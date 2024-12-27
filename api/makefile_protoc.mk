@@ -9,6 +9,8 @@ protoc-api-protobuf:
 	@echo "# generate services api protobuf"
 	$(MAKE) protoc-testing-protobuf
 	$(MAKE) protoc-testing-v1-protobuf
+	$(MAKE) protoc-org-protobuf
+	$(MAKE) protoc-org-v1-protobuf
 
 # specified server
 SAAS_SERVICE_SPECIFIED_FILES := $(shell find ./$(REL_PROJECT_PATH)/${service} -name "*.proto")

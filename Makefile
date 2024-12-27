@@ -90,6 +90,8 @@ generate:
 include api/makefile_protoc.mk
 include api/testing-service/makefile_protoc.mk
 include api/testing-service/v1/makefile_protoc.mk
+include api/org-service/makefile_protoc.mk
+include api/org-service/v1/makefile_protoc.mk
 
 # run
 include app/all-in-one/makefile_run.mk
