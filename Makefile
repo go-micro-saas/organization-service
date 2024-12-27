@@ -96,7 +96,7 @@ include api/org-service/v1/makefile_protoc.mk
 
 # run
 include app/all-in-one/makefile_run.mk
-include app/testing-service/cmd/makefile_run.mk
+include app/org-service/cmd/makefile_run.mk
 
 # build
 #include devops/makefile_cicd.mk
