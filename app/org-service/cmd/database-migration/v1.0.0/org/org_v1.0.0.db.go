@@ -2,7 +2,10 @@ package dbv1_0_0_org
 
 import (
 	"context"
-	orgchemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema"
+	orgschemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org"
+	employeeschemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_employee"
+	eventschemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_event_history"
+	inviteschemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_invite_record"
 	migrationpkg "github.com/ikaiguang/go-srv-kit/data/migration"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	"gorm.io/gorm"
@@ -30,19 +33,25 @@ func (s *Migrate) Upgrade(ctx context.Context) error {
 	)
 
 	// 创建表
-	mr = orgchemas.TestingSchema.CreateTableMigrator(migrator)
+	mr = orgschemas.OrgSchema.CreateTableMigrator(migrator)
 	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
 		e := errorpkg.ErrorInternalError("")
 		return errorpkg.Wrap(e, err)
 	}
-	// 添加字段
-	mr = orgchemas.TestingSchema.AddColumnAccessToken(migrator)
+	// 创建表
+	mr = employeeschemas.OrgEmployeeSchema.CreateTableMigrator(migrator)
 	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
 		e := errorpkg.ErrorInternalError("")
 		return errorpkg.Wrap(e, err)
 	}
-	// 创建索引
-	mr = orgchemas.TestingSchema.CreateUniqueIndexForIntAndUint(migrator)
+	// 创建表
+	mr = inviteschemas.OrgInviteRecordSchema.CreateTableMigrator(migrator)
+	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
+		e := errorpkg.ErrorInternalError("")
+		return errorpkg.Wrap(e, err)
+	}
+	// 创建表
+	mr = eventschemas.OrgEventHistorySchema.CreateTableMigrator(migrator)
 	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
 		e := errorpkg.ErrorInternalError("")
 		return errorpkg.Wrap(e, err)
