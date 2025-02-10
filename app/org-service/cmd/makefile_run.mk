@@ -24,8 +24,8 @@ run-service:
 	#@$(MAKE) run-org-service
 	go run ./app/org-service/cmd/org-service/... -conf=./app/org-service/configs
 
-.PHONY: org-service
+.PHONY: testing-service
 # org service :-->: org org-service
-org-service:
-	curl http://127.0.0.1:9991/api/v1/testdata/get?message=hello
+testing-service:
+	curl http://127.0.0.1:10501/api/v1/org/ping
 
