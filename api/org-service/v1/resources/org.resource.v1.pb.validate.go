@@ -371,3 +371,135 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PingRespDataValidationError{}
+
+// Validate checks the field values on Org with the rules defined in the proto
+// definition for this message. If any rules are violated, the first error
+// encountered is returned, or nil if there are no violations.
+func (m *Org) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Org with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in OrgMultiError, or nil if none found.
+func (m *Org) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Org) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Id
+
+	// no validation rules for CreatedTime
+
+	// no validation rules for UpdatedTime
+
+	// no validation rules for DeletedTime
+
+	// no validation rules for OrgId
+
+	// no validation rules for OrgName
+
+	// no validation rules for OrgAvatar
+
+	// no validation rules for OrgContactName
+
+	// no validation rules for OrgContactPhone
+
+	// no validation rules for OrgContactEmail
+
+	// no validation rules for OrgType
+
+	// no validation rules for OrgStatus
+
+	// no validation rules for OrgIndustryId
+
+	// no validation rules for OrgScaleId
+
+	// no validation rules for OrgAddress
+
+	// no validation rules for OrgZipCode
+
+	// no validation rules for OrgCreatorId
+
+	if len(errors) > 0 {
+		return OrgMultiError(errors)
+	}
+
+	return nil
+}
+
+// OrgMultiError is an error wrapping multiple validation errors returned by
+// Org.ValidateAll() if the designated constraints aren't met.
+type OrgMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OrgMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OrgMultiError) AllErrors() []error { return m }
+
+// OrgValidationError is the validation error returned by Org.Validate if the
+// designated constraints aren't met.
+type OrgValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OrgValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OrgValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OrgValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OrgValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OrgValidationError) ErrorName() string { return "OrgValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OrgValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOrg.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OrgValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OrgValidationError{}

@@ -65,6 +65,437 @@ func (TestdataInitEnum_TestdataInit) EnumDescriptor() ([]byte, []int) {
 	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{0, 0}
 }
 
+type OrgTypeEnum_OrgType int32
+
+const (
+	OrgTypeEnum_UNSPECIFIED OrgTypeEnum_OrgType = 0 // 未指定
+	OrgTypeEnum_PERSON      OrgTypeEnum_OrgType = 1 // 个人版
+	OrgTypeEnum_STANDARD    OrgTypeEnum_OrgType = 2 // 标准版
+)
+
+// Enum value maps for OrgTypeEnum_OrgType.
+var (
+	OrgTypeEnum_OrgType_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "PERSON",
+		2: "STANDARD",
+	}
+	OrgTypeEnum_OrgType_value = map[string]int32{
+		"UNSPECIFIED": 0,
+		"PERSON":      1,
+		"STANDARD":    2,
+	}
+)
+
+func (x OrgTypeEnum_OrgType) Enum() *OrgTypeEnum_OrgType {
+	p := new(OrgTypeEnum_OrgType)
+	*p = x
+	return p
+}
+
+func (x OrgTypeEnum_OrgType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrgTypeEnum_OrgType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[1].Descriptor()
+}
+
+func (OrgTypeEnum_OrgType) Type() protoreflect.EnumType {
+	return &file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[1]
+}
+
+func (x OrgTypeEnum_OrgType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrgTypeEnum_OrgType.Descriptor instead.
+func (OrgTypeEnum_OrgType) EnumDescriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{1, 0}
+}
+
+type OrgStatusEnum_OrgStatus int32
+
+const (
+	OrgStatusEnum_UNSPECIFIED OrgStatusEnum_OrgStatus = 0 // 未指定
+	OrgStatusEnum_ENABLE      OrgStatusEnum_OrgStatus = 1 // 有效的
+	OrgStatusEnum_DISABLE     OrgStatusEnum_OrgStatus = 2 // 已禁用
+	OrgStatusEnum_DELETED     OrgStatusEnum_OrgStatus = 3 // 已删除
+)
+
+// Enum value maps for OrgStatusEnum_OrgStatus.
+var (
+	OrgStatusEnum_OrgStatus_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "ENABLE",
+		2: "DISABLE",
+		3: "DELETED",
+	}
+	OrgStatusEnum_OrgStatus_value = map[string]int32{
+		"UNSPECIFIED": 0,
+		"ENABLE":      1,
+		"DISABLE":     2,
+		"DELETED":     3,
+	}
+)
+
+func (x OrgStatusEnum_OrgStatus) Enum() *OrgStatusEnum_OrgStatus {
+	p := new(OrgStatusEnum_OrgStatus)
+	*p = x
+	return p
+}
+
+func (x OrgStatusEnum_OrgStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrgStatusEnum_OrgStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[2].Descriptor()
+}
+
+func (OrgStatusEnum_OrgStatus) Type() protoreflect.EnumType {
+	return &file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[2]
+}
+
+func (x OrgStatusEnum_OrgStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrgStatusEnum_OrgStatus.Descriptor instead.
+func (OrgStatusEnum_OrgStatus) EnumDescriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{2, 0}
+}
+
+type OrgEmployeeRoleEnum_OrgEmployeeRole int32
+
+const (
+	OrgEmployeeRoleEnum_UNSPECIFIED OrgEmployeeRoleEnum_OrgEmployeeRole = 0 // 未指定
+	OrgEmployeeRoleEnum_CREATOR     OrgEmployeeRoleEnum_OrgEmployeeRole = 1 // 创建者
+	OrgEmployeeRoleEnum_NORMAL      OrgEmployeeRoleEnum_OrgEmployeeRole = 2 // 普通成员
+	OrgEmployeeRoleEnum_ADMIN       OrgEmployeeRoleEnum_OrgEmployeeRole = 3 // 管理员
+	OrgEmployeeRoleEnum_SUPER       OrgEmployeeRoleEnum_OrgEmployeeRole = 4 // 超级管理员
+)
+
+// Enum value maps for OrgEmployeeRoleEnum_OrgEmployeeRole.
+var (
+	OrgEmployeeRoleEnum_OrgEmployeeRole_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "CREATOR",
+		2: "NORMAL",
+		3: "ADMIN",
+		4: "SUPER",
+	}
+	OrgEmployeeRoleEnum_OrgEmployeeRole_value = map[string]int32{
+		"UNSPECIFIED": 0,
+		"CREATOR":     1,
+		"NORMAL":      2,
+		"ADMIN":       3,
+		"SUPER":       4,
+	}
+)
+
+func (x OrgEmployeeRoleEnum_OrgEmployeeRole) Enum() *OrgEmployeeRoleEnum_OrgEmployeeRole {
+	p := new(OrgEmployeeRoleEnum_OrgEmployeeRole)
+	*p = x
+	return p
+}
+
+func (x OrgEmployeeRoleEnum_OrgEmployeeRole) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrgEmployeeRoleEnum_OrgEmployeeRole) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[3].Descriptor()
+}
+
+func (OrgEmployeeRoleEnum_OrgEmployeeRole) Type() protoreflect.EnumType {
+	return &file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[3]
+}
+
+func (x OrgEmployeeRoleEnum_OrgEmployeeRole) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrgEmployeeRoleEnum_OrgEmployeeRole.Descriptor instead.
+func (OrgEmployeeRoleEnum_OrgEmployeeRole) EnumDescriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{3, 0}
+}
+
+type OrgEmployeeStatusEnum_OrgEmployeeStatus int32
+
+const (
+	OrgEmployeeStatusEnum_UNSPECIFIED OrgEmployeeStatusEnum_OrgEmployeeStatus = 0 // 未指定
+	OrgEmployeeStatusEnum_ENABLE      OrgEmployeeStatusEnum_OrgEmployeeStatus = 1 // 有效的
+	OrgEmployeeStatusEnum_DISABLE     OrgEmployeeStatusEnum_OrgEmployeeStatus = 2 // 已禁用
+	OrgEmployeeStatusEnum_DELETED     OrgEmployeeStatusEnum_OrgEmployeeStatus = 3 // 已删除
+)
+
+// Enum value maps for OrgEmployeeStatusEnum_OrgEmployeeStatus.
+var (
+	OrgEmployeeStatusEnum_OrgEmployeeStatus_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "ENABLE",
+		2: "DISABLE",
+		3: "DELETED",
+	}
+	OrgEmployeeStatusEnum_OrgEmployeeStatus_value = map[string]int32{
+		"UNSPECIFIED": 0,
+		"ENABLE":      1,
+		"DISABLE":     2,
+		"DELETED":     3,
+	}
+)
+
+func (x OrgEmployeeStatusEnum_OrgEmployeeStatus) Enum() *OrgEmployeeStatusEnum_OrgEmployeeStatus {
+	p := new(OrgEmployeeStatusEnum_OrgEmployeeStatus)
+	*p = x
+	return p
+}
+
+func (x OrgEmployeeStatusEnum_OrgEmployeeStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrgEmployeeStatusEnum_OrgEmployeeStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[4].Descriptor()
+}
+
+func (OrgEmployeeStatusEnum_OrgEmployeeStatus) Type() protoreflect.EnumType {
+	return &file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[4]
+}
+
+func (x OrgEmployeeStatusEnum_OrgEmployeeStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrgEmployeeStatusEnum_OrgEmployeeStatus.Descriptor instead.
+func (OrgEmployeeStatusEnum_OrgEmployeeStatus) EnumDescriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{4, 0}
+}
+
+type OrgInviteTypeEnum_OrgInviteType int32
+
+const (
+	OrgInviteTypeEnum_UNSPECIFIED OrgInviteTypeEnum_OrgInviteType = 0 // 未指定
+	OrgInviteTypeEnum_ACCOUNT     OrgInviteTypeEnum_OrgInviteType = 1 // 账号邀请
+	OrgInviteTypeEnum_LINK        OrgInviteTypeEnum_OrgInviteType = 2 // 链接邀请
+)
+
+// Enum value maps for OrgInviteTypeEnum_OrgInviteType.
+var (
+	OrgInviteTypeEnum_OrgInviteType_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "ACCOUNT",
+		2: "LINK",
+	}
+	OrgInviteTypeEnum_OrgInviteType_value = map[string]int32{
+		"UNSPECIFIED": 0,
+		"ACCOUNT":     1,
+		"LINK":        2,
+	}
+)
+
+func (x OrgInviteTypeEnum_OrgInviteType) Enum() *OrgInviteTypeEnum_OrgInviteType {
+	p := new(OrgInviteTypeEnum_OrgInviteType)
+	*p = x
+	return p
+}
+
+func (x OrgInviteTypeEnum_OrgInviteType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrgInviteTypeEnum_OrgInviteType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[5].Descriptor()
+}
+
+func (OrgInviteTypeEnum_OrgInviteType) Type() protoreflect.EnumType {
+	return &file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[5]
+}
+
+func (x OrgInviteTypeEnum_OrgInviteType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrgInviteTypeEnum_OrgInviteType.Descriptor instead.
+func (OrgInviteTypeEnum_OrgInviteType) EnumDescriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{5, 0}
+}
+
+type OrgInviteAccountTypeEnum_OrgInviteAccountType int32
+
+const (
+	OrgInviteAccountTypeEnum_UNSPECIFIED OrgInviteAccountTypeEnum_OrgInviteAccountType = 0 // 未指定
+	OrgInviteAccountTypeEnum_PHONE       OrgInviteAccountTypeEnum_OrgInviteAccountType = 1 // 手机
+	OrgInviteAccountTypeEnum_EMAIL       OrgInviteAccountTypeEnum_OrgInviteAccountType = 2 // 邮箱
+	OrgInviteAccountTypeEnum_WECHAT      OrgInviteAccountTypeEnum_OrgInviteAccountType = 3 // 微信
+	OrgInviteAccountTypeEnum_FIESHU      OrgInviteAccountTypeEnum_OrgInviteAccountType = 4 // 飞书
+	OrgInviteAccountTypeEnum_DINGTALK    OrgInviteAccountTypeEnum_OrgInviteAccountType = 5 // 钉钉
+)
+
+// Enum value maps for OrgInviteAccountTypeEnum_OrgInviteAccountType.
+var (
+	OrgInviteAccountTypeEnum_OrgInviteAccountType_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "PHONE",
+		2: "EMAIL",
+		3: "WECHAT",
+		4: "FIESHU",
+		5: "DINGTALK",
+	}
+	OrgInviteAccountTypeEnum_OrgInviteAccountType_value = map[string]int32{
+		"UNSPECIFIED": 0,
+		"PHONE":       1,
+		"EMAIL":       2,
+		"WECHAT":      3,
+		"FIESHU":      4,
+		"DINGTALK":    5,
+	}
+)
+
+func (x OrgInviteAccountTypeEnum_OrgInviteAccountType) Enum() *OrgInviteAccountTypeEnum_OrgInviteAccountType {
+	p := new(OrgInviteAccountTypeEnum_OrgInviteAccountType)
+	*p = x
+	return p
+}
+
+func (x OrgInviteAccountTypeEnum_OrgInviteAccountType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrgInviteAccountTypeEnum_OrgInviteAccountType) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[6].Descriptor()
+}
+
+func (OrgInviteAccountTypeEnum_OrgInviteAccountType) Type() protoreflect.EnumType {
+	return &file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[6]
+}
+
+func (x OrgInviteAccountTypeEnum_OrgInviteAccountType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrgInviteAccountTypeEnum_OrgInviteAccountType.Descriptor instead.
+func (OrgInviteAccountTypeEnum_OrgInviteAccountType) EnumDescriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{6, 0}
+}
+
+type OrgInviteStatusEnum_OrgInviteStatus int32
+
+const (
+	OrgInviteStatusEnum_UNSPECIFIED OrgInviteStatusEnum_OrgInviteStatus = 0 // 未指定
+	OrgInviteStatusEnum_INVITING    OrgInviteStatusEnum_OrgInviteStatus = 1 // 邀请中
+	OrgInviteStatusEnum_AGREED      OrgInviteStatusEnum_OrgInviteStatus = 2 // 已同意
+	OrgInviteStatusEnum_REJECTED    OrgInviteStatusEnum_OrgInviteStatus = 3 // 已拒绝
+	OrgInviteStatusEnum_CANCELLED   OrgInviteStatusEnum_OrgInviteStatus = 4 // 已取消
+	OrgInviteStatusEnum_EXPIRED     OrgInviteStatusEnum_OrgInviteStatus = 5 // 已过期
+)
+
+// Enum value maps for OrgInviteStatusEnum_OrgInviteStatus.
+var (
+	OrgInviteStatusEnum_OrgInviteStatus_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "INVITING",
+		2: "AGREED",
+		3: "REJECTED",
+		4: "CANCELLED",
+		5: "EXPIRED",
+	}
+	OrgInviteStatusEnum_OrgInviteStatus_value = map[string]int32{
+		"UNSPECIFIED": 0,
+		"INVITING":    1,
+		"AGREED":      2,
+		"REJECTED":    3,
+		"CANCELLED":   4,
+		"EXPIRED":     5,
+	}
+)
+
+func (x OrgInviteStatusEnum_OrgInviteStatus) Enum() *OrgInviteStatusEnum_OrgInviteStatus {
+	p := new(OrgInviteStatusEnum_OrgInviteStatus)
+	*p = x
+	return p
+}
+
+func (x OrgInviteStatusEnum_OrgInviteStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrgInviteStatusEnum_OrgInviteStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[7].Descriptor()
+}
+
+func (OrgInviteStatusEnum_OrgInviteStatus) Type() protoreflect.EnumType {
+	return &file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[7]
+}
+
+func (x OrgInviteStatusEnum_OrgInviteStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrgInviteStatusEnum_OrgInviteStatus.Descriptor instead.
+func (OrgInviteStatusEnum_OrgInviteStatus) EnumDescriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{7, 0}
+}
+
+type OrgEventStatusEnum_OrgEventStatus int32
+
+const (
+	OrgEventStatusEnum_UNSPECIFIED   OrgEventStatusEnum_OrgEventStatus = 0 // 未指定
+	OrgEventStatusEnum_SUCCESS       OrgEventStatusEnum_OrgEventStatus = 1 // 成功
+	OrgEventStatusEnum_FAILED        OrgEventStatusEnum_OrgEventStatus = 2 // 失败的状态
+	OrgEventStatusEnum_TRYING        OrgEventStatusEnum_OrgEventStatus = 3 // 重试中
+	OrgEventStatusEnum_RETRY_SUCCESS OrgEventStatusEnum_OrgEventStatus = 4 // 重试成功
+	OrgEventStatusEnum_RETRY_FAILED  OrgEventStatusEnum_OrgEventStatus = 5 // 重试失败
+)
+
+// Enum value maps for OrgEventStatusEnum_OrgEventStatus.
+var (
+	OrgEventStatusEnum_OrgEventStatus_name = map[int32]string{
+		0: "UNSPECIFIED",
+		1: "SUCCESS",
+		2: "FAILED",
+		3: "TRYING",
+		4: "RETRY_SUCCESS",
+		5: "RETRY_FAILED",
+	}
+	OrgEventStatusEnum_OrgEventStatus_value = map[string]int32{
+		"UNSPECIFIED":   0,
+		"SUCCESS":       1,
+		"FAILED":        2,
+		"TRYING":        3,
+		"RETRY_SUCCESS": 4,
+		"RETRY_FAILED":  5,
+	}
+)
+
+func (x OrgEventStatusEnum_OrgEventStatus) Enum() *OrgEventStatusEnum_OrgEventStatus {
+	p := new(OrgEventStatusEnum_OrgEventStatus)
+	*p = x
+	return p
+}
+
+func (x OrgEventStatusEnum_OrgEventStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OrgEventStatusEnum_OrgEventStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[8].Descriptor()
+}
+
+func (OrgEventStatusEnum_OrgEventStatus) Type() protoreflect.EnumType {
+	return &file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes[8]
+}
+
+func (x OrgEventStatusEnum_OrgEventStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OrgEventStatusEnum_OrgEventStatus.Descriptor instead.
+func (OrgEventStatusEnum_OrgEventStatus) EnumDescriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{8, 0}
+}
+
 // TestdataInitEnum TestdataInitEnum enum
 type TestdataInitEnum struct {
 	state         protoimpl.MessageState
@@ -104,6 +535,310 @@ func (*TestdataInitEnum) Descriptor() ([]byte, []int) {
 	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{0}
 }
 
+type OrgTypeEnum struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OrgTypeEnum) Reset() {
+	*x = OrgTypeEnum{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrgTypeEnum) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrgTypeEnum) ProtoMessage() {}
+
+func (x *OrgTypeEnum) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrgTypeEnum.ProtoReflect.Descriptor instead.
+func (*OrgTypeEnum) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{1}
+}
+
+type OrgStatusEnum struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OrgStatusEnum) Reset() {
+	*x = OrgStatusEnum{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrgStatusEnum) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrgStatusEnum) ProtoMessage() {}
+
+func (x *OrgStatusEnum) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrgStatusEnum.ProtoReflect.Descriptor instead.
+func (*OrgStatusEnum) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{2}
+}
+
+type OrgEmployeeRoleEnum struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OrgEmployeeRoleEnum) Reset() {
+	*x = OrgEmployeeRoleEnum{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrgEmployeeRoleEnum) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrgEmployeeRoleEnum) ProtoMessage() {}
+
+func (x *OrgEmployeeRoleEnum) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrgEmployeeRoleEnum.ProtoReflect.Descriptor instead.
+func (*OrgEmployeeRoleEnum) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{3}
+}
+
+type OrgEmployeeStatusEnum struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OrgEmployeeStatusEnum) Reset() {
+	*x = OrgEmployeeStatusEnum{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrgEmployeeStatusEnum) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrgEmployeeStatusEnum) ProtoMessage() {}
+
+func (x *OrgEmployeeStatusEnum) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrgEmployeeStatusEnum.ProtoReflect.Descriptor instead.
+func (*OrgEmployeeStatusEnum) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{4}
+}
+
+type OrgInviteTypeEnum struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OrgInviteTypeEnum) Reset() {
+	*x = OrgInviteTypeEnum{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrgInviteTypeEnum) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrgInviteTypeEnum) ProtoMessage() {}
+
+func (x *OrgInviteTypeEnum) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrgInviteTypeEnum.ProtoReflect.Descriptor instead.
+func (*OrgInviteTypeEnum) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{5}
+}
+
+type OrgInviteAccountTypeEnum struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OrgInviteAccountTypeEnum) Reset() {
+	*x = OrgInviteAccountTypeEnum{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrgInviteAccountTypeEnum) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrgInviteAccountTypeEnum) ProtoMessage() {}
+
+func (x *OrgInviteAccountTypeEnum) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrgInviteAccountTypeEnum.ProtoReflect.Descriptor instead.
+func (*OrgInviteAccountTypeEnum) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{6}
+}
+
+type OrgInviteStatusEnum struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OrgInviteStatusEnum) Reset() {
+	*x = OrgInviteStatusEnum{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrgInviteStatusEnum) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrgInviteStatusEnum) ProtoMessage() {}
+
+func (x *OrgInviteStatusEnum) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrgInviteStatusEnum.ProtoReflect.Descriptor instead.
+func (*OrgInviteStatusEnum) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{7}
+}
+
+type OrgEventStatusEnum struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *OrgEventStatusEnum) Reset() {
+	*x = OrgEventStatusEnum{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OrgEventStatusEnum) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrgEventStatusEnum) ProtoMessage() {}
+
+func (x *OrgEventStatusEnum) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrgEventStatusEnum.ProtoReflect.Descriptor instead.
+func (*OrgEventStatusEnum) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP(), []int{8}
+}
+
 var File_api_org_service_v1_enums_org_enum_v1_proto protoreflect.FileDescriptor
 
 var file_api_org_service_v1_enums_org_enum_v1_proto_rawDesc = []byte{
@@ -114,15 +849,67 @@ var file_api_org_service_v1_enums_org_enum_v1_proto_rawDesc = []byte{
 	0x31, 0x22, 0x33, 0x0a, 0x10, 0x54, 0x65, 0x73, 0x74, 0x64, 0x61, 0x74, 0x61, 0x49, 0x6e, 0x69,
 	0x74, 0x45, 0x6e, 0x75, 0x6d, 0x22, 0x1f, 0x0a, 0x0c, 0x54, 0x65, 0x73, 0x74, 0x64, 0x61, 0x74,
 	0x61, 0x49, 0x6e, 0x69, 0x74, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49,
-	0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x42, 0x78, 0x0a, 0x13, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61,
-	0x70, 0x69, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x65, 0x6e, 0x75, 0x6d, 0x76, 0x31, 0x42, 0x10, 0x53,
-	0x61, 0x61, 0x73, 0x41, 0x70, 0x69, 0x4f, 0x72, 0x67, 0x45, 0x6e, 0x75, 0x6d, 0x56, 0x31, 0x50,
-	0x01, 0x5a, 0x4d, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x6f,
-	0x2d, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x2d, 0x73, 0x61, 0x61, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0x61,
-	0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6f, 0x72, 0x67, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x2f, 0x76, 0x31, 0x2f, 0x65, 0x6e, 0x75, 0x6d, 0x73, 0x3b, 0x65, 0x6e, 0x75, 0x6d, 0x76, 0x31,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x22, 0x43, 0x0a, 0x0b, 0x4f, 0x72, 0x67, 0x54, 0x79, 0x70,
+	0x65, 0x45, 0x6e, 0x75, 0x6d, 0x22, 0x34, 0x0a, 0x07, 0x4f, 0x72, 0x67, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10,
+	0x00, 0x12, 0x0a, 0x0a, 0x06, 0x50, 0x45, 0x52, 0x53, 0x4f, 0x4e, 0x10, 0x01, 0x12, 0x0c, 0x0a,
+	0x08, 0x53, 0x54, 0x41, 0x4e, 0x44, 0x41, 0x52, 0x44, 0x10, 0x02, 0x22, 0x53, 0x0a, 0x0d, 0x4f,
+	0x72, 0x67, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x45, 0x6e, 0x75, 0x6d, 0x22, 0x42, 0x0a, 0x09,
+	0x4f, 0x72, 0x67, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53,
+	0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x45, 0x4e,
+	0x41, 0x42, 0x4c, 0x45, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x49, 0x53, 0x41, 0x42, 0x4c,
+	0x45, 0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x44, 0x10, 0x03,
+	0x22, 0x68, 0x0a, 0x13, 0x4f, 0x72, 0x67, 0x45, 0x6d, 0x70, 0x6c, 0x6f, 0x79, 0x65, 0x65, 0x52,
+	0x6f, 0x6c, 0x65, 0x45, 0x6e, 0x75, 0x6d, 0x22, 0x51, 0x0a, 0x0f, 0x4f, 0x72, 0x67, 0x45, 0x6d,
+	0x70, 0x6c, 0x6f, 0x79, 0x65, 0x65, 0x52, 0x6f, 0x6c, 0x65, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e,
+	0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x43,
+	0x52, 0x45, 0x41, 0x54, 0x4f, 0x52, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x4e, 0x4f, 0x52, 0x4d,
+	0x41, 0x4c, 0x10, 0x02, 0x12, 0x09, 0x0a, 0x05, 0x41, 0x44, 0x4d, 0x49, 0x4e, 0x10, 0x03, 0x12,
+	0x09, 0x0a, 0x05, 0x53, 0x55, 0x50, 0x45, 0x52, 0x10, 0x04, 0x22, 0x63, 0x0a, 0x15, 0x4f, 0x72,
+	0x67, 0x45, 0x6d, 0x70, 0x6c, 0x6f, 0x79, 0x65, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x45,
+	0x6e, 0x75, 0x6d, 0x22, 0x4a, 0x0a, 0x11, 0x4f, 0x72, 0x67, 0x45, 0x6d, 0x70, 0x6c, 0x6f, 0x79,
+	0x65, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53, 0x50,
+	0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x45, 0x4e, 0x41,
+	0x42, 0x4c, 0x45, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x49, 0x53, 0x41, 0x42, 0x4c, 0x45,
+	0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x44, 0x10, 0x03, 0x22,
+	0x4c, 0x0a, 0x11, 0x4f, 0x72, 0x67, 0x49, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x54, 0x79, 0x70, 0x65,
+	0x45, 0x6e, 0x75, 0x6d, 0x22, 0x37, 0x0a, 0x0d, 0x4f, 0x72, 0x67, 0x49, 0x6e, 0x76, 0x69, 0x74,
+	0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49,
+	0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x41, 0x43, 0x43, 0x4f, 0x55, 0x4e,
+	0x54, 0x10, 0x01, 0x12, 0x08, 0x0a, 0x04, 0x4c, 0x49, 0x4e, 0x4b, 0x10, 0x02, 0x22, 0x7f, 0x0a,
+	0x18, 0x4f, 0x72, 0x67, 0x49, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e,
+	0x74, 0x54, 0x79, 0x70, 0x65, 0x45, 0x6e, 0x75, 0x6d, 0x22, 0x63, 0x0a, 0x14, 0x4f, 0x72, 0x67,
+	0x49, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44,
+	0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x50, 0x48, 0x4f, 0x4e, 0x45, 0x10, 0x01, 0x12, 0x09, 0x0a,
+	0x05, 0x45, 0x4d, 0x41, 0x49, 0x4c, 0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x57, 0x45, 0x43, 0x48,
+	0x41, 0x54, 0x10, 0x03, 0x12, 0x0a, 0x0a, 0x06, 0x46, 0x49, 0x45, 0x53, 0x48, 0x55, 0x10, 0x04,
+	0x12, 0x0c, 0x0a, 0x08, 0x44, 0x49, 0x4e, 0x47, 0x54, 0x41, 0x4c, 0x4b, 0x10, 0x05, 0x22, 0x7d,
+	0x0a, 0x13, 0x4f, 0x72, 0x67, 0x49, 0x6e, 0x76, 0x69, 0x74, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x45, 0x6e, 0x75, 0x6d, 0x22, 0x66, 0x0a, 0x0f, 0x4f, 0x72, 0x67, 0x49, 0x6e, 0x76, 0x69,
+	0x74, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53, 0x50,
+	0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x49, 0x4e, 0x56,
+	0x49, 0x54, 0x49, 0x4e, 0x47, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x41, 0x47, 0x52, 0x45, 0x45,
+	0x44, 0x10, 0x02, 0x12, 0x0c, 0x0a, 0x08, 0x52, 0x45, 0x4a, 0x45, 0x43, 0x54, 0x45, 0x44, 0x10,
+	0x03, 0x12, 0x0d, 0x0a, 0x09, 0x43, 0x41, 0x4e, 0x43, 0x45, 0x4c, 0x4c, 0x45, 0x44, 0x10, 0x04,
+	0x12, 0x0b, 0x0a, 0x07, 0x45, 0x58, 0x50, 0x49, 0x52, 0x45, 0x44, 0x10, 0x05, 0x22, 0x81, 0x01,
+	0x0a, 0x12, 0x4f, 0x72, 0x67, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x45, 0x6e, 0x75, 0x6d, 0x22, 0x6b, 0x0a, 0x0e, 0x4f, 0x72, 0x67, 0x45, 0x76, 0x65, 0x6e, 0x74,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43,
+	0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x55, 0x43, 0x43, 0x45,
+	0x53, 0x53, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x46, 0x41, 0x49, 0x4c, 0x45, 0x44, 0x10, 0x02,
+	0x12, 0x0a, 0x0a, 0x06, 0x54, 0x52, 0x59, 0x49, 0x4e, 0x47, 0x10, 0x03, 0x12, 0x11, 0x0a, 0x0d,
+	0x52, 0x45, 0x54, 0x52, 0x59, 0x5f, 0x53, 0x55, 0x43, 0x43, 0x45, 0x53, 0x53, 0x10, 0x04, 0x12,
+	0x10, 0x0a, 0x0c, 0x52, 0x45, 0x54, 0x52, 0x59, 0x5f, 0x46, 0x41, 0x49, 0x4c, 0x45, 0x44, 0x10,
+	0x05, 0x42, 0x78, 0x0a, 0x13, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72,
+	0x67, 0x2e, 0x65, 0x6e, 0x75, 0x6d, 0x76, 0x31, 0x42, 0x10, 0x53, 0x61, 0x61, 0x73, 0x41, 0x70,
+	0x69, 0x4f, 0x72, 0x67, 0x45, 0x6e, 0x75, 0x6d, 0x56, 0x31, 0x50, 0x01, 0x5a, 0x4d, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x6f, 0x2d, 0x6d, 0x69, 0x63, 0x72,
+	0x6f, 0x2d, 0x73, 0x61, 0x61, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x6f, 0x72, 0x67, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x31, 0x2f, 0x65,
+	0x6e, 0x75, 0x6d, 0x73, 0x3b, 0x65, 0x6e, 0x75, 0x6d, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -137,11 +924,27 @@ func file_api_org_service_v1_enums_org_enum_v1_proto_rawDescGZIP() []byte {
 	return file_api_org_service_v1_enums_org_enum_v1_proto_rawDescData
 }
 
-var file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_api_org_service_v1_enums_org_enum_v1_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
+var file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_api_org_service_v1_enums_org_enum_v1_proto_goTypes = []interface{}{
-	(TestdataInitEnum_TestdataInit)(0), // 0: saas.api.org.enumv1.TestdataInitEnum.TestdataInit
-	(*TestdataInitEnum)(nil),           // 1: saas.api.org.enumv1.TestdataInitEnum
+	(TestdataInitEnum_TestdataInit)(0),                 // 0: saas.api.org.enumv1.TestdataInitEnum.TestdataInit
+	(OrgTypeEnum_OrgType)(0),                           // 1: saas.api.org.enumv1.OrgTypeEnum.OrgType
+	(OrgStatusEnum_OrgStatus)(0),                       // 2: saas.api.org.enumv1.OrgStatusEnum.OrgStatus
+	(OrgEmployeeRoleEnum_OrgEmployeeRole)(0),           // 3: saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
+	(OrgEmployeeStatusEnum_OrgEmployeeStatus)(0),       // 4: saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
+	(OrgInviteTypeEnum_OrgInviteType)(0),               // 5: saas.api.org.enumv1.OrgInviteTypeEnum.OrgInviteType
+	(OrgInviteAccountTypeEnum_OrgInviteAccountType)(0), // 6: saas.api.org.enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType
+	(OrgInviteStatusEnum_OrgInviteStatus)(0),           // 7: saas.api.org.enumv1.OrgInviteStatusEnum.OrgInviteStatus
+	(OrgEventStatusEnum_OrgEventStatus)(0),             // 8: saas.api.org.enumv1.OrgEventStatusEnum.OrgEventStatus
+	(*TestdataInitEnum)(nil),                           // 9: saas.api.org.enumv1.TestdataInitEnum
+	(*OrgTypeEnum)(nil),                                // 10: saas.api.org.enumv1.OrgTypeEnum
+	(*OrgStatusEnum)(nil),                              // 11: saas.api.org.enumv1.OrgStatusEnum
+	(*OrgEmployeeRoleEnum)(nil),                        // 12: saas.api.org.enumv1.OrgEmployeeRoleEnum
+	(*OrgEmployeeStatusEnum)(nil),                      // 13: saas.api.org.enumv1.OrgEmployeeStatusEnum
+	(*OrgInviteTypeEnum)(nil),                          // 14: saas.api.org.enumv1.OrgInviteTypeEnum
+	(*OrgInviteAccountTypeEnum)(nil),                   // 15: saas.api.org.enumv1.OrgInviteAccountTypeEnum
+	(*OrgInviteStatusEnum)(nil),                        // 16: saas.api.org.enumv1.OrgInviteStatusEnum
+	(*OrgEventStatusEnum)(nil),                         // 17: saas.api.org.enumv1.OrgEventStatusEnum
 }
 var file_api_org_service_v1_enums_org_enum_v1_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -169,14 +972,110 @@ func file_api_org_service_v1_enums_org_enum_v1_proto_init() {
 				return nil
 			}
 		}
+		file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrgTypeEnum); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrgStatusEnum); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrgEmployeeRoleEnum); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrgEmployeeStatusEnum); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrgInviteTypeEnum); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrgInviteAccountTypeEnum); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrgInviteStatusEnum); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_enums_org_enum_v1_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OrgEventStatusEnum); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_org_service_v1_enums_org_enum_v1_proto_rawDesc,
-			NumEnums:      1,
-			NumMessages:   1,
+			NumEnums:      9,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

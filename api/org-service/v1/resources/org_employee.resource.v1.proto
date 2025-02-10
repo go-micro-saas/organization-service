@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package saas.api.org.resourcev1;
+
+// 多语言特定包名，用于源代码引用
+option go_package           = "github.com/go-micro-saas/organization-service/api/org-service/v1/resources;resourcev1";
+option java_multiple_files  = true;
+option java_package         = "saas.api.org.resourcev1";
+option java_outer_classname = "SaasApiOrgResourceV1";
+
+// import "github.com/ikaiguang/go-srv-kit/kit/page/page.kit.proto";
+
+// OrgEmployee ENGINE InnoDB CHARSET utf8mb4 COMMENT '组织成员'
+message OrgEmployee {
+  // id ID
+  uint64 id = 1;
+  // created_time 创建时间
+  string created_time = 2;
+  // updated_time 最后修改时间
+  string updated_time = 3;
+  // deleted_time 删除时间
+  uint64 deleted_time = 4;
+  // employee_id uuid
+  uint64 employee_id = 5;
+  // user_id 用户ID
+  uint64 user_id = 6;
+  // org_id 组织ID
+  uint64 org_id = 7;
+  // org_name 组织名称
+  string org_name = 8;
+  // employee_avatar 成员头像
+  string employee_avatar = 9;
+  // employee_phone 成员联系手机
+  string employee_phone = 10;
+  // employee_email 成员联系邮箱
+  string employee_email = 11;
+  // employee_role 角色；1：创建者，2：普通成员，3：管理员，4：超级管理员
+  uint32 employee_role = 12;
+  // employee_status 状态；1：ENABLE，2：DISABLE，3：DELETED
+  uint32 employee_status = 13;
+  // inviter_record_id 邀请记录ID
+  uint64 inviter_record_id = 14;
+  // inviter_user_id 邀请者ID
+  uint64 inviter_user_id = 15;
+}

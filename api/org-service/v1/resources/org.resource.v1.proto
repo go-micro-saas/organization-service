@@ -22,3 +22,41 @@ message PingResp {
 message PingRespData {
   string message = 1;
 }
+
+// Org ENGINE InnoDB CHARSET utf8mb4 COMMENT '组织'
+message Org {
+  // id ID
+  uint64 id = 1;
+  // created_time 创建时间
+  string created_time = 2;
+  // updated_time 最后修改时间
+  string updated_time = 3;
+  // deleted_time 删除时间
+  uint64 deleted_time = 4;
+  // org_id uuid
+  uint64 org_id = 5;
+  // org_name 组织名称
+  string org_name = 6;
+  // org_avatar 组织头像
+  string org_avatar = 7;
+  // org_contact_name 组织联系名称
+  string org_contact_name = 8;
+  // org_contact_phone 组织联系手机
+  string org_contact_phone = 9;
+  // org_contact_email 组织联系邮箱
+  string org_contact_email = 10;
+  // org_type 组织状态；1：个人版，2：标准组织，3：。。。
+  uint32 org_type = 11;
+  // org_status 状态；0：INIT，1：ENABLE，2：DISABLE，3：DELETED
+  uint32 org_status = 12;
+  // org_industry_id 组织行业
+  uint64 org_industry_id = 13;
+  // org_scale_id 组织规模
+  uint64 org_scale_id = 14;
+  // org_address 组织地址
+  string org_address = 15;
+  // org_zip_code 组织地址邮编
+  string org_zip_code = 16;
+  // org_creator_id 组织创建者
+  uint64 org_creator_id = 17;
+}
