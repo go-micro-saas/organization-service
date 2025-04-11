@@ -21,7 +21,7 @@ type OrgEmployee struct {
 	EmployeeId      uint64                                         `gorm:"column:employee_id" json:"employee_id"`             // uuid
 	UserId          uint64                                         `gorm:"column:user_id" json:"user_id"`                     // 用户ID
 	OrgId           uint64                                         `gorm:"column:org_id" json:"org_id"`                       // 组织ID
-	OrgName         string                                         `gorm:"column:org_name" json:"org_name"`                   // 组织名称
+	EmployeeName    string                                         `gorm:"column:employee_name" json:"employee_name"`         // 成员名称
 	EmployeeAvatar  string                                         `gorm:"column:employee_avatar" json:"employee_avatar"`     // 成员头像
 	EmployeePhone   string                                         `gorm:"column:employee_phone" json:"employee_phone"`       // 成员联系手机
 	EmployeeEmail   string                                         `gorm:"column:employee_email" json:"employee_email"`       // 成员联系邮箱

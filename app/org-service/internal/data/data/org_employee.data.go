@@ -359,7 +359,7 @@ func (s *OrgEmployeeSlice) InsertColumns() (columnList []string, placeholder str
 		schemas.FieldCreatedTime, schemas.FieldUpdatedTime,
 		schemas.FieldDeletedTime, schemas.FieldEmployeeId,
 		schemas.FieldUserId, schemas.FieldOrgId,
-		schemas.FieldOrgName, schemas.FieldEmployeeAvatar,
+		schemas.FieldEmployeeName, schemas.FieldEmployeeAvatar,
 		schemas.FieldEmployeePhone, schemas.FieldEmployeeEmail,
 		schemas.FieldEmployeeRole, schemas.FieldEmployeeStatus,
 		schemas.FieldInviterRecordId, schemas.FieldInviterUserId,
@@ -386,7 +386,7 @@ func (s *OrgEmployeeSlice) InsertValues(args *gormpkg.BatchInsertValueArgs) (pre
 		prepareData = append(prepareData, dataModels[index].EmployeeId)
 		prepareData = append(prepareData, dataModels[index].UserId)
 		prepareData = append(prepareData, dataModels[index].OrgId)
-		prepareData = append(prepareData, dataModels[index].OrgName)
+		prepareData = append(prepareData, dataModels[index].EmployeeName)
 		prepareData = append(prepareData, dataModels[index].EmployeeAvatar)
 		prepareData = append(prepareData, dataModels[index].EmployeePhone)
 		prepareData = append(prepareData, dataModels[index].EmployeeEmail)
@@ -408,7 +408,7 @@ func (s *OrgEmployeeSlice) UpdateColumns() (columnList []string) {
 		schemas.FieldEmployeeId + "=excluded." + schemas.FieldEmployeeId,
 		schemas.FieldUserId + "=excluded." + schemas.FieldUserId,
 		schemas.FieldOrgId + "=excluded." + schemas.FieldOrgId,
-		schemas.FieldOrgName + "=excluded." + schemas.FieldOrgName,
+		schemas.FieldEmployeeName + "=excluded." + schemas.FieldEmployeeName,
 		schemas.FieldEmployeeAvatar + "=excluded." + schemas.FieldEmployeeAvatar,
 		schemas.FieldEmployeePhone + "=excluded." + schemas.FieldEmployeePhone,
 		schemas.FieldEmployeeEmail + "=excluded." + schemas.FieldEmployeeEmail,
@@ -508,9 +508,9 @@ func (s *orgEmployeeRepo) WhereConditions(dbConn *gorm.DB, conditions map[string
 	// 	   dbConn = dbConn.Where(tableName+"."+schemas.FieldOrgId+" = ?", data)
 	// }
 
-	// org_name
-	// if data, ok := conditions[schemas.FieldOrgName]; ok {
-	// 	   dbConn = dbConn.Where(tableName+"."+schemas.FieldOrgName+" = ?", data)
+	// employee_name
+	// if data, ok := conditions[schemas.FieldEmployeeName]; ok {
+	// 	   dbConn = dbConn.Where(tableName+"."+schemas.FieldEmployeeName+" = ?", data)
 	// }
 
 	// employee_avatar
@@ -594,9 +594,9 @@ func (s *orgEmployeeRepo) UpdateColumns(conditions map[string]interface{}) map[s
 	//	updateColumns[schemas.FieldOrgId] = data
 	//}
 
-	// org_name
-	//if data, ok := conditions[schemas.FieldOrgName]; ok {
-	//	updateColumns[schemas.FieldOrgName] = data
+	// employee_name
+	//if data, ok := conditions[schemas.FieldEmployeeName]; ok {
+	//	updateColumns[schemas.FieldEmployeeName] = data
 	//}
 
 	// employee_avatar
