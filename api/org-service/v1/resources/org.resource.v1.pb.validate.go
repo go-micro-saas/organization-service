@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = enumv1.OrgTypeEnum_OrgType(0)
 )
 
 // Validate checks the field values on PingReq with the rules defined in the
@@ -503,3 +507,819 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = OrgValidationError{}
+
+// Validate checks the field values on CreateOrgReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *CreateOrgReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateOrgReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CreateOrgReqMultiError, or
+// nil if none found.
+func (m *CreateOrgReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateOrgReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetCreatorId() <= 0 {
+		err := CreateOrgReqValidationError{
+			field:  "CreatorId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetOrgName()) < 1 {
+		err := CreateOrgReqValidationError{
+			field:  "OrgName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetOrgAvatar() != "" {
+
+	}
+
+	if _, ok := _CreateOrgReq_OrgType_NotInLookup[m.GetOrgType()]; ok {
+		err := CreateOrgReqValidationError{
+			field:  "OrgType",
+			reason: "value must not be in list [UNSPECIFIED]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return CreateOrgReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// CreateOrgReqMultiError is an error wrapping multiple validation errors
+// returned by CreateOrgReq.ValidateAll() if the designated constraints aren't met.
+type CreateOrgReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateOrgReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateOrgReqMultiError) AllErrors() []error { return m }
+
+// CreateOrgReqValidationError is the validation error returned by
+// CreateOrgReq.Validate if the designated constraints aren't met.
+type CreateOrgReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateOrgReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateOrgReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateOrgReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateOrgReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateOrgReqValidationError) ErrorName() string { return "CreateOrgReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CreateOrgReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateOrgReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateOrgReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateOrgReqValidationError{}
+
+var _CreateOrgReq_OrgType_NotInLookup = map[enumv1.OrgTypeEnum_OrgType]struct{}{
+	0: {},
+}
+
+// Validate checks the field values on CreateOrgResp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *CreateOrgResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateOrgResp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CreateOrgRespMultiError, or
+// nil if none found.
+func (m *CreateOrgResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateOrgResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, CreateOrgRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, CreateOrgRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateOrgRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return CreateOrgRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// CreateOrgRespMultiError is an error wrapping multiple validation errors
+// returned by CreateOrgResp.ValidateAll() if the designated constraints
+// aren't met.
+type CreateOrgRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateOrgRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateOrgRespMultiError) AllErrors() []error { return m }
+
+// CreateOrgRespValidationError is the validation error returned by
+// CreateOrgResp.Validate if the designated constraints aren't met.
+type CreateOrgRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateOrgRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateOrgRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateOrgRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateOrgRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateOrgRespValidationError) ErrorName() string { return "CreateOrgRespValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CreateOrgRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateOrgResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateOrgRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateOrgRespValidationError{}
+
+// Validate checks the field values on CreateOrgRespData with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *CreateOrgRespData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CreateOrgRespData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// CreateOrgRespDataMultiError, or nil if none found.
+func (m *CreateOrgRespData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CreateOrgRespData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for OrgId
+
+	// no validation rules for OrgAvatar
+
+	// no validation rules for OrgType
+
+	if len(errors) > 0 {
+		return CreateOrgRespDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// CreateOrgRespDataMultiError is an error wrapping multiple validation errors
+// returned by CreateOrgRespData.ValidateAll() if the designated constraints
+// aren't met.
+type CreateOrgRespDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CreateOrgRespDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CreateOrgRespDataMultiError) AllErrors() []error { return m }
+
+// CreateOrgRespDataValidationError is the validation error returned by
+// CreateOrgRespData.Validate if the designated constraints aren't met.
+type CreateOrgRespDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateOrgRespDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateOrgRespDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateOrgRespDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateOrgRespDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateOrgRespDataValidationError) ErrorName() string {
+	return "CreateOrgRespDataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateOrgRespDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateOrgRespData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateOrgRespDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateOrgRespDataValidationError{}
+
+// Validate checks the field values on AddEmployeeReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *AddEmployeeReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddEmployeeReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in AddEmployeeReqMultiError,
+// or nil if none found.
+func (m *AddEmployeeReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddEmployeeReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetOperatorUid() <= 0 {
+		err := AddEmployeeReqValidationError{
+			field:  "OperatorUid",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetOrgId() <= 0 {
+		err := AddEmployeeReqValidationError{
+			field:  "OrgId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetEmployeeUid() <= 0 {
+		err := AddEmployeeReqValidationError{
+			field:  "EmployeeUid",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetEmployeeName()) < 1 {
+		err := AddEmployeeReqValidationError{
+			field:  "EmployeeName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if _, ok := _AddEmployeeReq_EmployeeRole_NotInLookup[m.GetEmployeeRole()]; ok {
+		err := AddEmployeeReqValidationError{
+			field:  "EmployeeRole",
+			reason: "value must not be in list [UNSPECIFIED]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetEmployeeAvatar() != "" {
+
+	}
+
+	if m.GetEmployeePhone() != "" {
+
+	}
+
+	if m.GetEmployeeEmail() != "" {
+
+	}
+
+	if len(errors) > 0 {
+		return AddEmployeeReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddEmployeeReqMultiError is an error wrapping multiple validation errors
+// returned by AddEmployeeReq.ValidateAll() if the designated constraints
+// aren't met.
+type AddEmployeeReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddEmployeeReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddEmployeeReqMultiError) AllErrors() []error { return m }
+
+// AddEmployeeReqValidationError is the validation error returned by
+// AddEmployeeReq.Validate if the designated constraints aren't met.
+type AddEmployeeReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddEmployeeReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddEmployeeReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddEmployeeReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddEmployeeReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddEmployeeReqValidationError) ErrorName() string { return "AddEmployeeReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AddEmployeeReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddEmployeeReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddEmployeeReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddEmployeeReqValidationError{}
+
+var _AddEmployeeReq_EmployeeRole_NotInLookup = map[enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus]struct{}{
+	0: {},
+}
+
+// Validate checks the field values on AddEmployeeResp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *AddEmployeeResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddEmployeeResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddEmployeeRespMultiError, or nil if none found.
+func (m *AddEmployeeResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddEmployeeResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, AddEmployeeRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, AddEmployeeRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AddEmployeeRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return AddEmployeeRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddEmployeeRespMultiError is an error wrapping multiple validation errors
+// returned by AddEmployeeResp.ValidateAll() if the designated constraints
+// aren't met.
+type AddEmployeeRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddEmployeeRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddEmployeeRespMultiError) AllErrors() []error { return m }
+
+// AddEmployeeRespValidationError is the validation error returned by
+// AddEmployeeResp.Validate if the designated constraints aren't met.
+type AddEmployeeRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddEmployeeRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddEmployeeRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddEmployeeRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddEmployeeRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddEmployeeRespValidationError) ErrorName() string { return "AddEmployeeRespValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AddEmployeeRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddEmployeeResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddEmployeeRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddEmployeeRespValidationError{}
+
+// Validate checks the field values on AddEmployeeRespData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddEmployeeRespData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddEmployeeRespData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddEmployeeRespDataMultiError, or nil if none found.
+func (m *AddEmployeeRespData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddEmployeeRespData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for EmployeeId
+
+	// no validation rules for EmployeeName
+
+	// no validation rules for EmployeeAvatar
+
+	if _, ok := _AddEmployeeRespData_EmployeeRole_NotInLookup[m.GetEmployeeRole()]; ok {
+		err := AddEmployeeRespDataValidationError{
+			field:  "EmployeeRole",
+			reason: "value must not be in list [UNSPECIFIED]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return AddEmployeeRespDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddEmployeeRespDataMultiError is an error wrapping multiple validation
+// errors returned by AddEmployeeRespData.ValidateAll() if the designated
+// constraints aren't met.
+type AddEmployeeRespDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddEmployeeRespDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddEmployeeRespDataMultiError) AllErrors() []error { return m }
+
+// AddEmployeeRespDataValidationError is the validation error returned by
+// AddEmployeeRespData.Validate if the designated constraints aren't met.
+type AddEmployeeRespDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddEmployeeRespDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddEmployeeRespDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddEmployeeRespDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddEmployeeRespDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddEmployeeRespDataValidationError) ErrorName() string {
+	return "AddEmployeeRespDataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddEmployeeRespDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddEmployeeRespData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddEmployeeRespDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddEmployeeRespDataValidationError{}
+
+var _AddEmployeeRespData_EmployeeRole_NotInLookup = map[enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus]struct{}{
+	0: {},
+}

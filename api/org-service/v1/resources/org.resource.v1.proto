@@ -69,7 +69,7 @@ message CreateOrgRespData {
 }
 
 message AddEmployeeReq {
-  uint64 operator_id = 100 [(validate.rules).uint64.gt = 0];  // 操作人ID
+  uint64 operator_uid = 100 [(validate.rules).uint64.gt = 0];  // 操作人ID
 
   uint64 org_id                                                             = 1 [(validate.rules).uint64.gt = 0];               // 组织ID
   uint64 employee_uid                                                       = 2 [(validate.rules).uint64.gt = 0];               // 成员ID

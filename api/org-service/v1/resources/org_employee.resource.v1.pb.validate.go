@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole(0)
 )
 
 // Validate checks the field values on OrgEmployee with the rules defined in
@@ -71,7 +75,7 @@ func (m *OrgEmployee) validate(all bool) error {
 
 	// no validation rules for OrgId
 
-	// no validation rules for OrgName
+	// no validation rules for EmployeeName
 
 	// no validation rules for EmployeeAvatar
 
