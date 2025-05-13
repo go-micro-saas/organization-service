@@ -10,25 +10,45 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/biz/biz"
+	"github.com/go-micro-saas/organization-service/app/org-service/internal/conf"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/data"
+	"github.com/go-micro-saas/organization-service/app/org-service/internal/service/dto"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/service/service"
+	"github.com/go-micro-saas/service-api/app/snowflake-service"
 	"github.com/ikaiguang/go-srv-kit/service/cleanup"
 	"github.com/ikaiguang/go-srv-kit/service/setup"
 )
 
 // Injectors from wire.go:
 
-func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, gs *grpc.Server) (cleanuputil.CleanupManager, error) {
+func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, gs *grpc.Server) (cleanuputil.CleanupManager, func(), error) {
 	logger, err := setuputil.GetLogger(launcherManager)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
+	}
+	serviceAPIManager, err := setuputil.GetServiceAPIManager(launcherManager)
+	if err != nil {
+		return nil, nil, err
+	}
+	serviceConfig := conf.GetServiceConfig()
+	getNodeIdReq, err := dto.ToPbGetNodeIdReq(serviceConfig)
+	if err != nil {
+		return nil, nil, err
+	}
+	v := snowflakeapi.DefaultOptions(logger)
+	snowflake, cleanup, err := snowflakeapi.GetSingletonIDGeneratorByHTTPAPI(serviceAPIManager, getNodeIdReq, v...)
+	if err != nil {
+		return nil, nil, err
 	}
 	orgDataRepo := data.NewOrgData(logger)
-	orgBizRepo := biz.NewOrgBiz(logger, orgDataRepo)
+	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgDataRepo)
 	srvOrgV1Server := service.NewOrgV1Service(logger, orgBizRepo)
 	cleanupManager, err := service.RegisterServices(hs, gs, srvOrgV1Server)
 	if err != nil {
-		return nil, err
+		cleanup()
+		return nil, nil, err
 	}
-	return cleanupManager, nil
+	return cleanupManager, func() {
+		cleanup()
+	}, nil
 }

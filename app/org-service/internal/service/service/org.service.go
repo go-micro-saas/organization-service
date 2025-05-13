@@ -34,3 +34,11 @@ func (s *orgV1Service) Ping(ctx context.Context, req *resourcev1.PingReq) (*reso
 		Data: dto.OrgDto.ToPbTestRespData(reply.Message),
 	}, nil
 }
+
+func (s *orgV1Service) CreateOrg(ctx context.Context, req *resourcev1.CreateOrgReq) (*resourcev1.CreateOrgResp, error) {
+	return s.UnimplementedSrvOrgV1Server.CreateOrg(ctx, req)
+}
+
+func (s *orgV1Service) AddEmployee(ctx context.Context, req *resourcev1.AddEmployeeReq) (*resourcev1.AddEmployeeResp, error) {
+	return s.UnimplementedSrvOrgV1Server.AddEmployee(ctx, req)
+}

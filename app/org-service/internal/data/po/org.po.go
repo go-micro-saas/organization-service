@@ -32,3 +32,26 @@ type Org struct {
 	OrgZipCode      string                         `gorm:"column:org_zip_code" json:"org_zip_code"`           // 组织地址邮编
 	OrgCreatorId    uint64                         `gorm:"column:org_creator_id" json:"org_creator_id"`       // 组织创建者
 }
+
+func DefaultOrg() *Org {
+	dataModel := &Org{
+		Id:              0,
+		CreatedTime:     time.Now(),
+		UpdatedTime:     time.Now(),
+		DeletedTime:     0,
+		OrgId:           0,
+		OrgName:         "",
+		OrgAvatar:       "",
+		OrgContactName:  "",
+		OrgContactPhone: "",
+		OrgContactEmail: "",
+		OrgType:         enumv1.OrgTypeEnum_STANDARD,
+		OrgStatus:       enumv1.OrgStatusEnum_ENABLE,
+		OrgIndustryId:   0,
+		OrgScaleId:      0,
+		OrgAddress:      "",
+		OrgZipCode:      "",
+		OrgCreatorId:    0,
+	}
+	return dataModel
+}

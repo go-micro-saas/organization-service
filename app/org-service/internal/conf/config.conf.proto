@@ -11,7 +11,14 @@ import "validate/validate.proto";
 
 message ServiceConfig {
   message OrgService {
-    string key = 1 [(validate.rules).string = { ignore_empty: true }];
+    // Snowflake nodeid for snowflake
+    message Snowflake {
+      string instance_id           = 1 [(validate.rules).string = { min_len: 1 }];
+      string instance_name         = 2;
+      map<string, string> metadata = 3;
+    }
+
+    Snowflake snowflake = 1;
   }
   OrgService org_service = 1;
 }
