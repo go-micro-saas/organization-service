@@ -1,10 +1,20 @@
 package dto
 
 import (
+	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/conf"
 	nodeidresourcev1 "github.com/go-micro-saas/service-api/api/nodeid-service/v1/resources"
+	snowflakeapi "github.com/go-micro-saas/service-api/app/snowflake-service"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 )
+
+func GetNodeIDOptions(logger log.Logger, cfg *conf.ServiceConfig) []snowflakeapi.Option {
+	opts := snowflakeapi.DefaultOptions(logger)
+	if cfg.GetOrgService().GetSnowflake().GetEnable() {
+		opts = append(opts, snowflakeapi.WithMustGetNodeIdFromAPI(true))
+	}
+	return opts
+}
 
 func ToPbGetNodeIdReq(cfg *conf.ServiceConfig) (*nodeidresourcev1.GetNodeIdReq, error) {
 	snowflakeConf := cfg.GetOrgService().GetSnowflake()

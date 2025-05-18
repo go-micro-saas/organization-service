@@ -24,9 +24,8 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 		setuputil.GetServiceAPIManager,
 		// conf
 		conf.GetServiceConfig,
-		dto.ToPbGetNodeIdReq,
 		// idGenerator
-		snowflakeapi.DefaultOptions, snowflakeapi.GetSingletonIDGeneratorByHTTPAPI,
+		dto.ToPbGetNodeIdReq, dto.GetNodeIDOptions, snowflakeapi.GetSingletonIDGeneratorByHTTPAPI,
 		// data
 		data.NewOrgData,
 		// biz

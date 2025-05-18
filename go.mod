@@ -5,7 +5,7 @@ go 1.22
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.2.1
 	github.com/go-kratos/kratos/v2 v2.8.4
-	github.com/go-micro-saas/service-api v0.0.16
+	github.com/go-micro-saas/service-api v0.0.17
 	github.com/google/wire v0.6.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/ikaiguang/go-srv-kit v0.3.36

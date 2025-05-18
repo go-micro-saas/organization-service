@@ -318,6 +318,8 @@ func (m *ServiceConfig_OrgService_Snowflake) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Enable
+
 	if utf8.RuneCountInString(m.GetInstanceId()) < 1 {
 		err := ServiceConfig_OrgService_SnowflakeValidationError{
 			field:  "InstanceId",
