@@ -6,5 +6,5 @@ import (
 )
 
 type OrgBizRepo interface {
-	HelloWorld(ctx context.Context, param *bo.HelloWorldParam) (*bo.HelloWorldReply, error)
+	CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.CreateOrgReply, error)
 }

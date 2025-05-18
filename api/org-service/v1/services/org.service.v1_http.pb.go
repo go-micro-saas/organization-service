@@ -22,11 +22,13 @@ const _ = http.SupportPackageIsVersion1
 
 const OperationSrvOrgV1AddEmployee = "/saas.api.org.servicev1.SrvOrgV1/AddEmployee"
 const OperationSrvOrgV1CreateOrg = "/saas.api.org.servicev1.SrvOrgV1/CreateOrg"
+const OperationSrvOrgV1OnlyCreateOrg = "/saas.api.org.servicev1.SrvOrgV1/OnlyCreateOrg"
 const OperationSrvOrgV1Ping = "/saas.api.org.servicev1.SrvOrgV1/Ping"
 
 type SrvOrgV1HTTPServer interface {
 	AddEmployee(context.Context, *resources.AddEmployeeReq) (*resources.AddEmployeeResp, error)
 	CreateOrg(context.Context, *resources.CreateOrgReq) (*resources.CreateOrgResp, error)
+	OnlyCreateOrg(context.Context, *resources.OnlyCreateOrgReq) (*resources.CreateOrgResp, error)
 	// Ping Ping ping
 	Ping(context.Context, *resources.PingReq) (*resources.PingResp, error)
 }
@@ -35,6 +37,7 @@ func RegisterSrvOrgV1HTTPServer(s *http.Server, srv SrvOrgV1HTTPServer) {
 	r := s.Route("/")
 	r.GET("/api/v1/org/ping", _SrvOrgV1_Ping0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/create", _SrvOrgV1_CreateOrg0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/only-create", _SrvOrgV1_OnlyCreateOrg0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/add-employee", _SrvOrgV1_AddEmployee0_HTTP_Handler(srv))
 }
 
@@ -79,6 +82,28 @@ func _SrvOrgV1_CreateOrg0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Con
 	}
 }
 
+func _SrvOrgV1_OnlyCreateOrg0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.OnlyCreateOrgReq
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1OnlyCreateOrg)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.OnlyCreateOrg(ctx, req.(*resources.OnlyCreateOrgReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.CreateOrgResp)
+		return ctx.Result(200, reply)
+	}
+}
+
 func _SrvOrgV1_AddEmployee0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in resources.AddEmployeeReq
@@ -104,6 +129,7 @@ func _SrvOrgV1_AddEmployee0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.C
 type SrvOrgV1HTTPClient interface {
 	AddEmployee(ctx context.Context, req *resources.AddEmployeeReq, opts ...http.CallOption) (rsp *resources.AddEmployeeResp, err error)
 	CreateOrg(ctx context.Context, req *resources.CreateOrgReq, opts ...http.CallOption) (rsp *resources.CreateOrgResp, err error)
+	OnlyCreateOrg(ctx context.Context, req *resources.OnlyCreateOrgReq, opts ...http.CallOption) (rsp *resources.CreateOrgResp, err error)
 	Ping(ctx context.Context, req *resources.PingReq, opts ...http.CallOption) (rsp *resources.PingResp, err error)
 }
 
@@ -133,6 +159,19 @@ func (c *SrvOrgV1HTTPClientImpl) CreateOrg(ctx context.Context, in *resources.Cr
 	pattern := "/api/v1/org/create"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationSrvOrgV1CreateOrg))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) OnlyCreateOrg(ctx context.Context, in *resources.OnlyCreateOrgReq, opts ...http.CallOption) (*resources.CreateOrgResp, error) {
+	var out resources.CreateOrgResp
+	pattern := "/api/v1/org/only-create"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationSrvOrgV1OnlyCreateOrg))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

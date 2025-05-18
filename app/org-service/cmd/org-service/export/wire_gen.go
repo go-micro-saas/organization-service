@@ -40,8 +40,14 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 	if err != nil {
 		return nil, nil, err
 	}
-	orgDataRepo := data.NewOrgData(logger)
-	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgDataRepo)
+	db, err := setuputil.GetRecommendDBConn(launcherManager)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	orgRepo := data.NewOrgRepo(db)
+	orgEmployeeRepo := data.NewOrgEmployeeRepo(db)
+	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgRepo, orgEmployeeRepo)
 	srvOrgV1Server := service.NewOrgV1Service(logger, orgBizRepo)
 	cleanupManager, err := service.RegisterServices(hs, gs, srvOrgV1Server)
 	if err != nil {

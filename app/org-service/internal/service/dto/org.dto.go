@@ -25,3 +25,39 @@ func (s *orgDto) ToPbTestRespData(msg string) *resourcev1.PingRespData {
 
 	return res
 }
+
+func (s *orgDto) ToBoCreateOrgParam(req *resourcev1.CreateOrgReq) *bo.CreateOrgParam {
+	res := &bo.CreateOrgParam{
+		CreatorID:          req.CreatorId,
+		CreatorName:        req.CreatorName,
+		CreatorAvatar:      req.CreatorAvatar,
+		OrgName:            req.OrgName,
+		OrgAvatar:          req.OrgAvatar,
+		OrgType:            req.OrgType,
+		SkipCreateEmployee: false,
+	}
+	return res
+}
+
+func (s *orgDto) ToBoCreateOrgParam2(req *resourcev1.OnlyCreateOrgReq) *bo.CreateOrgParam {
+	res := &bo.CreateOrgParam{
+		CreatorID:          req.CreatorId,
+		CreatorName:        "",
+		CreatorAvatar:      "",
+		OrgName:            req.OrgName,
+		OrgAvatar:          req.OrgAvatar,
+		OrgType:            req.OrgType,
+		SkipCreateEmployee: true,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbCreateOrgRespData(dataModel *bo.CreateOrgReply) *resourcev1.CreateOrgRespData {
+	res := &resourcev1.CreateOrgRespData{
+		OrgId:     dataModel.OrgId,
+		OrgName:   dataModel.OrgName,
+		OrgAvatar: dataModel.OrgAvatar,
+		OrgType:   dataModel.OrgType,
+	}
+	return res
+}

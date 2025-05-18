@@ -4,6 +4,8 @@ package po
 
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
+	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
+	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	datatypes "gorm.io/datatypes"
 	time "time"
 )
@@ -54,4 +56,14 @@ func DefaultOrg() *Org {
 		OrgCreatorId:    0,
 	}
 	return dataModel
+}
+
+func DefaultOrgWithID(idGenerator idpkg.Snowflake) (dataModel *Org, err error) {
+	dataModel = DefaultOrg()
+	dataModel.OrgId, err = idGenerator.NextID()
+	if err != nil {
+		err = errorpkg.ErrorInternalServer(err.Error())
+		return dataModel, err
+	}
+	return dataModel, err
 }

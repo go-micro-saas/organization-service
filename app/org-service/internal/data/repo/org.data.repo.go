@@ -13,6 +13,7 @@ import (
 type OrgRepo interface {
 	NewTransaction(ctx context.Context, opts ...*sql.TxOptions) gormpkg.TransactionInterface
 	Create(ctx context.Context, dataModel *po.Org) error
+	CreateWithTransaction(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.Org) (err error)
 	ExistCreate(ctx context.Context, dataModel *po.Org) (anotherModel *po.Org, isNotFound bool, err error)
 	CreateInBatches(ctx context.Context, dataModels []*po.Org, batchSize int) error
 	Insert(ctx context.Context, dataModels []*po.Org) error

@@ -4,6 +4,8 @@ package po
 
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
+	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
+	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	datatypes "gorm.io/datatypes"
 	time "time"
 )
@@ -29,4 +31,35 @@ type OrgEmployee struct {
 	EmployeeStatus  enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus `gorm:"column:employee_status" json:"employee_status"`     // 状态；1：ENABLE，2：DISABLE，3：DELETED
 	InviterRecordId uint64                                         `gorm:"column:inviter_record_id" json:"inviter_record_id"` // 邀请记录ID
 	InviterUserId   uint64                                         `gorm:"column:inviter_user_id" json:"inviter_user_id"`     // 邀请者ID
+}
+
+func DefaultOrgEmployee() *OrgEmployee {
+	res := &OrgEmployee{
+		Id:              0,
+		CreatedTime:     time.Now(),
+		UpdatedTime:     time.Now(),
+		DeletedTime:     0,
+		EmployeeId:      0,
+		UserId:          0,
+		OrgId:           0,
+		EmployeeName:    "",
+		EmployeeAvatar:  "",
+		EmployeePhone:   "",
+		EmployeeEmail:   "",
+		EmployeeRole:    enumv1.OrgEmployeeRoleEnum_NORMAL,
+		EmployeeStatus:  enumv1.OrgEmployeeStatusEnum_ENABLE,
+		InviterRecordId: 0,
+		InviterUserId:   0,
+	}
+	return res
+}
+
+func DefaultOrgEmployeeWithID(idGenerator idpkg.Snowflake) (dataModel *OrgEmployee, err error) {
+	dataModel = DefaultOrgEmployee()
+	dataModel.EmployeeId, err = idGenerator.NextID()
+	if err != nil {
+		err = errorpkg.ErrorInternalServer(err.Error())
+		return dataModel, err
+	}
+	return dataModel, err
 }

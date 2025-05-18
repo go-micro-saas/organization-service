@@ -25,6 +25,12 @@ service SrvOrgV1 {
       body: "*"
     };
   }
+  rpc OnlyCreateOrg(resourcev1.OnlyCreateOrgReq) returns (resourcev1.CreateOrgResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/only-create"
+      body: "*"
+    };
+  }
   rpc AddEmployee(resourcev1.AddEmployeeReq) returns (resourcev1.AddEmployeeResp) {
     option (google.api.http) = {
       post: "/api/v1/org/add-employee"

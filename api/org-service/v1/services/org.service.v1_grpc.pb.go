@@ -20,9 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SrvOrgV1_Ping_FullMethodName        = "/saas.api.org.servicev1.SrvOrgV1/Ping"
-	SrvOrgV1_CreateOrg_FullMethodName   = "/saas.api.org.servicev1.SrvOrgV1/CreateOrg"
-	SrvOrgV1_AddEmployee_FullMethodName = "/saas.api.org.servicev1.SrvOrgV1/AddEmployee"
+	SrvOrgV1_Ping_FullMethodName          = "/saas.api.org.servicev1.SrvOrgV1/Ping"
+	SrvOrgV1_CreateOrg_FullMethodName     = "/saas.api.org.servicev1.SrvOrgV1/CreateOrg"
+	SrvOrgV1_OnlyCreateOrg_FullMethodName = "/saas.api.org.servicev1.SrvOrgV1/OnlyCreateOrg"
+	SrvOrgV1_AddEmployee_FullMethodName   = "/saas.api.org.servicev1.SrvOrgV1/AddEmployee"
 )
 
 // SrvOrgV1Client is the client API for SrvOrgV1 service.
@@ -34,6 +35,7 @@ type SrvOrgV1Client interface {
 	// Ping ping
 	Ping(ctx context.Context, in *resources.PingReq, opts ...grpc.CallOption) (*resources.PingResp, error)
 	CreateOrg(ctx context.Context, in *resources.CreateOrgReq, opts ...grpc.CallOption) (*resources.CreateOrgResp, error)
+	OnlyCreateOrg(ctx context.Context, in *resources.OnlyCreateOrgReq, opts ...grpc.CallOption) (*resources.CreateOrgResp, error)
 	AddEmployee(ctx context.Context, in *resources.AddEmployeeReq, opts ...grpc.CallOption) (*resources.AddEmployeeResp, error)
 }
 
@@ -65,6 +67,16 @@ func (c *srvOrgV1Client) CreateOrg(ctx context.Context, in *resources.CreateOrgR
 	return out, nil
 }
 
+func (c *srvOrgV1Client) OnlyCreateOrg(ctx context.Context, in *resources.OnlyCreateOrgReq, opts ...grpc.CallOption) (*resources.CreateOrgResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.CreateOrgResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_OnlyCreateOrg_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *srvOrgV1Client) AddEmployee(ctx context.Context, in *resources.AddEmployeeReq, opts ...grpc.CallOption) (*resources.AddEmployeeResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(resources.AddEmployeeResp)
@@ -84,6 +96,7 @@ type SrvOrgV1Server interface {
 	// Ping ping
 	Ping(context.Context, *resources.PingReq) (*resources.PingResp, error)
 	CreateOrg(context.Context, *resources.CreateOrgReq) (*resources.CreateOrgResp, error)
+	OnlyCreateOrg(context.Context, *resources.OnlyCreateOrgReq) (*resources.CreateOrgResp, error)
 	AddEmployee(context.Context, *resources.AddEmployeeReq) (*resources.AddEmployeeResp, error)
 	mustEmbedUnimplementedSrvOrgV1Server()
 }
@@ -100,6 +113,9 @@ func (UnimplementedSrvOrgV1Server) Ping(context.Context, *resources.PingReq) (*r
 }
 func (UnimplementedSrvOrgV1Server) CreateOrg(context.Context, *resources.CreateOrgReq) (*resources.CreateOrgResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrg not implemented")
+}
+func (UnimplementedSrvOrgV1Server) OnlyCreateOrg(context.Context, *resources.OnlyCreateOrgReq) (*resources.CreateOrgResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OnlyCreateOrg not implemented")
 }
 func (UnimplementedSrvOrgV1Server) AddEmployee(context.Context, *resources.AddEmployeeReq) (*resources.AddEmployeeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddEmployee not implemented")
@@ -161,6 +177,24 @@ func _SrvOrgV1_CreateOrg_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SrvOrgV1_OnlyCreateOrg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.OnlyCreateOrgReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).OnlyCreateOrg(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_OnlyCreateOrg_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).OnlyCreateOrg(ctx, req.(*resources.OnlyCreateOrgReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SrvOrgV1_AddEmployee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(resources.AddEmployeeReq)
 	if err := dec(in); err != nil {
@@ -193,6 +227,10 @@ var SrvOrgV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateOrg",
 			Handler:    _SrvOrgV1_CreateOrg_Handler,
+		},
+		{
+			MethodName: "OnlyCreateOrg",
+			Handler:    _SrvOrgV1_OnlyCreateOrg_Handler,
 		},
 		{
 			MethodName: "AddEmployee",

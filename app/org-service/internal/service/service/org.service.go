@@ -25,18 +25,31 @@ func NewOrgV1Service(logger log.Logger, orgBiz bizrepos.OrgBizRepo) servicev1.Sr
 }
 
 func (s *orgV1Service) Ping(ctx context.Context, req *resourcev1.PingReq) (*resourcev1.PingResp, error) {
-	param := dto.OrgDto.ToBoHelloWorldParam(req)
-	reply, err := s.orgBiz.HelloWorld(ctx, param)
-	if err != nil {
-		return nil, err
-	}
 	return &resourcev1.PingResp{
-		Data: dto.OrgDto.ToPbTestRespData(reply.Message),
+		Data: dto.OrgDto.ToPbTestRespData(req.Message),
 	}, nil
 }
 
 func (s *orgV1Service) CreateOrg(ctx context.Context, req *resourcev1.CreateOrgReq) (*resourcev1.CreateOrgResp, error) {
-	return s.UnimplementedSrvOrgV1Server.CreateOrg(ctx, req)
+	param := dto.OrgDto.ToBoCreateOrgParam(req)
+	reply, err := s.orgBiz.CreateOrg(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.CreateOrgResp{
+		Data: dto.OrgDto.ToPbCreateOrgRespData(reply),
+	}, nil
+}
+
+func (s *orgV1Service) OnlyCreateOrg(ctx context.Context, req *resourcev1.OnlyCreateOrgReq) (*resourcev1.CreateOrgResp, error) {
+	param := dto.OrgDto.ToBoCreateOrgParam2(req)
+	reply, err := s.orgBiz.CreateOrg(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.CreateOrgResp{
+		Data: dto.OrgDto.ToPbCreateOrgRespData(reply),
+	}, nil
 }
 
 func (s *orgV1Service) AddEmployee(ctx context.Context, req *resourcev1.AddEmployeeReq) (*resourcev1.AddEmployeeResp, error) {

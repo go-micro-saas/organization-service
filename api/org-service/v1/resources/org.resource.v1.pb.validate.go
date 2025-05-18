@@ -541,6 +541,21 @@ func (m *CreateOrgReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if utf8.RuneCountInString(m.GetCreatorName()) < 1 {
+		err := CreateOrgReqValidationError{
+			field:  "CreatorName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetCreatorAvatar() != "" {
+
+	}
+
 	if utf8.RuneCountInString(m.GetOrgName()) < 1 {
 		err := CreateOrgReqValidationError{
 			field:  "OrgName",
@@ -645,6 +660,147 @@ var _ interface {
 } = CreateOrgReqValidationError{}
 
 var _CreateOrgReq_OrgType_NotInLookup = map[enumv1.OrgTypeEnum_OrgType]struct{}{
+	0: {},
+}
+
+// Validate checks the field values on OnlyCreateOrgReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *OnlyCreateOrgReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OnlyCreateOrgReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// OnlyCreateOrgReqMultiError, or nil if none found.
+func (m *OnlyCreateOrgReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OnlyCreateOrgReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetCreatorId() <= 0 {
+		err := OnlyCreateOrgReqValidationError{
+			field:  "CreatorId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetOrgName()) < 1 {
+		err := OnlyCreateOrgReqValidationError{
+			field:  "OrgName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetOrgAvatar() != "" {
+
+	}
+
+	if _, ok := _OnlyCreateOrgReq_OrgType_NotInLookup[m.GetOrgType()]; ok {
+		err := OnlyCreateOrgReqValidationError{
+			field:  "OrgType",
+			reason: "value must not be in list [UNSPECIFIED]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return OnlyCreateOrgReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// OnlyCreateOrgReqMultiError is an error wrapping multiple validation errors
+// returned by OnlyCreateOrgReq.ValidateAll() if the designated constraints
+// aren't met.
+type OnlyCreateOrgReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OnlyCreateOrgReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OnlyCreateOrgReqMultiError) AllErrors() []error { return m }
+
+// OnlyCreateOrgReqValidationError is the validation error returned by
+// OnlyCreateOrgReq.Validate if the designated constraints aren't met.
+type OnlyCreateOrgReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OnlyCreateOrgReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OnlyCreateOrgReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OnlyCreateOrgReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OnlyCreateOrgReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OnlyCreateOrgReqValidationError) ErrorName() string { return "OnlyCreateOrgReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OnlyCreateOrgReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOnlyCreateOrgReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OnlyCreateOrgReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OnlyCreateOrgReqValidationError{}
+
+var _OnlyCreateOrgReq_OrgType_NotInLookup = map[enumv1.OrgTypeEnum_OrgType]struct{}{
 	0: {},
 }
 
@@ -808,6 +964,8 @@ func (m *CreateOrgRespData) validate(all bool) error {
 	var errors []error
 
 	// no validation rules for OrgId
+
+	// no validation rules for OrgName
 
 	// no validation rules for OrgAvatar
 

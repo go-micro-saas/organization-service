@@ -56,6 +56,17 @@ func (s *orgRepo) CreateWithDBConn(ctx context.Context, dbConn *gorm.DB, dataMod
 	return s.create(ctx, dbConn, dataModel)
 }
 
+func (s *orgRepo) CreateWithTransaction(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.Org) (err error) {
+	fc := func(ctx context.Context, tx *gorm.DB) error {
+		return s.create(ctx, tx, dataModel)
+	}
+	err = tx.Do(ctx, fc)
+	if err != nil {
+		return err
+	}
+	return
+}
+
 // existCreate exist create
 func (s *orgRepo) existCreate(ctx context.Context, dbConn *gorm.DB, dataModel *po.Org) (anotherModel *po.Org, isNotFound bool, err error) {
 	anotherModel = new(po.Org)

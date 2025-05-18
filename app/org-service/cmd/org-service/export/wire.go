@@ -20,14 +20,15 @@ import (
 func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, gs *grpc.Server) (cleanuputil.CleanupManager, func(), error) {
 	panic(wire.Build(
 		setuputil.GetLogger,
-		//setuputil.GetRecommendDBConn,
+		setuputil.GetRecommendDBConn,
 		setuputil.GetServiceAPIManager,
 		// conf
 		conf.GetServiceConfig,
 		// idGenerator
 		dto.ToPbGetNodeIdReq, dto.GetNodeIDOptions, snowflakeapi.GetSingletonIDGeneratorByHTTPAPI,
 		// data
-		data.NewOrgData,
+		data.NewOrgRepo,
+		data.NewOrgEmployeeRepo,
 		// biz
 		biz.NewOrgBiz,
 		// service
