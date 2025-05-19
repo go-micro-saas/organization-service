@@ -7,6 +7,7 @@ import (
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	datatypes "gorm.io/datatypes"
+	"strconv"
 	time "time"
 )
 
@@ -21,6 +22,7 @@ type OrgEmployee struct {
 	UpdatedTime     time.Time                                      `gorm:"column:updated_time" json:"updated_time"`           // 最后修改时间
 	DeletedTime     uint64                                         `gorm:"column:deleted_time" json:"deleted_time"`           // 删除时间
 	EmployeeId      uint64                                         `gorm:"column:employee_id" json:"employee_id"`             // uuid
+	EmployeeUuid    string                                         `gorm:"column:employee_uuid" json:"employee_uuid"`         // uuid；默认orgID-employeeID；删除后设置随机uuid
 	UserId          uint64                                         `gorm:"column:user_id" json:"user_id"`                     // 用户ID
 	OrgId           uint64                                         `gorm:"column:org_id" json:"org_id"`                       // 组织ID
 	EmployeeName    string                                         `gorm:"column:employee_name" json:"employee_name"`         // 成员名称
@@ -31,6 +33,10 @@ type OrgEmployee struct {
 	EmployeeStatus  enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus `gorm:"column:employee_status" json:"employee_status"`     // 状态；1：ENABLE，2：DISABLE，3：DELETED
 	InviterRecordId uint64                                         `gorm:"column:inviter_record_id" json:"inviter_record_id"` // 邀请记录ID
 	InviterUserId   uint64                                         `gorm:"column:inviter_user_id" json:"inviter_user_id"`     // 邀请者ID
+}
+
+func (s *OrgEmployee) GenUUID() string {
+	return strconv.FormatUint(s.OrgId, 10) + "-" + strconv.FormatUint(s.UserId, 10)
 }
 
 func DefaultOrgEmployee() *OrgEmployee {

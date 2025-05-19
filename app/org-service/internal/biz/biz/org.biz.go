@@ -51,6 +51,7 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 	}
 	employeeModel.UserId = orgModel.OrgCreatorId
 	employeeModel.OrgId = orgModel.OrgId
+	employeeModel.EmployeeUuid = employeeModel.GenUUID()
 	employeeModel.EmployeeName = param.CreatorName
 	employeeModel.EmployeeAvatar = param.CreatorAvatar
 	employeeModel.EmployeeRole = enumv1.OrgEmployeeRoleEnum_CREATOR

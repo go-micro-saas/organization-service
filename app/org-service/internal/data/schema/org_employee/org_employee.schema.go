@@ -29,6 +29,7 @@ const (
 	FieldUpdatedTime     = "updated_time"
 	FieldDeletedTime     = "deleted_time"
 	FieldEmployeeId      = "employee_id"
+	FieldEmployeeUuid    = "employee_uuid"
 	FieldUserId          = "user_id"
 	FieldOrgId           = "org_id"
 	FieldEmployeeName    = "employee_name"
@@ -48,6 +49,7 @@ type OrgEmployee struct {
 	UpdatedTime     time.Time `gorm:"column:updated_time;type:time;not null;comment:最后修改时间" json:"updated_time"`
 	DeletedTime     uint64    `gorm:"column:deleted_time;index;type:uint;not null;default:0;comment:删除时间" json:"deleted_time"`
 	EmployeeId      uint64    `gorm:"column:employee_id;unique;type:uint;not null;default:0;comment:uuid" json:"employee_id"`
+	EmployeeUuid    string    `gorm:"column:employee_uuid;unique;type:string;size:255;not null;default:'';comment:uuid；默认orgID-employeeID；删除后设置随机uuid" json:"employee_uuid"`
 	UserId          uint64    `gorm:"column:user_id;index;type:uint;not null;default:0;comment:用户ID" json:"user_id"`
 	OrgId           uint64    `gorm:"column:org_id;index;type:uint;not null;default:0;comment:组织ID" json:"org_id"`
 	EmployeeName    string    `gorm:"column:employee_name;type:string;size:255;not null;default:'';comment:成员名称" json:"employee_name"`
@@ -78,24 +80,26 @@ func (s *OrgEmployee) DropTableMigrator(migrator gorm.Migrator) migrationuitl.Mi
 // TableSQL table SQL
 func (s *OrgEmployee) TableSQL() string {
 	return `
-CREATE TABLE og_org_employee (
+create table og_org_employee (
 	id bigint unsigned auto_increment comment 'ID',
-	created_time datetime(3) NOT NULL comment '创建时间',
-	updated_time datetime(3) NOT NULL comment '最后修改时间',
-	deleted_time bigint unsigned NOT NULL DEFAULT 0 comment '删除时间',
-	employee_id bigint unsigned NOT NULL DEFAULT 0 comment 'uuid',
-	user_id bigint unsigned NOT NULL DEFAULT 0 comment '用户ID',
-	org_id bigint unsigned NOT NULL DEFAULT 0 comment '组织ID',
-	employee_name varchar(255) NOT NULL DEFAULT '' comment '成员名称',
-	employee_avatar varchar(1023) NOT NULL DEFAULT '' comment '成员头像',
-	employee_phone varchar(255) NOT NULL DEFAULT '' comment '成员联系手机',
-	employee_email varchar(255) NOT NULL DEFAULT '' comment '成员联系邮箱',
-	employee_role integer unsigned NOT NULL DEFAULT 0 comment '角色；1：创建者，2：普通成员，3：管理员，4：超级管理员',
-	employee_status integer unsigned NOT NULL DEFAULT 0 comment '状态；1：ENABLE，2：DISABLE，3：DELETED',
-	inviter_record_id bigint unsigned NOT NULL DEFAULT 0 comment '邀请记录ID',
-	inviter_user_id bigint unsigned NOT NULL DEFAULT 0 comment '邀请者ID',
-	PRIMARY KEY (id),
-	UNIQUE KEY (employee_id),
+	created_time datetime(3) not null comment '创建时间',
+	updated_time datetime(3) not null comment '最后修改时间',
+	deleted_time bigint unsigned not null default 0 comment '删除时间',
+	employee_id bigint unsigned not null default 0 comment 'uuid',
+	employee_uuid varchar(255) not null default '' comment 'uuid；默认orgID-employeeID；删除后设置随机uuid',
+	user_id bigint unsigned not null default 0 comment '用户ID',
+	org_id bigint unsigned not null default 0 comment '组织ID',
+	employee_name varchar(255) not null default '' comment '成员名称',
+	employee_avatar varchar(1023) not null default '' comment '成员头像',
+	employee_phone varchar(255) not null default '' comment '成员联系手机',
+	employee_email varchar(255) not null default '' comment '成员联系邮箱',
+	employee_role integer unsigned not null default 0 comment '角色；1：创建者，2：普通成员，3：管理员，4：超级管理员',
+	employee_status integer unsigned not null default 0 comment '状态；1：ENABLE，2：DISABLE，3：DELETED',
+	inviter_record_id bigint unsigned not null default 0 comment '邀请记录ID',
+	inviter_user_id bigint unsigned not null default 0 comment '邀请者ID',
+	primary key (id),
+	unique key (employee_id),
+	unique key (employee_uuid),
 	key (user_id),
 	key (org_id),
 	key (deleted_time)
