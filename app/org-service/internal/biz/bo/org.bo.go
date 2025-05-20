@@ -88,3 +88,7 @@ func (s *AddEmployeeReply) SetByEmployee(employeeModel *po.OrgEmployee) {
 	s.EmployeeStatus = employeeModel.EmployeeStatus
 	s.EmployeeRole = employeeModel.EmployeeRole
 }
+
+type InviteEmployeeParam struct {
+	InviteID uint64
+}

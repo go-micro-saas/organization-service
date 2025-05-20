@@ -106,3 +106,23 @@ message AddEmployeeRespData {
   saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus employee_status = 6;  // 成员状态
   saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole employee_role       = 7;  // 成员角色
 }
+
+message InviteEmployeeReq {
+  uint64 invite_id = 100 [(validate.rules).uint64.gt = 0];  // 邀请ID
+}
+message InviteEmployeeResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+  InviteEmployeeRespData data  = 100;
+}
+message InviteEmployeeRespData {
+  uint64 org_id                                                               = 1;
+  uint64 user_id                                                              = 2;
+  uint64 employee_id                                                          = 3;
+  string employee_name                                                        = 4;
+  string employee_avatar                                                      = 5;
+  saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus employee_status = 6;  // 成员状态
+  saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole employee_role       = 7;  // 成员角色
+}

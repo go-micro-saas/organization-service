@@ -47,7 +47,8 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 	}
 	orgRepo := data.NewOrgRepo(db)
 	orgEmployeeRepo := data.NewOrgEmployeeRepo(db)
-	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgRepo, orgEmployeeRepo)
+	orgInviteRecordRepo := data.NewOrgInviteRecordRepo(db)
+	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgRepo, orgEmployeeRepo, orgInviteRecordRepo)
 	srvOrgV1Server := service.NewOrgV1Service(logger, orgBizRepo)
 	cleanupManager, err := service.RegisterServices(hs, gs, srvOrgV1Server)
 	if err != nil {

@@ -17,8 +17,9 @@ type orgBiz struct {
 	log         *log.Helper
 	idGenerator idpkg.Snowflake
 
-	orgData      datarepos.OrgRepo
-	employeeData datarepos.OrgEmployeeRepo
+	orgData          datarepos.OrgRepo
+	employeeData     datarepos.OrgEmployeeRepo
+	inviteRecordData datarepos.OrgInviteRecordRepo
 }
 
 func NewOrgBiz(
@@ -26,14 +27,16 @@ func NewOrgBiz(
 	idGenerator idpkg.Snowflake,
 	orgData datarepos.OrgRepo,
 	employeeData datarepos.OrgEmployeeRepo,
+	inviteRecordData datarepos.OrgInviteRecordRepo,
 ) bizrepos.OrgBizRepo {
 	logHelper := log.NewHelper(log.With(logger, "module", "test-service/biz/biz"))
 
 	return &orgBiz{
-		log:          logHelper,
-		idGenerator:  idGenerator,
-		orgData:      orgData,
-		employeeData: employeeData,
+		log:              logHelper,
+		idGenerator:      idGenerator,
+		orgData:          orgData,
+		employeeData:     employeeData,
+		inviteRecordData: inviteRecordData,
 	}
 }
 
@@ -116,6 +119,10 @@ func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*
 	res := &bo.AddEmployeeReply{}
 	res.SetByEmployee(employee)
 	return res, nil
+}
+
+func (s *orgBiz) InviteEmployee(ctx context.Context, param *bo.InviteEmployeeParam) (*bo.AddEmployeeReply, error) {
+	return nil, nil
 }
 
 func (s *orgBiz) isEmployeeExists(ctx context.Context, dataModel *po.OrgEmployee) error {

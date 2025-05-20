@@ -37,4 +37,10 @@ service SrvOrgV1 {
       body: "*"
     };
   }
+  rpc InviteEmployee(resourcev1.InviteEmployeeReq) returns (resourcev1.InviteEmployeeResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/invite-employee"
+      body: "*"
+    };
+  }
 }

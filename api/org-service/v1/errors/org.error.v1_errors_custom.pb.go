@@ -47,9 +47,9 @@ func DefaultErrorS105CannotBeOwner() *errors.Error {
 	return e
 }
 
-// 无效的操作人
+// 无效的操作员
 func DefaultErrorS105InvalidOperator() *errors.Error {
-	e := errors.New(400, ERROR_S105_INVALID_OPERATOR.String(), "无效的操作人")
+	e := errors.New(400, ERROR_S105_INVALID_OPERATOR.String(), "无效的操作员")
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_OPERATOR.Number()))}
 	return e
 }

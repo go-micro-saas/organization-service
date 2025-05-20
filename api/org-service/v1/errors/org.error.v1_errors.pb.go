@@ -42,7 +42,7 @@ func ErrorS105CannotBeOwner(format string, args ...interface{}) *errors.Error {
 	return e
 }
 
-// 无效的操作人
+// 无效的操作员
 func IsS105InvalidOperator(err error) bool {
 	if err == nil {
 		return false
@@ -51,7 +51,7 @@ func IsS105InvalidOperator(err error) bool {
 	return e.Reason == ERROR_S105_INVALID_OPERATOR.String() && e.Code == 400
 }
 
-// 无效的操作人
+// 无效的操作员
 func ErrorS105InvalidOperator(format string, args ...interface{}) *errors.Error {
 	e := errors.New(400, ERROR_S105_INVALID_OPERATOR.String(), fmt.Sprintf(format, args...))
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_OPERATOR.Number()))}

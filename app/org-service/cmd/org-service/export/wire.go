@@ -29,6 +29,7 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 		// data
 		data.NewOrgRepo,
 		data.NewOrgEmployeeRepo,
+		data.NewOrgInviteRecordRepo,
 		// biz
 		biz.NewOrgBiz,
 		// service

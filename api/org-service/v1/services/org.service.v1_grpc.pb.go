@@ -20,10 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SrvOrgV1_Ping_FullMethodName          = "/saas.api.org.servicev1.SrvOrgV1/Ping"
-	SrvOrgV1_CreateOrg_FullMethodName     = "/saas.api.org.servicev1.SrvOrgV1/CreateOrg"
-	SrvOrgV1_OnlyCreateOrg_FullMethodName = "/saas.api.org.servicev1.SrvOrgV1/OnlyCreateOrg"
-	SrvOrgV1_AddEmployee_FullMethodName   = "/saas.api.org.servicev1.SrvOrgV1/AddEmployee"
+	SrvOrgV1_Ping_FullMethodName           = "/saas.api.org.servicev1.SrvOrgV1/Ping"
+	SrvOrgV1_CreateOrg_FullMethodName      = "/saas.api.org.servicev1.SrvOrgV1/CreateOrg"
+	SrvOrgV1_OnlyCreateOrg_FullMethodName  = "/saas.api.org.servicev1.SrvOrgV1/OnlyCreateOrg"
+	SrvOrgV1_AddEmployee_FullMethodName    = "/saas.api.org.servicev1.SrvOrgV1/AddEmployee"
+	SrvOrgV1_InviteEmployee_FullMethodName = "/saas.api.org.servicev1.SrvOrgV1/InviteEmployee"
 )
 
 // SrvOrgV1Client is the client API for SrvOrgV1 service.
@@ -37,6 +38,7 @@ type SrvOrgV1Client interface {
 	CreateOrg(ctx context.Context, in *resources.CreateOrgReq, opts ...grpc.CallOption) (*resources.CreateOrgResp, error)
 	OnlyCreateOrg(ctx context.Context, in *resources.OnlyCreateOrgReq, opts ...grpc.CallOption) (*resources.CreateOrgResp, error)
 	AddEmployee(ctx context.Context, in *resources.AddEmployeeReq, opts ...grpc.CallOption) (*resources.AddEmployeeResp, error)
+	InviteEmployee(ctx context.Context, in *resources.InviteEmployeeReq, opts ...grpc.CallOption) (*resources.InviteEmployeeResp, error)
 }
 
 type srvOrgV1Client struct {
@@ -87,6 +89,16 @@ func (c *srvOrgV1Client) AddEmployee(ctx context.Context, in *resources.AddEmplo
 	return out, nil
 }
 
+func (c *srvOrgV1Client) InviteEmployee(ctx context.Context, in *resources.InviteEmployeeReq, opts ...grpc.CallOption) (*resources.InviteEmployeeResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.InviteEmployeeResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_InviteEmployee_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SrvOrgV1Server is the server API for SrvOrgV1 service.
 // All implementations must embed UnimplementedSrvOrgV1Server
 // for forward compatibility.
@@ -98,6 +110,7 @@ type SrvOrgV1Server interface {
 	CreateOrg(context.Context, *resources.CreateOrgReq) (*resources.CreateOrgResp, error)
 	OnlyCreateOrg(context.Context, *resources.OnlyCreateOrgReq) (*resources.CreateOrgResp, error)
 	AddEmployee(context.Context, *resources.AddEmployeeReq) (*resources.AddEmployeeResp, error)
+	InviteEmployee(context.Context, *resources.InviteEmployeeReq) (*resources.InviteEmployeeResp, error)
 	mustEmbedUnimplementedSrvOrgV1Server()
 }
 
@@ -119,6 +132,9 @@ func (UnimplementedSrvOrgV1Server) OnlyCreateOrg(context.Context, *resources.Onl
 }
 func (UnimplementedSrvOrgV1Server) AddEmployee(context.Context, *resources.AddEmployeeReq) (*resources.AddEmployeeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddEmployee not implemented")
+}
+func (UnimplementedSrvOrgV1Server) InviteEmployee(context.Context, *resources.InviteEmployeeReq) (*resources.InviteEmployeeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InviteEmployee not implemented")
 }
 func (UnimplementedSrvOrgV1Server) mustEmbedUnimplementedSrvOrgV1Server() {}
 func (UnimplementedSrvOrgV1Server) testEmbeddedByValue()                  {}
@@ -213,6 +229,24 @@ func _SrvOrgV1_AddEmployee_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SrvOrgV1_InviteEmployee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.InviteEmployeeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).InviteEmployee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_InviteEmployee_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).InviteEmployee(ctx, req.(*resources.InviteEmployeeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SrvOrgV1_ServiceDesc is the grpc.ServiceDesc for SrvOrgV1 service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -235,6 +269,10 @@ var SrvOrgV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddEmployee",
 			Handler:    _SrvOrgV1_AddEmployee_Handler,
+		},
+		{
+			MethodName: "InviteEmployee",
+			Handler:    _SrvOrgV1_InviteEmployee_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
