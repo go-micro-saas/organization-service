@@ -37,7 +37,7 @@ type OrgEmployee struct {
 }
 
 func (s *OrgEmployee) GenUUID() string {
-	return strconv.FormatUint(s.OrgId, 10) + "-" + strconv.FormatUint(s.UserId, 10)
+	return GenEmployeeUUID(s.OrgId, s.UserId)
 }
 
 func (s *OrgEmployee) RebuildUUID() string {
@@ -60,7 +60,15 @@ func (s *OrgEmployee) CanAddEmployee() bool {
 }
 
 func (s *OrgEmployee) IsOwner() bool {
-	return s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR
+	return IsOrgOwner(s.EmployeeRole)
+}
+
+func IsOrgOwner(employeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole) bool {
+	return employeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR
+}
+
+func GenEmployeeUUID(orgID, userID uint64) string {
+	return strconv.FormatUint(orgID, 10) + "-" + strconv.FormatUint(userID, 10)
 }
 
 func DefaultOrgEmployee() *OrgEmployee {
@@ -88,8 +96,8 @@ func DefaultOrgEmployeeWithID(idGenerator idpkg.Snowflake) (dataModel *OrgEmploy
 	dataModel = DefaultOrgEmployee()
 	dataModel.EmployeeId, err = idGenerator.NextID()
 	if err != nil {
-		err = errorpkg.ErrorInternalServer(err.Error())
-		return dataModel, err
+		e := errorpkg.ErrorInternalServer(err.Error())
+		return dataModel, errorpkg.WithStack(e)
 	}
 	return dataModel, err
 }

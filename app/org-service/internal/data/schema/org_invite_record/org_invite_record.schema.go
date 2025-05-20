@@ -29,6 +29,7 @@ const (
 	FieldUpdatedTime         = "updated_time"
 	FieldInviteId            = "invite_id"
 	FieldOrgId               = "org_id"
+	FieldInviterUserId       = "inviter_user_id"
 	FieldInviterEmployeeId   = "inviter_employee_id"
 	FieldInvitedType         = "invited_type"
 	FieldInvitedUserId       = "invited_user_id"
@@ -36,6 +37,7 @@ const (
 	FieldInvitedAccountType  = "invited_account_type"
 	FieldInvitedEmployeeRole = "invited_employee_role"
 	FieldInviteStatus        = "invite_status"
+	FieldExpireTime          = "expire_time"
 	FieldAssignEmployeeId    = "assign_employee_id"
 	FieldInviteCode          = "invite_code"
 )
@@ -47,6 +49,7 @@ type OrgInviteRecord struct {
 	UpdatedTime         time.Time `gorm:"column:updated_time;type:time;not null;comment:最后修改时间" json:"updated_time"`
 	InviteId            uint64    `gorm:"column:invite_id;unique;type:uint;not null;default:0;comment:uuid" json:"invite_id"`
 	OrgId               uint64    `gorm:"column:org_id;index;type:uint;not null;default:0;comment:组织ID" json:"org_id"`
+	InviterUserId       uint64    `gorm:"column:inviter_user_id;type:uint;not null;default:0;comment:邀请者用户ID" json:"inviter_user_id"`
 	InviterEmployeeId   uint64    `gorm:"column:inviter_employee_id;type:uint;not null;default:0;comment:邀请者成员ID" json:"inviter_employee_id"`
 	InvitedType         uint32    `gorm:"column:invited_type;type:uint;not null;default:0;comment:邀请类型：1：账号邀请，2：链接邀请" json:"invited_type"`
 	InvitedUserId       uint64    `gorm:"column:invited_user_id;type:uint;not null;default:0;comment:被邀请者用户ID" json:"invited_user_id"`
@@ -54,6 +57,7 @@ type OrgInviteRecord struct {
 	InvitedAccountType  uint32    `gorm:"column:invited_account_type;type:uint;not null;default:0;comment:被邀请者账户类型：1：手机，2：邮箱，3：微信，4：飞书，5：钉钉" json:"invited_account_type"`
 	InvitedEmployeeRole uint32    `gorm:"column:invited_employee_role;type:uint;not null;default:0;comment:角色；1：创建者，2：普通成员，3：管理员，4：超级管理员" json:"invited_employee_role"`
 	InviteStatus        uint32    `gorm:"column:invite_status;type:uint;not null;default:0;comment:状态；1：邀请中，2：已同意，3：已拒绝，4：已取消，5：已过期" json:"invite_status"`
+	ExpireTime          time.Time `gorm:"column:expire_time;type:time;not null;comment:过期时间" json:"expire_time"`
 	AssignEmployeeId    uint64    `gorm:"column:assign_employee_id;type:uint;not null;default:0;comment:分配成员ID" json:"assign_employee_id"`
 	InviteCode          string    `gorm:"column:invite_code;type:string;size:255;not null;default:'';comment:邀请码" json:"invite_code"`
 }
@@ -82,6 +86,7 @@ create table og_org_invite_record (
 	updated_time datetime(3) not null comment '最后修改时间',
 	invite_id bigint unsigned not null default 0 comment 'uuid',
 	org_id bigint unsigned not null default 0 comment '组织ID',
+	inviter_user_id bigint unsigned not null default 0 comment '邀请者用户ID',
 	inviter_employee_id bigint unsigned not null default 0 comment '邀请者成员ID',
 	invited_type integer unsigned not null default 0 comment '邀请类型：1：账号邀请，2：链接邀请',
 	invited_user_id bigint unsigned not null default 0 comment '被邀请者用户ID',
@@ -89,6 +94,7 @@ create table og_org_invite_record (
 	invited_account_type integer unsigned not null default 0 comment '被邀请者账户类型：1：手机，2：邮箱，3：微信，4：飞书，5：钉钉',
 	invited_employee_role integer unsigned not null default 0 comment '角色；1：创建者，2：普通成员，3：管理员，4：超级管理员',
 	invite_status integer unsigned not null default 0 comment '状态；1：邀请中，2：已同意，3：已拒绝，4：已取消，5：已过期',
+	expire_time datetime(3) not null comment '过期时间',
 	assign_employee_id bigint unsigned not null default 0 comment '分配成员ID',
 	invite_code varchar(255) not null default '' comment '邀请码',
 	primary key (id),

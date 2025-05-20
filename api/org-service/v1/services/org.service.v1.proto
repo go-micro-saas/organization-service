@@ -37,10 +37,28 @@ service SrvOrgV1 {
       body: "*"
     };
   }
-  rpc InviteEmployee(resourcev1.InviteEmployeeReq) returns (resourcev1.InviteEmployeeResp) {
+  rpc GenerateInviteLink(resourcev1.GenerateInviteLinkReq) returns (resourcev1.GenerateInviteLinkResp) {
     option (google.api.http) = {
-      post: "/api/v1/org/invite-employee"
+      post: "/api/v1/org/gen-invite-link"
       body: "*"
     };
   }
+  rpc CreateInviteEmployee(resourcev1.CreateInviteEmployeeReq) returns (resourcev1.CreateInviteEmployeeResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/create-invite-employee"
+      body: "*"
+    };
+  }
+  //  rpc JoinOrgByInviteLink(resourcev1.JoinOrgByInviteLinkReq) returns (resourcev1.JoinOrgByInviteLinkResp) {
+  //    option (google.api.http) = {
+  //      post: "/api/v1/org/join-by-invite-link"
+  //      body: "*"
+  //    };
+  //  }
+  //  rpc AgreeRefuseInvite(resourcev1.AgreeRefuseInviteReq) returns (resourcev1.AgreeRefuseInviteResp) {
+  //    option (google.api.http) = {
+  //      post: "/api/v1/org/agree-refuse-invite"
+  //      body: "*"
+  //    };
+  //  }
 }

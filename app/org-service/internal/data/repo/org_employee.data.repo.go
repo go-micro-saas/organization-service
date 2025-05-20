@@ -13,6 +13,7 @@ type OrgEmployeeRepo interface {
 	Create(ctx context.Context, dataModel *po.OrgEmployee) error
 	CreateWithTransaction(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.OrgEmployee) (err error)
 	ExistCreate(ctx context.Context, dataModel *po.OrgEmployee) (anotherModel *po.OrgEmployee, isNotFound bool, err error)
+	ExistCreateByEmployeeUUID(ctx context.Context, employeeUUID string) (anotherModel *po.OrgEmployee, isNotFound bool, err error)
 	CreateInBatches(ctx context.Context, dataModels []*po.OrgEmployee, batchSize int) error
 	Insert(ctx context.Context, dataModels []*po.OrgEmployee) error
 	Update(ctx context.Context, dataModel *po.OrgEmployee) error

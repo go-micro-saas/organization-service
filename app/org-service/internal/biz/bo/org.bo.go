@@ -3,6 +3,7 @@ package bo
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
+	"time"
 )
 
 type Testdata struct {
@@ -91,4 +92,20 @@ func (s *AddEmployeeReply) SetByEmployee(employeeModel *po.OrgEmployee) {
 
 type InviteEmployeeParam struct {
 	InviteID uint64
+}
+
+type GenerateInviteLinkParam struct {
+	OperatorUid uint64    // 操作人ID
+	OrgId       uint64    // 组织ID
+	ExpireTime  time.Time //
+}
+
+type GenerateInviteEmployeeParam struct {
+	OperatorUid        uint64    // 操作人ID
+	OrgId              uint64    // 组织ID
+	ExpireTime         time.Time //
+	InviteUserId       uint64
+	InviteAccount      string
+	InviteAccountType  enumv1.OrgInviteAccountTypeEnum_OrgInviteAccountType
+	InviteEmployeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole
 }

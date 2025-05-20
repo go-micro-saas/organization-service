@@ -64,10 +64,15 @@ func (s *orgEmployeeRepo) CreateWithTransaction(ctx context.Context, tx gormpkg.
 
 // existCreate exist create
 func (s *orgEmployeeRepo) existCreate(ctx context.Context, dbConn *gorm.DB, dataModel *po.OrgEmployee) (anotherModel *po.OrgEmployee, isNotFound bool, err error) {
+	return s.existCreateByEmployeeUUID(ctx, dbConn, dataModel.EmployeeUuid)
+}
+
+// existCreate exist create
+func (s *orgEmployeeRepo) existCreateByEmployeeUUID(ctx context.Context, dbConn *gorm.DB, uuid string) (anotherModel *po.OrgEmployee, isNotFound bool, err error) {
 	anotherModel = new(po.OrgEmployee)
 	err = dbConn.WithContext(ctx).
 		Table(s.OrgEmployeeSchema.TableName()).
-		Where(schemas.FieldEmployeeUuid+" = ?", dataModel.EmployeeUuid).
+		Where(schemas.FieldEmployeeUuid+" = ?", uuid).
 		First(anotherModel).Error
 	if err != nil {
 		if gormpkg.IsErrRecordNotFound(err) {
@@ -85,6 +90,10 @@ func (s *orgEmployeeRepo) existCreate(ctx context.Context, dbConn *gorm.DB, data
 // ExistCreate exist create
 func (s *orgEmployeeRepo) ExistCreate(ctx context.Context, dataModel *po.OrgEmployee) (anotherModel *po.OrgEmployee, isNotFound bool, err error) {
 	return s.existCreate(ctx, s.dbConn, dataModel)
+}
+
+func (s *orgEmployeeRepo) ExistCreateByEmployeeUUID(ctx context.Context, employeeUUID string) (anotherModel *po.OrgEmployee, isNotFound bool, err error) {
+	return s.existCreateByEmployeeUUID(ctx, s.dbConn, employeeUUID)
 }
 
 // ExistCreateWithDBConn exist create

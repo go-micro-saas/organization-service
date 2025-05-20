@@ -68,6 +68,7 @@ message OrgInviteAccountTypeEnum {
     WECHAT      = 3;  // 微信
     FIESHU      = 4;  // 飞书
     DINGTALK    = 5;  // 钉钉
+    UID         = 6;  // 用户ID
   }
 }
 

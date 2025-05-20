@@ -4,6 +4,9 @@ package po
 
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
+	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
+	randompkg "github.com/ikaiguang/go-srv-kit/kit/random"
+	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	datatypes "gorm.io/datatypes"
 	time "time"
 )
@@ -19,13 +22,47 @@ type OrgInviteRecord struct {
 	UpdatedTime         time.Time                                            `gorm:"column:updated_time" json:"updated_time"`                   // 最后修改时间
 	InviteId            uint64                                               `gorm:"column:invite_id" json:"invite_id"`                         // uuid
 	OrgId               uint64                                               `gorm:"column:org_id" json:"org_id"`                               // 组织ID
+	InviterUserId       uint64                                               `gorm:"column:inviter_user_id" json:"inviter_user_id"`             // 邀请者用户ID
 	InviterEmployeeId   uint64                                               `gorm:"column:inviter_employee_id" json:"inviter_employee_id"`     // 邀请者成员ID
-	InvitedType         uint32                                               `gorm:"column:invited_type" json:"invited_type"`                   // 邀请类型：1：账号邀请，2：链接邀请
+	InvitedType         enumv1.OrgInviteTypeEnum_OrgInviteType               `gorm:"column:invited_type" json:"invited_type"`                   // 邀请类型：1：账号邀请，2：链接邀请
 	InvitedUserId       uint64                                               `gorm:"column:invited_user_id" json:"invited_user_id"`             // 被邀请者用户ID
-	InvitedAccount      uint32                                               `gorm:"column:invited_account" json:"invited_account"`             // 被邀请者账户
+	InvitedAccount      string                                               `gorm:"column:invited_account" json:"invited_account"`             // 被邀请者账户
 	InvitedAccountType  enumv1.OrgInviteAccountTypeEnum_OrgInviteAccountType `gorm:"column:invited_account_type" json:"invited_account_type"`   // 被邀请者账户类型：1：手机，2：邮箱，3：微信，4：飞书，5：钉钉
-	InvitedEmployeeRole enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus       `gorm:"column:invited_employee_role" json:"invited_employee_role"` // 角色；1：创建者，2：普通成员，3：管理员，4：超级管理员
+	InvitedEmployeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole           `gorm:"column:invited_employee_role" json:"invited_employee_role"` // 角色；1：创建者，2：普通成员，3：管理员，4：超级管理员
 	InviteStatus        enumv1.OrgInviteStatusEnum_OrgInviteStatus           `gorm:"column:invite_status" json:"invite_status"`                 // 状态；1：邀请中，2：已同意，3：已拒绝，4：已取消，5：已过期
+	ExpireTime          time.Time                                            `gorm:"column:expire_time" json:"expire_time"`                     // 过期时间
 	AssignEmployeeId    uint64                                               `gorm:"column:assign_employee_id" json:"assign_employee_id"`       // 分配成员ID
 	InviteCode          string                                               `gorm:"column:invite_code" json:"invite_code"`                     // 邀请码
+}
+
+func DefaultInviteRecord() *OrgInviteRecord {
+	res := &OrgInviteRecord{
+		Id:                  0,
+		CreatedTime:         time.Now(),
+		UpdatedTime:         time.Now(),
+		InviteId:            0,
+		OrgId:               0,
+		InviterUserId:       0,
+		InviterEmployeeId:   0,
+		InvitedType:         enumv1.OrgInviteTypeEnum_LINK,
+		InvitedUserId:       0,
+		InvitedAccount:      "",
+		InvitedAccountType:  0,
+		InvitedEmployeeRole: enumv1.OrgEmployeeRoleEnum_NORMAL,
+		InviteStatus:        enumv1.OrgInviteStatusEnum_INVITING,
+		ExpireTime:          time.Now().AddDate(0, 0, 1),
+		AssignEmployeeId:    0,
+		InviteCode:          randompkg.AlphabetLower(6),
+	}
+	return res
+}
+
+func DefaultInviteRecordWithID(idGenerator idpkg.Snowflake) (dataModel *OrgInviteRecord, err error) {
+	dataModel = DefaultInviteRecord()
+	dataModel.InviteId, err = idGenerator.NextID()
+	if err != nil {
+		e := errorpkg.ErrorInternalServer(err.Error())
+		return dataModel, errorpkg.WithStack(e)
+	}
+	return dataModel, err
 }

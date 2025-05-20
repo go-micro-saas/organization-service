@@ -62,8 +62,8 @@ func DefaultOrgWithID(idGenerator idpkg.Snowflake) (dataModel *Org, err error) {
 	dataModel = DefaultOrg()
 	dataModel.OrgId, err = idGenerator.NextID()
 	if err != nil {
-		err = errorpkg.ErrorInternalServer(err.Error())
-		return dataModel, err
+		e := errorpkg.ErrorInternalServer(err.Error())
+		return dataModel, errorpkg.WithStack(e)
 	}
 	return dataModel, err
 }

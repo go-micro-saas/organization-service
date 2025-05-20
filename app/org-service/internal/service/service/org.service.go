@@ -62,3 +62,11 @@ func (s *orgV1Service) AddEmployee(ctx context.Context, req *resourcev1.AddEmplo
 		Data: dto.OrgDto.ToPbAddEmployeeRespData(reply),
 	}, nil
 }
+
+func (s *orgV1Service) GenerateInviteLink(ctx context.Context, req *resourcev1.GenerateInviteLinkReq) (*resourcev1.GenerateInviteLinkResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GenerateInviteLink(ctx, req)
+}
+
+func (s *orgV1Service) CreateInviteEmployee(ctx context.Context, req *resourcev1.CreateInviteEmployeeReq) (*resourcev1.CreateInviteEmployeeResp, error) {
+	return s.UnimplementedSrvOrgV1Server.CreateInviteEmployee(ctx, req)
+}

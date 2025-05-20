@@ -96,11 +96,11 @@ func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*
 	)
 	employee.EmployeeId, err = s.idGenerator.NextID()
 	if err != nil {
-		err = errorpkg.ErrorInternalServer(err.Error())
-		return nil, err
+		e := errorpkg.ErrorInternalServer(err.Error())
+		return nil, errorpkg.WithStack(e)
 	}
 
-	if err = s.cannotBeOwner(employee); err != nil {
+	if err = s.cannotBeOwner(employee.EmployeeRole); err != nil {
 		return nil, err
 	}
 	if _, err = s.canAddEmployee(ctx, param); err != nil {
@@ -126,7 +126,11 @@ func (s *orgBiz) InviteEmployee(ctx context.Context, param *bo.InviteEmployeePar
 }
 
 func (s *orgBiz) isEmployeeExists(ctx context.Context, dataModel *po.OrgEmployee) error {
-	_, isNotFound, err := s.employeeData.ExistCreate(ctx, dataModel)
+	return s.isEmployeeExistsByEmployeeUUID(ctx, dataModel.EmployeeUuid)
+}
+
+func (s *orgBiz) isEmployeeExistsByEmployeeUUID(ctx context.Context, employeeUUID string) error {
+	_, isNotFound, err := s.employeeData.ExistCreateByEmployeeUUID(ctx, employeeUUID)
 	if err != nil {
 		return err
 	}
@@ -137,8 +141,8 @@ func (s *orgBiz) isEmployeeExists(ctx context.Context, dataModel *po.OrgEmployee
 	return nil
 }
 
-func (s *orgBiz) cannotBeOwner(employee *po.OrgEmployee) error {
-	if employee.IsOwner() {
+func (s *orgBiz) cannotBeOwner(employeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole) error {
+	if po.IsOrgOwner(employeeRole) {
 		e := errorv1.DefaultErrorS105CannotBeOwner()
 		return errorpkg.WithStack(e)
 	}
@@ -146,7 +150,7 @@ func (s *orgBiz) cannotBeOwner(employee *po.OrgEmployee) error {
 }
 
 func (s *orgBiz) canAddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*po.OrgEmployee, error) {
-	employee, err := s.canInviteEmployee(ctx, param)
+	employee, err := s.canInviteEmployee(ctx, param.OperatorUid, param.OrgId)
 	if err != nil {
 		return nil, err
 	}
@@ -157,10 +161,10 @@ func (s *orgBiz) canAddEmployee(ctx context.Context, param *bo.AddEmployeeParam)
 	return employee, nil
 }
 
-func (s *orgBiz) canInviteEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*po.OrgEmployee, error) {
+func (s *orgBiz) canInviteEmployee(ctx context.Context, operatorUid, orgID uint64) (*po.OrgEmployee, error) {
 	queryParam := &po.QueryEmployeeParam{
-		OrgID:      param.OrgId,
-		UserID:     param.OperatorUid,
+		OrgID:      orgID,
+		UserID:     operatorUid,
 		EmployeeId: 0,
 	}
 	employee, isNotFound, err := s.employeeData.QueryOneByUserID(ctx, queryParam)
@@ -168,10 +172,6 @@ func (s *orgBiz) canInviteEmployee(ctx context.Context, param *bo.AddEmployeePar
 		return nil, err
 	}
 	if isNotFound {
-		e := errorv1.DefaultErrorS105InvalidOperator()
-		return nil, errorpkg.WithStack(e)
-	}
-	if !employee.IsSameOrg(param.OrgId) {
 		e := errorv1.DefaultErrorS105InvalidOperator()
 		return nil, errorpkg.WithStack(e)
 	}
