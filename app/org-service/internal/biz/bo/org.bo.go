@@ -53,10 +53,6 @@ type AddEmployeeParam struct {
 	UserEmail    string                                     // 成员邮箱
 }
 
-func (s *AddEmployeeParam) IsOwner() bool {
-	return s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR
-}
-
 func (s *AddEmployeeParam) NewEmployeeModel() *po.OrgEmployee {
 	employeeModel := po.DefaultOrgEmployee()
 	employeeModel.EmployeeId = 0

@@ -87,10 +87,6 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 }
 
 func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*bo.AddEmployeeReply, error) {
-	if param.IsOwner() {
-		e := errorv1.ErrorS105CannotBeOwner("不能设置为组织的所有者")
-		return nil, errorpkg.WithStack(e)
-	}
 	var (
 		employee = param.NewEmployeeModel()
 		err      error
@@ -98,6 +94,10 @@ func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*
 	employee.EmployeeId, err = s.idGenerator.NextID()
 	if err != nil {
 		err = errorpkg.ErrorInternalServer(err.Error())
+		return nil, err
+	}
+
+	if err = s.cannotBeOwner(employee); err != nil {
 		return nil, err
 	}
 	if _, err = s.canAddEmployee(ctx, param); err != nil {
@@ -130,6 +130,14 @@ func (s *orgBiz) isEmployeeExists(ctx context.Context, dataModel *po.OrgEmployee
 	return nil
 }
 
+func (s *orgBiz) cannotBeOwner(employee *po.OrgEmployee) error {
+	if employee.IsOwner() {
+		e := errorv1.DefaultErrorS105CannotBeOwner()
+		return errorpkg.WithStack(e)
+	}
+	return nil
+}
+
 func (s *orgBiz) canAddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*po.OrgEmployee, error) {
 	employee, err := s.canInviteEmployee(ctx, param)
 	if err != nil {
@@ -145,7 +153,7 @@ func (s *orgBiz) canAddEmployee(ctx context.Context, param *bo.AddEmployeeParam)
 func (s *orgBiz) canInviteEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*po.OrgEmployee, error) {
 	queryParam := &po.QueryEmployeeParam{
 		OrgID:      param.OrgId,
-		UserID:     param.UserId,
+		UserID:     param.OperatorUid,
 		EmployeeId: 0,
 	}
 	employee, isNotFound, err := s.employeeData.QueryOneByUserID(ctx, queryParam)

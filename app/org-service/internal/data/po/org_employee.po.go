@@ -59,6 +59,10 @@ func (s *OrgEmployee) CanAddEmployee() bool {
 		s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_SUPER
 }
 
+func (s *OrgEmployee) IsOwner() bool {
+	return s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR
+}
+
 func DefaultOrgEmployee() *OrgEmployee {
 	res := &OrgEmployee{
 		Id:              0,
