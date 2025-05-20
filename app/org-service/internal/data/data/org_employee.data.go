@@ -67,7 +67,7 @@ func (s *orgEmployeeRepo) existCreate(ctx context.Context, dbConn *gorm.DB, data
 	anotherModel = new(po.OrgEmployee)
 	err = dbConn.WithContext(ctx).
 		Table(s.OrgEmployeeSchema.TableName()).
-		Where(schemas.FieldId+" = ?", dataModel.Id).
+		Where(schemas.FieldEmployeeUuid+" = ?", dataModel.EmployeeUuid).
 		First(anotherModel).Error
 	if err != nil {
 		if gormpkg.IsErrRecordNotFound(err) {
@@ -200,6 +200,46 @@ func (s *orgEmployeeRepo) QueryOneById(ctx context.Context, id interface{}) (dat
 // QueryOneByIdWithDBConn query one by id
 func (s *orgEmployeeRepo) QueryOneByIdWithDBConn(ctx context.Context, dbConn *gorm.DB, id interface{}) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
 	return s.queryOneById(ctx, dbConn, id)
+}
+
+func (s *orgEmployeeRepo) QueryOneByUserID(ctx context.Context, param *po.QueryEmployeeParam) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
+	dataModel = new(po.OrgEmployee)
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldOrgId+" = ?", param.OrgID).
+		Where(schemas.FieldUserId+" = ?", param.UserID).
+		Where(schemas.FieldDeletedTime+" =?", 0).
+		First(dataModel).Error
+	if err != nil {
+		if gormpkg.IsErrRecordNotFound(err) {
+			err = nil
+			isNotFound = true
+		} else {
+			e := errorpkg.ErrorInternalServer("")
+			err = errorpkg.Wrap(e, err)
+		}
+		return
+	}
+	return
+}
+
+func (s *orgEmployeeRepo) QueryOneByEmployeeID(ctx context.Context, employeeID uint64) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
+	dataModel = new(po.OrgEmployee)
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldEmployeeId+" = ?", employeeID).
+		First(dataModel).Error
+	if err != nil {
+		if gormpkg.IsErrRecordNotFound(err) {
+			err = nil
+			isNotFound = true
+		} else {
+			e := errorpkg.ErrorInternalServer("")
+			err = errorpkg.Wrap(e, err)
+		}
+		return
+	}
+	return
 }
 
 // queryOneByConditions query one by conditions

@@ -4,11 +4,13 @@ import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
+	errorv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/errors"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/biz/bo"
 	bizrepos "github.com/go-micro-saas/organization-service/app/org-service/internal/biz/repo"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	datarepos "github.com/go-micro-saas/organization-service/app/org-service/internal/data/repo"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
+	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 )
 
 type orgBiz struct {
@@ -82,4 +84,85 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 	res := &bo.CreateOrgReply{}
 	res.SetByOrg(orgModel)
 	return res, nil
+}
+
+func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*bo.AddEmployeeReply, error) {
+	if param.IsOwner() {
+		e := errorv1.ErrorS105CannotBeOwner("不能设置为组织的所有者")
+		return nil, errorpkg.WithStack(e)
+	}
+	var (
+		employee = param.NewEmployeeModel()
+		err      error
+	)
+	employee.EmployeeId, err = s.idGenerator.NextID()
+	if err != nil {
+		err = errorpkg.ErrorInternalServer(err.Error())
+		return nil, err
+	}
+	if _, err = s.canAddEmployee(ctx, param); err != nil {
+		return nil, err
+	}
+	if err = s.isEmployeeExists(ctx, employee); err != nil {
+		return nil, err
+	}
+
+	// create
+	err = s.employeeData.Create(ctx, employee)
+	if err != nil {
+		return nil, err
+	}
+
+	res := &bo.AddEmployeeReply{}
+	res.SetByEmployee(employee)
+	return res, nil
+}
+
+func (s *orgBiz) isEmployeeExists(ctx context.Context, dataModel *po.OrgEmployee) error {
+	_, isNotFound, err := s.employeeData.ExistCreate(ctx, dataModel)
+	if err != nil {
+		return err
+	}
+	if !isNotFound {
+		e := errorv1.DefaultErrorS105EmployeeExists()
+		return errorpkg.WithStack(e)
+	}
+	return nil
+}
+
+func (s *orgBiz) canAddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*po.OrgEmployee, error) {
+	employee, err := s.canInviteEmployee(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	if !employee.CanAddEmployee() {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
+	}
+	return employee, nil
+}
+
+func (s *orgBiz) canInviteEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*po.OrgEmployee, error) {
+	queryParam := &po.QueryEmployeeParam{
+		OrgID:      param.OrgId,
+		UserID:     param.UserId,
+		EmployeeId: 0,
+	}
+	employee, isNotFound, err := s.employeeData.QueryOneByUserID(ctx, queryParam)
+	if err != nil {
+		return nil, err
+	}
+	if isNotFound {
+		e := errorv1.DefaultErrorS105InvalidOperator()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !employee.IsSameOrg(param.OrgId) {
+		e := errorv1.DefaultErrorS105InvalidOperator()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !employee.IsValid() {
+		e := errorv1.DefaultErrorS105InvalidOperator()
+		return nil, errorpkg.WithStack(e)
+	}
+	return employee, nil
 }

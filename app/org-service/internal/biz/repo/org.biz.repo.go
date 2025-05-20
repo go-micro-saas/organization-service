@@ -7,4 +7,5 @@ import (
 
 type OrgBizRepo interface {
 	CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.CreateOrgReply, error)
+	AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*bo.AddEmployeeReply, error)
 }

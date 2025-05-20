@@ -41,3 +41,54 @@ func (s *CreateOrgReply) SetByOrg(orgModel *po.Org) {
 	s.OrgAvatar = orgModel.OrgAvatar
 	s.OrgType = orgModel.OrgType
 }
+
+type AddEmployeeParam struct {
+	OperatorUid  uint64                                     // 操作人ID
+	OrgId        uint64                                     // 组织ID
+	UserId       uint64                                     // 成员ID
+	UserName     string                                     // 成员名称
+	EmployeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole // 成员角色
+	UserAvatar   string                                     // 成员头像
+	UserPhone    string                                     // 成员电话
+	UserEmail    string                                     // 成员邮箱
+}
+
+func (s *AddEmployeeParam) IsOwner() bool {
+	return s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR
+}
+
+func (s *AddEmployeeParam) NewEmployeeModel() *po.OrgEmployee {
+	employeeModel := po.DefaultOrgEmployee()
+	employeeModel.EmployeeId = 0
+	employeeModel.OrgId = s.OrgId
+	employeeModel.UserId = s.UserId
+	employeeModel.EmployeeUuid = employeeModel.GenUUID()
+	employeeModel.EmployeeName = s.UserName
+	employeeModel.EmployeeAvatar = s.UserAvatar
+	employeeModel.EmployeePhone = s.UserPhone
+	employeeModel.EmployeeEmail = s.UserEmail
+	employeeModel.EmployeeRole = s.EmployeeRole
+	employeeModel.EmployeeStatus = enumv1.OrgEmployeeStatusEnum_ENABLE
+
+	return employeeModel
+}
+
+type AddEmployeeReply struct {
+	OrgId          uint64
+	UserId         uint64
+	EmployeeId     uint64
+	EmployeeName   string
+	EmployeeAvatar string
+	EmployeeStatus enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus // 成员状态
+	EmployeeRole   enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole     // 成员角色
+}
+
+func (s *AddEmployeeReply) SetByEmployee(employeeModel *po.OrgEmployee) {
+	s.OrgId = employeeModel.OrgId
+	s.UserId = employeeModel.UserId
+	s.EmployeeId = employeeModel.EmployeeId
+	s.EmployeeName = employeeModel.EmployeeName
+	s.EmployeeAvatar = employeeModel.EmployeeAvatar
+	s.EmployeeStatus = employeeModel.EmployeeStatus
+	s.EmployeeRole = employeeModel.EmployeeRole
+}

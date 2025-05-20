@@ -53,5 +53,12 @@ func (s *orgV1Service) OnlyCreateOrg(ctx context.Context, req *resourcev1.OnlyCr
 }
 
 func (s *orgV1Service) AddEmployee(ctx context.Context, req *resourcev1.AddEmployeeReq) (*resourcev1.AddEmployeeResp, error) {
-	return s.UnimplementedSrvOrgV1Server.AddEmployee(ctx, req)
+	param := dto.OrgDto.ToBoAddEmployeeParam(req)
+	reply, err := s.orgBiz.AddEmployee(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.AddEmployeeResp{
+		Data: dto.OrgDto.ToPbAddEmployeeRespData(reply),
+	}, nil
 }

@@ -61,3 +61,30 @@ func (s *orgDto) ToPbCreateOrgRespData(dataModel *bo.CreateOrgReply) *resourcev1
 	}
 	return res
 }
+
+func (s *orgDto) ToBoAddEmployeeParam(req *resourcev1.AddEmployeeReq) *bo.AddEmployeeParam {
+	res := &bo.AddEmployeeParam{
+		OperatorUid:  req.OperatorUid,
+		OrgId:        req.OrgId,
+		UserId:       req.UserId,
+		UserName:     req.UserName,
+		EmployeeRole: req.EmployeeRole,
+		UserAvatar:   req.UserAvatar,
+		UserPhone:    req.UserPhone,
+		UserEmail:    req.UserEmail,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbAddEmployeeRespData(dataModel *bo.AddEmployeeReply) *resourcev1.AddEmployeeRespData {
+	res := &resourcev1.AddEmployeeRespData{
+		OrgId:          dataModel.OrgId,
+		UserId:         dataModel.UserId,
+		EmployeeId:     dataModel.EmployeeId,
+		EmployeeName:   dataModel.EmployeeName,
+		EmployeeAvatar: dataModel.EmployeeAvatar,
+		EmployeeStatus: dataModel.EmployeeStatus,
+		EmployeeRole:   dataModel.EmployeeRole,
+	}
+	return res
+}

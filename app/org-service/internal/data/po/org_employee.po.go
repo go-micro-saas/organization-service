@@ -5,6 +5,7 @@ package po
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
+	uuidpkg "github.com/ikaiguang/go-srv-kit/kit/uuid"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	datatypes "gorm.io/datatypes"
 	"strconv"
@@ -39,6 +40,25 @@ func (s *OrgEmployee) GenUUID() string {
 	return strconv.FormatUint(s.OrgId, 10) + "-" + strconv.FormatUint(s.UserId, 10)
 }
 
+func (s *OrgEmployee) RebuildUUID() string {
+	return uuidpkg.NewUUID()
+}
+
+func (s *OrgEmployee) IsValid() bool {
+	return s.DeletedTime == 0 &&
+		s.EmployeeStatus == enumv1.OrgEmployeeStatusEnum_ENABLE
+}
+
+func (s *OrgEmployee) IsSameOrg(orgID uint64) bool {
+	return s.OrgId == orgID
+}
+
+func (s *OrgEmployee) CanAddEmployee() bool {
+	return s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR ||
+		s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_ADMIN ||
+		s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_SUPER
+}
+
 func DefaultOrgEmployee() *OrgEmployee {
 	res := &OrgEmployee{
 		Id:              0,
@@ -68,4 +88,10 @@ func DefaultOrgEmployeeWithID(idGenerator idpkg.Snowflake) (dataModel *OrgEmploy
 		return dataModel, err
 	}
 	return dataModel, err
+}
+
+type QueryEmployeeParam struct {
+	OrgID      uint64
+	UserID     uint64
+	EmployeeId uint64
 }

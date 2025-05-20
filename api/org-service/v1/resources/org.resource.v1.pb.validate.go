@@ -1095,9 +1095,9 @@ func (m *AddEmployeeReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetEmployeeUid() <= 0 {
+	if m.GetUserId() <= 0 {
 		err := AddEmployeeReqValidationError{
-			field:  "EmployeeUid",
+			field:  "UserId",
 			reason: "value must be greater than 0",
 		}
 		if !all {
@@ -1106,9 +1106,9 @@ func (m *AddEmployeeReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetEmployeeName()) < 1 {
+	if utf8.RuneCountInString(m.GetUserName()) < 1 {
 		err := AddEmployeeReqValidationError{
-			field:  "EmployeeName",
+			field:  "UserName",
 			reason: "value length must be at least 1 runes",
 		}
 		if !all {
@@ -1128,15 +1128,15 @@ func (m *AddEmployeeReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetEmployeeAvatar() != "" {
+	if m.GetUserAvatar() != "" {
 
 	}
 
-	if m.GetEmployeePhone() != "" {
+	if m.GetUserPhone() != "" {
 
 	}
 
-	if m.GetEmployeeEmail() != "" {
+	if m.GetUserEmail() != "" {
 
 	}
 
@@ -1218,7 +1218,7 @@ var _ interface {
 	ErrorName() string
 } = AddEmployeeReqValidationError{}
 
-var _AddEmployeeReq_EmployeeRole_NotInLookup = map[enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus]struct{}{
+var _AddEmployeeReq_EmployeeRole_NotInLookup = map[enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole]struct{}{
 	0: {},
 }
 
@@ -1381,22 +1381,19 @@ func (m *AddEmployeeRespData) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for OrgId
+
+	// no validation rules for UserId
+
 	// no validation rules for EmployeeId
 
 	// no validation rules for EmployeeName
 
 	// no validation rules for EmployeeAvatar
 
-	if _, ok := _AddEmployeeRespData_EmployeeRole_NotInLookup[m.GetEmployeeRole()]; ok {
-		err := AddEmployeeRespDataValidationError{
-			field:  "EmployeeRole",
-			reason: "value must not be in list [UNSPECIFIED]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for EmployeeStatus
+
+	// no validation rules for EmployeeRole
 
 	if len(errors) > 0 {
 		return AddEmployeeRespDataMultiError(errors)
@@ -1477,7 +1474,3 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = AddEmployeeRespDataValidationError{}
-
-var _AddEmployeeRespData_EmployeeRole_NotInLookup = map[enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus]struct{}{
-	0: {},
-}

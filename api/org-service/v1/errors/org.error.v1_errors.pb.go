@@ -25,3 +25,243 @@ func ErrorUnknown(format string, args ...interface{}) *errors.Error {
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_UNKNOWN.Number()))}
 	return e
 }
+
+// 不能设置为组织的所有者
+func IsS105CannotBeOwner(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_CANNOT_BE_OWNER.String() && e.Code == 400
+}
+
+// 不能设置为组织的所有者
+func ErrorS105CannotBeOwner(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_CANNOT_BE_OWNER.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_CANNOT_BE_OWNER.Number()))}
+	return e
+}
+
+// 无效的操作人
+func IsS105InvalidOperator(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_INVALID_OPERATOR.String() && e.Code == 400
+}
+
+// 无效的操作人
+func ErrorS105InvalidOperator(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_INVALID_OPERATOR.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_OPERATOR.Number()))}
+	return e
+}
+
+// 组织不存在
+func IsS105OrgNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_ORG_NOT_FOUND.String() && e.Code == 400
+}
+
+// 组织不存在
+func ErrorS105OrgNotFound(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_ORG_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_ORG_NOT_FOUND.Number()))}
+	return e
+}
+
+// 组织已存在
+func IsS105OrgExists(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_ORG_EXISTS.String() && e.Code == 400
+}
+
+// 组织已存在
+func ErrorS105OrgExists(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_ORG_EXISTS.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_ORG_EXISTS.Number()))}
+	return e
+}
+
+// 成员已存在
+func IsS105EmployeeExists(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_EXISTS.String() && e.Code == 400
+}
+
+// 成员已存在
+func ErrorS105EmployeeExists(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_EXISTS.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_EXISTS.Number()))}
+	return e
+}
+
+// 成员不存在
+func IsS105EmployeeNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_NOT_FOUND.String() && e.Code == 400
+}
+
+// 成员不存在
+func ErrorS105EmployeeNotFound(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_NOT_FOUND.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_NOT_FOUND.Number()))}
+	return e
+}
+
+// 成员不是组织的所有者
+func IsS105EmployeeNotOwner(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_NOT_OWNER.String() && e.Code == 400
+}
+
+// 成员不是组织的所有者
+func ErrorS105EmployeeNotOwner(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_NOT_OWNER.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_NOT_OWNER.Number()))}
+	return e
+}
+
+// 成员不是组织的管理员
+func IsS105EmployeeNotAdmin(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_NOT_ADMIN.String() && e.Code == 400
+}
+
+// 成员不是组织的管理员
+func ErrorS105EmployeeNotAdmin(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_NOT_ADMIN.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_NOT_ADMIN.Number()))}
+	return e
+}
+
+// 成员不是组织的超级管理员
+func IsS105EmployeeNotSuper(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_NOT_SUPER.String() && e.Code == 400
+}
+
+// 成员不是组织的超级管理员
+func ErrorS105EmployeeNotSuper(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_NOT_SUPER.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_NOT_SUPER.Number()))}
+	return e
+}
+
+// 成员不是组织的普通成员
+func IsS105EmployeeNotNormal(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_NOT_NORMAL.String() && e.Code == 400
+}
+
+// 成员不是组织的普通成员
+func ErrorS105EmployeeNotNormal(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_NOT_NORMAL.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_NOT_NORMAL.Number()))}
+	return e
+}
+
+// 成员不是有效的
+func IsS105EmployeeNotEnable(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_NOT_ENABLE.String() && e.Code == 400
+}
+
+// 成员不是有效的
+func ErrorS105EmployeeNotEnable(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_NOT_ENABLE.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_NOT_ENABLE.Number()))}
+	return e
+}
+
+// 成员不是创建者
+func IsS105EmployeeNotCreator(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_NOT_CREATOR.String() && e.Code == 400
+}
+
+// 成员不是创建者
+func ErrorS105EmployeeNotCreator(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_NOT_CREATOR.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_NOT_CREATOR.Number()))}
+	return e
+}
+
+// 成员已被禁用
+func IsS105EmployeeDisable(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_DISABLE.String() && e.Code == 400
+}
+
+// 成员已被禁用
+func ErrorS105EmployeeDisable(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_DISABLE.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_DISABLE.Number()))}
+	return e
+}
+
+// 无权限
+func IsS105EmployeeNoPermission(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_EMPLOYEE_NO_PERMISSION.String() && e.Code == 400
+}
+
+// 无权限
+func ErrorS105EmployeeNoPermission(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_EMPLOYEE_NO_PERMISSION.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_EMPLOYEE_NO_PERMISSION.Number()))}
+	return e
+}
+
+// 不是组织的成员
+func IsS105NotOrgEmployee(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_NOT_ORG_EMPLOYEE.String() && e.Code == 400
+}
+
+// 不是组织的成员
+func ErrorS105NotOrgEmployee(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_NOT_ORG_EMPLOYEE.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_ORG_EMPLOYEE.Number()))}
+	return e
+}
