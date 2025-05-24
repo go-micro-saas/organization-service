@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (s *orgBiz) GenerateInviteLink(ctx context.Context, param *bo.GenerateInviteLinkParam) (*po.OrgInviteRecord, error) {
+func (s *orgBiz) CreateInviteRecordForLink(ctx context.Context, param *bo.CreateInviteRecordForLinkParam) (*po.OrgInviteRecord, error) {
 	recordModel, err := po.DefaultInviteRecordWithID(s.idGenerator)
 	if err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func (s *orgBiz) GenerateInviteLink(ctx context.Context, param *bo.GenerateInvit
 	return recordModel, nil
 }
 
-func (s *orgBiz) GenerateInviteEmployee(ctx context.Context, param *bo.GenerateInviteEmployeeParam) (*po.OrgInviteRecord, error) {
+func (s *orgBiz) CreateInviteRecordForEmployee(ctx context.Context, param *bo.CreateInviteRecordForEmployeeParam) (*po.OrgInviteRecord, error) {
 	inviterModel, err := s.canInviteEmployee(ctx, param.OperatorUid, param.OrgId)
 	if err != nil {
 		return nil, err

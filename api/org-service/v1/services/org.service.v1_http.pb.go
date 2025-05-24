@@ -21,17 +21,17 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationSrvOrgV1AddEmployee = "/saas.api.org.servicev1.SrvOrgV1/AddEmployee"
-const OperationSrvOrgV1CreateInviteEmployee = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteEmployee"
+const OperationSrvOrgV1CreateInviteRecordForEmployee = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForEmployee"
+const OperationSrvOrgV1CreateInviteRecordForLink = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForLink"
 const OperationSrvOrgV1CreateOrg = "/saas.api.org.servicev1.SrvOrgV1/CreateOrg"
-const OperationSrvOrgV1GenerateInviteLink = "/saas.api.org.servicev1.SrvOrgV1/GenerateInviteLink"
 const OperationSrvOrgV1OnlyCreateOrg = "/saas.api.org.servicev1.SrvOrgV1/OnlyCreateOrg"
 const OperationSrvOrgV1Ping = "/saas.api.org.servicev1.SrvOrgV1/Ping"
 
 type SrvOrgV1HTTPServer interface {
 	AddEmployee(context.Context, *resources.AddEmployeeReq) (*resources.AddEmployeeResp, error)
-	CreateInviteEmployee(context.Context, *resources.CreateInviteEmployeeReq) (*resources.CreateInviteEmployeeResp, error)
+	CreateInviteRecordForEmployee(context.Context, *resources.CreateInviteRecordForEmployeeReq) (*resources.CreateInviteRecordForEmployeeResp, error)
+	CreateInviteRecordForLink(context.Context, *resources.CreateInviteRecordForLinkReq) (*resources.CreateInviteRecordForLinkResp, error)
 	CreateOrg(context.Context, *resources.CreateOrgReq) (*resources.CreateOrgResp, error)
-	GenerateInviteLink(context.Context, *resources.GenerateInviteLinkReq) (*resources.GenerateInviteLinkResp, error)
 	OnlyCreateOrg(context.Context, *resources.OnlyCreateOrgReq) (*resources.CreateOrgResp, error)
 	// Ping Ping ping
 	Ping(context.Context, *resources.PingReq) (*resources.PingResp, error)
@@ -43,8 +43,8 @@ func RegisterSrvOrgV1HTTPServer(s *http.Server, srv SrvOrgV1HTTPServer) {
 	r.POST("/api/v1/org/create", _SrvOrgV1_CreateOrg0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/only-create", _SrvOrgV1_OnlyCreateOrg0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/add-employee", _SrvOrgV1_AddEmployee0_HTTP_Handler(srv))
-	r.POST("/api/v1/org/gen-invite-link", _SrvOrgV1_GenerateInviteLink0_HTTP_Handler(srv))
-	r.POST("/api/v1/org/create-invite-employee", _SrvOrgV1_CreateInviteEmployee0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/create-invite-record-for-link", _SrvOrgV1_CreateInviteRecordForLink0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/create-invite-record-for-employee", _SrvOrgV1_CreateInviteRecordForEmployee0_HTTP_Handler(srv))
 }
 
 func _SrvOrgV1_Ping0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
@@ -132,55 +132,55 @@ func _SrvOrgV1_AddEmployee0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.C
 	}
 }
 
-func _SrvOrgV1_GenerateInviteLink0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+func _SrvOrgV1_CreateInviteRecordForLink0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in resources.GenerateInviteLinkReq
+		var in resources.CreateInviteRecordForLinkReq
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationSrvOrgV1GenerateInviteLink)
+		http.SetOperation(ctx, OperationSrvOrgV1CreateInviteRecordForLink)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.GenerateInviteLink(ctx, req.(*resources.GenerateInviteLinkReq))
+			return srv.CreateInviteRecordForLink(ctx, req.(*resources.CreateInviteRecordForLinkReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*resources.GenerateInviteLinkResp)
+		reply := out.(*resources.CreateInviteRecordForLinkResp)
 		return ctx.Result(200, reply)
 	}
 }
 
-func _SrvOrgV1_CreateInviteEmployee0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+func _SrvOrgV1_CreateInviteRecordForEmployee0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in resources.CreateInviteEmployeeReq
+		var in resources.CreateInviteRecordForEmployeeReq
 		if err := ctx.Bind(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, OperationSrvOrgV1CreateInviteEmployee)
+		http.SetOperation(ctx, OperationSrvOrgV1CreateInviteRecordForEmployee)
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.CreateInviteEmployee(ctx, req.(*resources.CreateInviteEmployeeReq))
+			return srv.CreateInviteRecordForEmployee(ctx, req.(*resources.CreateInviteRecordForEmployeeReq))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*resources.CreateInviteEmployeeResp)
+		reply := out.(*resources.CreateInviteRecordForEmployeeResp)
 		return ctx.Result(200, reply)
 	}
 }
 
 type SrvOrgV1HTTPClient interface {
 	AddEmployee(ctx context.Context, req *resources.AddEmployeeReq, opts ...http.CallOption) (rsp *resources.AddEmployeeResp, err error)
-	CreateInviteEmployee(ctx context.Context, req *resources.CreateInviteEmployeeReq, opts ...http.CallOption) (rsp *resources.CreateInviteEmployeeResp, err error)
+	CreateInviteRecordForEmployee(ctx context.Context, req *resources.CreateInviteRecordForEmployeeReq, opts ...http.CallOption) (rsp *resources.CreateInviteRecordForEmployeeResp, err error)
+	CreateInviteRecordForLink(ctx context.Context, req *resources.CreateInviteRecordForLinkReq, opts ...http.CallOption) (rsp *resources.CreateInviteRecordForLinkResp, err error)
 	CreateOrg(ctx context.Context, req *resources.CreateOrgReq, opts ...http.CallOption) (rsp *resources.CreateOrgResp, err error)
-	GenerateInviteLink(ctx context.Context, req *resources.GenerateInviteLinkReq, opts ...http.CallOption) (rsp *resources.GenerateInviteLinkResp, err error)
 	OnlyCreateOrg(ctx context.Context, req *resources.OnlyCreateOrgReq, opts ...http.CallOption) (rsp *resources.CreateOrgResp, err error)
 	Ping(ctx context.Context, req *resources.PingReq, opts ...http.CallOption) (rsp *resources.PingResp, err error)
 }
@@ -206,11 +206,24 @@ func (c *SrvOrgV1HTTPClientImpl) AddEmployee(ctx context.Context, in *resources.
 	return &out, nil
 }
 
-func (c *SrvOrgV1HTTPClientImpl) CreateInviteEmployee(ctx context.Context, in *resources.CreateInviteEmployeeReq, opts ...http.CallOption) (*resources.CreateInviteEmployeeResp, error) {
-	var out resources.CreateInviteEmployeeResp
-	pattern := "/api/v1/org/create-invite-employee"
+func (c *SrvOrgV1HTTPClientImpl) CreateInviteRecordForEmployee(ctx context.Context, in *resources.CreateInviteRecordForEmployeeReq, opts ...http.CallOption) (*resources.CreateInviteRecordForEmployeeResp, error) {
+	var out resources.CreateInviteRecordForEmployeeResp
+	pattern := "/api/v1/org/create-invite-record-for-employee"
 	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation(OperationSrvOrgV1CreateInviteEmployee))
+	opts = append(opts, http.Operation(OperationSrvOrgV1CreateInviteRecordForEmployee))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) CreateInviteRecordForLink(ctx context.Context, in *resources.CreateInviteRecordForLinkReq, opts ...http.CallOption) (*resources.CreateInviteRecordForLinkResp, error) {
+	var out resources.CreateInviteRecordForLinkResp
+	pattern := "/api/v1/org/create-invite-record-for-link"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationSrvOrgV1CreateInviteRecordForLink))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
@@ -224,19 +237,6 @@ func (c *SrvOrgV1HTTPClientImpl) CreateOrg(ctx context.Context, in *resources.Cr
 	pattern := "/api/v1/org/create"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationSrvOrgV1CreateOrg))
-	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &out, nil
-}
-
-func (c *SrvOrgV1HTTPClientImpl) GenerateInviteLink(ctx context.Context, in *resources.GenerateInviteLinkReq, opts ...http.CallOption) (*resources.GenerateInviteLinkResp, error) {
-	var out resources.GenerateInviteLinkResp
-	pattern := "/api/v1/org/gen-invite-link"
-	path := binding.EncodeURL(pattern, in, false)
-	opts = append(opts, http.Operation(OperationSrvOrgV1GenerateInviteLink))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

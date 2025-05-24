@@ -108,24 +108,25 @@ message AddEmployeeRespData {
   saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole employee_role       = 7;  // 成员角色
 }
 
-message GenerateInviteLinkReq {
-  uint64 operator_uid = 100 [(validate.rules).uint64.gt = 0];  // 操作人ID
-  uint64 org_id       = 1 [(validate.rules).uint64.gt = 0];    // 组织ID
+message CreateInviteRecordForLinkReq {
+  uint64 operator_uid                   = 100 [(validate.rules).uint64.gt = 0];  // 操作人ID
+  uint64 org_id                         = 1 [(validate.rules).uint64.gt = 0];    // 组织ID
+  google.protobuf.Timestamp expire_time = 2;                                     // 默认一天
 }
-message GenerateInviteLinkResp {
-  int32 code                      = 1;
-  string reason                   = 2;
-  string message                  = 3;
-  map<string, string> metadata    = 4;
-  GenerateInviteLinkRespData data = 100;
+message CreateInviteRecordForLinkResp {
+  int32 code                             = 1;
+  string reason                          = 2;
+  string message                         = 3;
+  map<string, string> metadata           = 4;
+  CreateInviteRecordForLinkRespData data = 100;
 }
-message GenerateInviteLinkRespData {
+message CreateInviteRecordForLinkRespData {
   uint64 invite_id                      = 1;
   string invite_code                    = 2;
   google.protobuf.Timestamp expire_time = 3;
 }
 
-message CreateInviteEmployeeReq {
+message CreateInviteRecordForEmployeeReq {
   uint64 operator_uid = 100 [(validate.rules).uint64.gt = 0];  // 操作人ID
   uint64 org_id       = 101 [(validate.rules).uint64.gt = 0];  // 组织ID
 
@@ -135,14 +136,14 @@ message CreateInviteEmployeeReq {
   enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType invite_account_type = 4 [(validate.rules).enum = { not_in: [ 0 ] }];  // 被邀请人账号类型
   enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole invite_employee_role          = 5 [(validate.rules).enum = { not_in: [ 0 ] }];  // 被邀请人角色
 }
-message CreateInviteEmployeeResp {
-  int32 code                        = 1;
-  string reason                     = 2;
-  string message                    = 3;
-  map<string, string> metadata      = 4;
-  CreateInviteEmployeeRespData data = 100;
+message CreateInviteRecordForEmployeeResp {
+  int32 code                                 = 1;
+  string reason                              = 2;
+  string message                             = 3;
+  map<string, string> metadata               = 4;
+  CreateInviteRecordForEmployeeRespData data = 100;
 }
-message CreateInviteEmployeeRespData {
+message CreateInviteRecordForEmployeeRespData {
   uint64 invite_id                      = 1;
   string invite_code                    = 2;
   google.protobuf.Timestamp expire_time = 3;

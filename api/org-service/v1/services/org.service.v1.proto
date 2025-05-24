@@ -37,27 +37,27 @@ service SrvOrgV1 {
       body: "*"
     };
   }
-  rpc GenerateInviteLink(resourcev1.GenerateInviteLinkReq) returns (resourcev1.GenerateInviteLinkResp) {
+  rpc CreateInviteRecordForLink(resourcev1.CreateInviteRecordForLinkReq) returns (resourcev1.CreateInviteRecordForLinkResp) {
     option (google.api.http) = {
-      post: "/api/v1/org/gen-invite-link"
+      post: "/api/v1/org/create-invite-record-for-link"
       body: "*"
     };
   }
-  rpc CreateInviteEmployee(resourcev1.CreateInviteEmployeeReq) returns (resourcev1.CreateInviteEmployeeResp) {
+  rpc CreateInviteRecordForEmployee(resourcev1.CreateInviteRecordForEmployeeReq) returns (resourcev1.CreateInviteRecordForEmployeeResp) {
     option (google.api.http) = {
-      post: "/api/v1/org/create-invite-employee"
+      post: "/api/v1/org/create-invite-record-for-employee"
       body: "*"
     };
   }
-  //  rpc JoinOrgByInviteLink(resourcev1.JoinOrgByInviteLinkReq) returns (resourcev1.JoinOrgByInviteLinkResp) {
+  //  rpc JoinByInviteLink(resourcev1.JoinByInviteLinkReq) returns (resourcev1.JoinByInviteLinkResp) {
   //    option (google.api.http) = {
   //      post: "/api/v1/org/join-by-invite-link"
   //      body: "*"
   //    };
   //  }
-  //  rpc AgreeRefuseInvite(resourcev1.AgreeRefuseInviteReq) returns (resourcev1.AgreeRefuseInviteResp) {
+  //  rpc AgreeOrRefuseInvite(resourcev1.AgreeOrRefuseInviteReq) returns (resourcev1.AgreeOrRefuseInviteResp) {
   //    option (google.api.http) = {
-  //      post: "/api/v1/org/agree-refuse-invite"
+  //      post: "/api/v1/org/agree-or-refuse-invite"
   //      body: "*"
   //    };
   //  }

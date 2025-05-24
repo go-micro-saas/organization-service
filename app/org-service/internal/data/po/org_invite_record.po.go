@@ -7,13 +7,12 @@ import (
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
 	randompkg "github.com/ikaiguang/go-srv-kit/kit/random"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
-	datatypes "gorm.io/datatypes"
 	time "time"
 )
 
-var _ = time.Time{}
-
-var _ = datatypes.JSON{}
+const (
+	DefaultOrgInviteRecordExpireTime = time.Hour * 24
+)
 
 // OrgInviteRecord ENGINE InnoDB CHARSET utf8mb4 COMMENT '事件历史'
 type OrgInviteRecord struct {
@@ -50,7 +49,7 @@ func DefaultInviteRecord() *OrgInviteRecord {
 		InvitedAccountType:  0,
 		InvitedEmployeeRole: enumv1.OrgEmployeeRoleEnum_NORMAL,
 		InviteStatus:        enumv1.OrgInviteStatusEnum_INVITING,
-		ExpireTime:          time.Now().AddDate(0, 0, 1),
+		ExpireTime:          time.Now().Add(DefaultOrgInviteRecordExpireTime),
 		AssignEmployeeId:    0,
 		InviteCode:          randompkg.AlphabetLower(6),
 	}

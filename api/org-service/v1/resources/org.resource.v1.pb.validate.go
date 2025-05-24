@@ -1475,22 +1475,22 @@ var _ interface {
 	ErrorName() string
 } = AddEmployeeRespDataValidationError{}
 
-// Validate checks the field values on GenerateInviteLinkReq with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on CreateInviteRecordForLinkReq with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GenerateInviteLinkReq) Validate() error {
+func (m *CreateInviteRecordForLinkReq) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GenerateInviteLinkReq with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on CreateInviteRecordForLinkReq with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GenerateInviteLinkReqMultiError, or nil if none found.
-func (m *GenerateInviteLinkReq) ValidateAll() error {
+// CreateInviteRecordForLinkReqMultiError, or nil if none found.
+func (m *CreateInviteRecordForLinkReq) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GenerateInviteLinkReq) validate(all bool) error {
+func (m *CreateInviteRecordForLinkReq) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1498,7 +1498,7 @@ func (m *GenerateInviteLinkReq) validate(all bool) error {
 	var errors []error
 
 	if m.GetOperatorUid() <= 0 {
-		err := GenerateInviteLinkReqValidationError{
+		err := CreateInviteRecordForLinkReqValidationError{
 			field:  "OperatorUid",
 			reason: "value must be greater than 0",
 		}
@@ -1509,7 +1509,7 @@ func (m *GenerateInviteLinkReq) validate(all bool) error {
 	}
 
 	if m.GetOrgId() <= 0 {
-		err := GenerateInviteLinkReqValidationError{
+		err := CreateInviteRecordForLinkReqValidationError{
 			field:  "OrgId",
 			reason: "value must be greater than 0",
 		}
@@ -1519,20 +1519,49 @@ func (m *GenerateInviteLinkReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if all {
+		switch v := interface{}(m.GetExpireTime()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, CreateInviteRecordForLinkReqValidationError{
+					field:  "ExpireTime",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, CreateInviteRecordForLinkReqValidationError{
+					field:  "ExpireTime",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetExpireTime()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateInviteRecordForLinkReqValidationError{
+				field:  "ExpireTime",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
-		return GenerateInviteLinkReqMultiError(errors)
+		return CreateInviteRecordForLinkReqMultiError(errors)
 	}
 
 	return nil
 }
 
-// GenerateInviteLinkReqMultiError is an error wrapping multiple validation
-// errors returned by GenerateInviteLinkReq.ValidateAll() if the designated
-// constraints aren't met.
-type GenerateInviteLinkReqMultiError []error
+// CreateInviteRecordForLinkReqMultiError is an error wrapping multiple
+// validation errors returned by CreateInviteRecordForLinkReq.ValidateAll() if
+// the designated constraints aren't met.
+type CreateInviteRecordForLinkReqMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GenerateInviteLinkReqMultiError) Error() string {
+func (m CreateInviteRecordForLinkReqMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1541,11 +1570,12 @@ func (m GenerateInviteLinkReqMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GenerateInviteLinkReqMultiError) AllErrors() []error { return m }
+func (m CreateInviteRecordForLinkReqMultiError) AllErrors() []error { return m }
 
-// GenerateInviteLinkReqValidationError is the validation error returned by
-// GenerateInviteLinkReq.Validate if the designated constraints aren't met.
-type GenerateInviteLinkReqValidationError struct {
+// CreateInviteRecordForLinkReqValidationError is the validation error returned
+// by CreateInviteRecordForLinkReq.Validate if the designated constraints
+// aren't met.
+type CreateInviteRecordForLinkReqValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1553,24 +1583,24 @@ type GenerateInviteLinkReqValidationError struct {
 }
 
 // Field function returns field value.
-func (e GenerateInviteLinkReqValidationError) Field() string { return e.field }
+func (e CreateInviteRecordForLinkReqValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GenerateInviteLinkReqValidationError) Reason() string { return e.reason }
+func (e CreateInviteRecordForLinkReqValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GenerateInviteLinkReqValidationError) Cause() error { return e.cause }
+func (e CreateInviteRecordForLinkReqValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GenerateInviteLinkReqValidationError) Key() bool { return e.key }
+func (e CreateInviteRecordForLinkReqValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GenerateInviteLinkReqValidationError) ErrorName() string {
-	return "GenerateInviteLinkReqValidationError"
+func (e CreateInviteRecordForLinkReqValidationError) ErrorName() string {
+	return "CreateInviteRecordForLinkReqValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GenerateInviteLinkReqValidationError) Error() string {
+func (e CreateInviteRecordForLinkReqValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1582,14 +1612,14 @@ func (e GenerateInviteLinkReqValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGenerateInviteLinkReq.%s: %s%s",
+		"invalid %sCreateInviteRecordForLinkReq.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GenerateInviteLinkReqValidationError{}
+var _ error = CreateInviteRecordForLinkReqValidationError{}
 
 var _ interface {
 	Field() string
@@ -1597,24 +1627,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GenerateInviteLinkReqValidationError{}
+} = CreateInviteRecordForLinkReqValidationError{}
 
-// Validate checks the field values on GenerateInviteLinkResp with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on CreateInviteRecordForLinkResp with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GenerateInviteLinkResp) Validate() error {
+func (m *CreateInviteRecordForLinkResp) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GenerateInviteLinkResp with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// GenerateInviteLinkRespMultiError, or nil if none found.
-func (m *GenerateInviteLinkResp) ValidateAll() error {
+// ValidateAll checks the field values on CreateInviteRecordForLinkResp with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// CreateInviteRecordForLinkRespMultiError, or nil if none found.
+func (m *CreateInviteRecordForLinkResp) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GenerateInviteLinkResp) validate(all bool) error {
+func (m *CreateInviteRecordForLinkResp) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1633,7 +1663,7 @@ func (m *GenerateInviteLinkResp) validate(all bool) error {
 		switch v := interface{}(m.GetData()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, GenerateInviteLinkRespValidationError{
+				errors = append(errors, CreateInviteRecordForLinkRespValidationError{
 					field:  "Data",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1641,7 +1671,7 @@ func (m *GenerateInviteLinkResp) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, GenerateInviteLinkRespValidationError{
+				errors = append(errors, CreateInviteRecordForLinkRespValidationError{
 					field:  "Data",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1650,7 +1680,7 @@ func (m *GenerateInviteLinkResp) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return GenerateInviteLinkRespValidationError{
+			return CreateInviteRecordForLinkRespValidationError{
 				field:  "Data",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1659,19 +1689,19 @@ func (m *GenerateInviteLinkResp) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GenerateInviteLinkRespMultiError(errors)
+		return CreateInviteRecordForLinkRespMultiError(errors)
 	}
 
 	return nil
 }
 
-// GenerateInviteLinkRespMultiError is an error wrapping multiple validation
-// errors returned by GenerateInviteLinkResp.ValidateAll() if the designated
-// constraints aren't met.
-type GenerateInviteLinkRespMultiError []error
+// CreateInviteRecordForLinkRespMultiError is an error wrapping multiple
+// validation errors returned by CreateInviteRecordForLinkResp.ValidateAll()
+// if the designated constraints aren't met.
+type CreateInviteRecordForLinkRespMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GenerateInviteLinkRespMultiError) Error() string {
+func (m CreateInviteRecordForLinkRespMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1680,11 +1710,12 @@ func (m GenerateInviteLinkRespMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GenerateInviteLinkRespMultiError) AllErrors() []error { return m }
+func (m CreateInviteRecordForLinkRespMultiError) AllErrors() []error { return m }
 
-// GenerateInviteLinkRespValidationError is the validation error returned by
-// GenerateInviteLinkResp.Validate if the designated constraints aren't met.
-type GenerateInviteLinkRespValidationError struct {
+// CreateInviteRecordForLinkRespValidationError is the validation error
+// returned by CreateInviteRecordForLinkResp.Validate if the designated
+// constraints aren't met.
+type CreateInviteRecordForLinkRespValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1692,24 +1723,24 @@ type GenerateInviteLinkRespValidationError struct {
 }
 
 // Field function returns field value.
-func (e GenerateInviteLinkRespValidationError) Field() string { return e.field }
+func (e CreateInviteRecordForLinkRespValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GenerateInviteLinkRespValidationError) Reason() string { return e.reason }
+func (e CreateInviteRecordForLinkRespValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GenerateInviteLinkRespValidationError) Cause() error { return e.cause }
+func (e CreateInviteRecordForLinkRespValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GenerateInviteLinkRespValidationError) Key() bool { return e.key }
+func (e CreateInviteRecordForLinkRespValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GenerateInviteLinkRespValidationError) ErrorName() string {
-	return "GenerateInviteLinkRespValidationError"
+func (e CreateInviteRecordForLinkRespValidationError) ErrorName() string {
+	return "CreateInviteRecordForLinkRespValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GenerateInviteLinkRespValidationError) Error() string {
+func (e CreateInviteRecordForLinkRespValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1721,14 +1752,14 @@ func (e GenerateInviteLinkRespValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGenerateInviteLinkResp.%s: %s%s",
+		"invalid %sCreateInviteRecordForLinkResp.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GenerateInviteLinkRespValidationError{}
+var _ error = CreateInviteRecordForLinkRespValidationError{}
 
 var _ interface {
 	Field() string
@@ -1736,24 +1767,25 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GenerateInviteLinkRespValidationError{}
+} = CreateInviteRecordForLinkRespValidationError{}
 
-// Validate checks the field values on GenerateInviteLinkRespData with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GenerateInviteLinkRespData) Validate() error {
+// Validate checks the field values on CreateInviteRecordForLinkRespData with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *CreateInviteRecordForLinkRespData) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GenerateInviteLinkRespData with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// GenerateInviteLinkRespDataMultiError, or nil if none found.
-func (m *GenerateInviteLinkRespData) ValidateAll() error {
+// ValidateAll checks the field values on CreateInviteRecordForLinkRespData
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// CreateInviteRecordForLinkRespDataMultiError, or nil if none found.
+func (m *CreateInviteRecordForLinkRespData) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GenerateInviteLinkRespData) validate(all bool) error {
+func (m *CreateInviteRecordForLinkRespData) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1768,7 +1800,7 @@ func (m *GenerateInviteLinkRespData) validate(all bool) error {
 		switch v := interface{}(m.GetExpireTime()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, GenerateInviteLinkRespDataValidationError{
+				errors = append(errors, CreateInviteRecordForLinkRespDataValidationError{
 					field:  "ExpireTime",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1776,7 +1808,7 @@ func (m *GenerateInviteLinkRespData) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, GenerateInviteLinkRespDataValidationError{
+				errors = append(errors, CreateInviteRecordForLinkRespDataValidationError{
 					field:  "ExpireTime",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1785,7 +1817,7 @@ func (m *GenerateInviteLinkRespData) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetExpireTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return GenerateInviteLinkRespDataValidationError{
+			return CreateInviteRecordForLinkRespDataValidationError{
 				field:  "ExpireTime",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1794,19 +1826,20 @@ func (m *GenerateInviteLinkRespData) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GenerateInviteLinkRespDataMultiError(errors)
+		return CreateInviteRecordForLinkRespDataMultiError(errors)
 	}
 
 	return nil
 }
 
-// GenerateInviteLinkRespDataMultiError is an error wrapping multiple
-// validation errors returned by GenerateInviteLinkRespData.ValidateAll() if
-// the designated constraints aren't met.
-type GenerateInviteLinkRespDataMultiError []error
+// CreateInviteRecordForLinkRespDataMultiError is an error wrapping multiple
+// validation errors returned by
+// CreateInviteRecordForLinkRespData.ValidateAll() if the designated
+// constraints aren't met.
+type CreateInviteRecordForLinkRespDataMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GenerateInviteLinkRespDataMultiError) Error() string {
+func (m CreateInviteRecordForLinkRespDataMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1815,11 +1848,12 @@ func (m GenerateInviteLinkRespDataMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GenerateInviteLinkRespDataMultiError) AllErrors() []error { return m }
+func (m CreateInviteRecordForLinkRespDataMultiError) AllErrors() []error { return m }
 
-// GenerateInviteLinkRespDataValidationError is the validation error returned
-// by GenerateInviteLinkRespData.Validate if the designated constraints aren't met.
-type GenerateInviteLinkRespDataValidationError struct {
+// CreateInviteRecordForLinkRespDataValidationError is the validation error
+// returned by CreateInviteRecordForLinkRespData.Validate if the designated
+// constraints aren't met.
+type CreateInviteRecordForLinkRespDataValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1827,24 +1861,24 @@ type GenerateInviteLinkRespDataValidationError struct {
 }
 
 // Field function returns field value.
-func (e GenerateInviteLinkRespDataValidationError) Field() string { return e.field }
+func (e CreateInviteRecordForLinkRespDataValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GenerateInviteLinkRespDataValidationError) Reason() string { return e.reason }
+func (e CreateInviteRecordForLinkRespDataValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GenerateInviteLinkRespDataValidationError) Cause() error { return e.cause }
+func (e CreateInviteRecordForLinkRespDataValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GenerateInviteLinkRespDataValidationError) Key() bool { return e.key }
+func (e CreateInviteRecordForLinkRespDataValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GenerateInviteLinkRespDataValidationError) ErrorName() string {
-	return "GenerateInviteLinkRespDataValidationError"
+func (e CreateInviteRecordForLinkRespDataValidationError) ErrorName() string {
+	return "CreateInviteRecordForLinkRespDataValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GenerateInviteLinkRespDataValidationError) Error() string {
+func (e CreateInviteRecordForLinkRespDataValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1856,14 +1890,14 @@ func (e GenerateInviteLinkRespDataValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGenerateInviteLinkRespData.%s: %s%s",
+		"invalid %sCreateInviteRecordForLinkRespData.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GenerateInviteLinkRespDataValidationError{}
+var _ error = CreateInviteRecordForLinkRespDataValidationError{}
 
 var _ interface {
 	Field() string
@@ -1871,24 +1905,25 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GenerateInviteLinkRespDataValidationError{}
+} = CreateInviteRecordForLinkRespDataValidationError{}
 
-// Validate checks the field values on CreateInviteEmployeeReq with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CreateInviteEmployeeReq) Validate() error {
+// Validate checks the field values on CreateInviteRecordForEmployeeReq with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *CreateInviteRecordForEmployeeReq) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CreateInviteEmployeeReq with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// CreateInviteEmployeeReqMultiError, or nil if none found.
-func (m *CreateInviteEmployeeReq) ValidateAll() error {
+// ValidateAll checks the field values on CreateInviteRecordForEmployeeReq with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// CreateInviteRecordForEmployeeReqMultiError, or nil if none found.
+func (m *CreateInviteRecordForEmployeeReq) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CreateInviteEmployeeReq) validate(all bool) error {
+func (m *CreateInviteRecordForEmployeeReq) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1896,7 +1931,7 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 	var errors []error
 
 	if m.GetOperatorUid() <= 0 {
-		err := CreateInviteEmployeeReqValidationError{
+		err := CreateInviteRecordForEmployeeReqValidationError{
 			field:  "OperatorUid",
 			reason: "value must be greater than 0",
 		}
@@ -1907,7 +1942,7 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 	}
 
 	if m.GetOrgId() <= 0 {
-		err := CreateInviteEmployeeReqValidationError{
+		err := CreateInviteRecordForEmployeeReqValidationError{
 			field:  "OrgId",
 			reason: "value must be greater than 0",
 		}
@@ -1918,7 +1953,7 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 	}
 
 	if m.GetInviteUserId() <= 0 {
-		err := CreateInviteEmployeeReqValidationError{
+		err := CreateInviteRecordForEmployeeReqValidationError{
 			field:  "InviteUserId",
 			reason: "value must be greater than 0",
 		}
@@ -1929,7 +1964,7 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetInviteAccount()) < 1 {
-		err := CreateInviteEmployeeReqValidationError{
+		err := CreateInviteRecordForEmployeeReqValidationError{
 			field:  "InviteAccount",
 			reason: "value length must be at least 1 runes",
 		}
@@ -1943,7 +1978,7 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 		switch v := interface{}(m.GetExpireTime()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CreateInviteEmployeeReqValidationError{
+				errors = append(errors, CreateInviteRecordForEmployeeReqValidationError{
 					field:  "ExpireTime",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1951,7 +1986,7 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CreateInviteEmployeeReqValidationError{
+				errors = append(errors, CreateInviteRecordForEmployeeReqValidationError{
 					field:  "ExpireTime",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1960,7 +1995,7 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetExpireTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateInviteEmployeeReqValidationError{
+			return CreateInviteRecordForEmployeeReqValidationError{
 				field:  "ExpireTime",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1968,8 +2003,8 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 		}
 	}
 
-	if _, ok := _CreateInviteEmployeeReq_InviteAccountType_NotInLookup[m.GetInviteAccountType()]; ok {
-		err := CreateInviteEmployeeReqValidationError{
+	if _, ok := _CreateInviteRecordForEmployeeReq_InviteAccountType_NotInLookup[m.GetInviteAccountType()]; ok {
+		err := CreateInviteRecordForEmployeeReqValidationError{
 			field:  "InviteAccountType",
 			reason: "value must not be in list [UNSPECIFIED]",
 		}
@@ -1979,8 +2014,8 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if _, ok := _CreateInviteEmployeeReq_InviteEmployeeRole_NotInLookup[m.GetInviteEmployeeRole()]; ok {
-		err := CreateInviteEmployeeReqValidationError{
+	if _, ok := _CreateInviteRecordForEmployeeReq_InviteEmployeeRole_NotInLookup[m.GetInviteEmployeeRole()]; ok {
+		err := CreateInviteRecordForEmployeeReqValidationError{
 			field:  "InviteEmployeeRole",
 			reason: "value must not be in list [UNSPECIFIED]",
 		}
@@ -1991,19 +2026,20 @@ func (m *CreateInviteEmployeeReq) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return CreateInviteEmployeeReqMultiError(errors)
+		return CreateInviteRecordForEmployeeReqMultiError(errors)
 	}
 
 	return nil
 }
 
-// CreateInviteEmployeeReqMultiError is an error wrapping multiple validation
-// errors returned by CreateInviteEmployeeReq.ValidateAll() if the designated
+// CreateInviteRecordForEmployeeReqMultiError is an error wrapping multiple
+// validation errors returned by
+// CreateInviteRecordForEmployeeReq.ValidateAll() if the designated
 // constraints aren't met.
-type CreateInviteEmployeeReqMultiError []error
+type CreateInviteRecordForEmployeeReqMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CreateInviteEmployeeReqMultiError) Error() string {
+func (m CreateInviteRecordForEmployeeReqMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2012,11 +2048,12 @@ func (m CreateInviteEmployeeReqMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CreateInviteEmployeeReqMultiError) AllErrors() []error { return m }
+func (m CreateInviteRecordForEmployeeReqMultiError) AllErrors() []error { return m }
 
-// CreateInviteEmployeeReqValidationError is the validation error returned by
-// CreateInviteEmployeeReq.Validate if the designated constraints aren't met.
-type CreateInviteEmployeeReqValidationError struct {
+// CreateInviteRecordForEmployeeReqValidationError is the validation error
+// returned by CreateInviteRecordForEmployeeReq.Validate if the designated
+// constraints aren't met.
+type CreateInviteRecordForEmployeeReqValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2024,24 +2061,24 @@ type CreateInviteEmployeeReqValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateInviteEmployeeReqValidationError) Field() string { return e.field }
+func (e CreateInviteRecordForEmployeeReqValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateInviteEmployeeReqValidationError) Reason() string { return e.reason }
+func (e CreateInviteRecordForEmployeeReqValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateInviteEmployeeReqValidationError) Cause() error { return e.cause }
+func (e CreateInviteRecordForEmployeeReqValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateInviteEmployeeReqValidationError) Key() bool { return e.key }
+func (e CreateInviteRecordForEmployeeReqValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateInviteEmployeeReqValidationError) ErrorName() string {
-	return "CreateInviteEmployeeReqValidationError"
+func (e CreateInviteRecordForEmployeeReqValidationError) ErrorName() string {
+	return "CreateInviteRecordForEmployeeReqValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateInviteEmployeeReqValidationError) Error() string {
+func (e CreateInviteRecordForEmployeeReqValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2053,14 +2090,14 @@ func (e CreateInviteEmployeeReqValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateInviteEmployeeReq.%s: %s%s",
+		"invalid %sCreateInviteRecordForEmployeeReq.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateInviteEmployeeReqValidationError{}
+var _ error = CreateInviteRecordForEmployeeReqValidationError{}
 
 var _ interface {
 	Field() string
@@ -2068,32 +2105,33 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateInviteEmployeeReqValidationError{}
+} = CreateInviteRecordForEmployeeReqValidationError{}
 
-var _CreateInviteEmployeeReq_InviteAccountType_NotInLookup = map[enumv1.OrgInviteAccountTypeEnum_OrgInviteAccountType]struct{}{
+var _CreateInviteRecordForEmployeeReq_InviteAccountType_NotInLookup = map[enumv1.OrgInviteAccountTypeEnum_OrgInviteAccountType]struct{}{
 	0: {},
 }
 
-var _CreateInviteEmployeeReq_InviteEmployeeRole_NotInLookup = map[enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole]struct{}{
+var _CreateInviteRecordForEmployeeReq_InviteEmployeeRole_NotInLookup = map[enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole]struct{}{
 	0: {},
 }
 
-// Validate checks the field values on CreateInviteEmployeeResp with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CreateInviteEmployeeResp) Validate() error {
+// Validate checks the field values on CreateInviteRecordForEmployeeResp with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *CreateInviteRecordForEmployeeResp) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CreateInviteEmployeeResp with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// CreateInviteEmployeeRespMultiError, or nil if none found.
-func (m *CreateInviteEmployeeResp) ValidateAll() error {
+// ValidateAll checks the field values on CreateInviteRecordForEmployeeResp
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// CreateInviteRecordForEmployeeRespMultiError, or nil if none found.
+func (m *CreateInviteRecordForEmployeeResp) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CreateInviteEmployeeResp) validate(all bool) error {
+func (m *CreateInviteRecordForEmployeeResp) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -2112,7 +2150,7 @@ func (m *CreateInviteEmployeeResp) validate(all bool) error {
 		switch v := interface{}(m.GetData()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CreateInviteEmployeeRespValidationError{
+				errors = append(errors, CreateInviteRecordForEmployeeRespValidationError{
 					field:  "Data",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -2120,7 +2158,7 @@ func (m *CreateInviteEmployeeResp) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CreateInviteEmployeeRespValidationError{
+				errors = append(errors, CreateInviteRecordForEmployeeRespValidationError{
 					field:  "Data",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -2129,7 +2167,7 @@ func (m *CreateInviteEmployeeResp) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateInviteEmployeeRespValidationError{
+			return CreateInviteRecordForEmployeeRespValidationError{
 				field:  "Data",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -2138,19 +2176,20 @@ func (m *CreateInviteEmployeeResp) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return CreateInviteEmployeeRespMultiError(errors)
+		return CreateInviteRecordForEmployeeRespMultiError(errors)
 	}
 
 	return nil
 }
 
-// CreateInviteEmployeeRespMultiError is an error wrapping multiple validation
-// errors returned by CreateInviteEmployeeResp.ValidateAll() if the designated
+// CreateInviteRecordForEmployeeRespMultiError is an error wrapping multiple
+// validation errors returned by
+// CreateInviteRecordForEmployeeResp.ValidateAll() if the designated
 // constraints aren't met.
-type CreateInviteEmployeeRespMultiError []error
+type CreateInviteRecordForEmployeeRespMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CreateInviteEmployeeRespMultiError) Error() string {
+func (m CreateInviteRecordForEmployeeRespMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2159,11 +2198,12 @@ func (m CreateInviteEmployeeRespMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CreateInviteEmployeeRespMultiError) AllErrors() []error { return m }
+func (m CreateInviteRecordForEmployeeRespMultiError) AllErrors() []error { return m }
 
-// CreateInviteEmployeeRespValidationError is the validation error returned by
-// CreateInviteEmployeeResp.Validate if the designated constraints aren't met.
-type CreateInviteEmployeeRespValidationError struct {
+// CreateInviteRecordForEmployeeRespValidationError is the validation error
+// returned by CreateInviteRecordForEmployeeResp.Validate if the designated
+// constraints aren't met.
+type CreateInviteRecordForEmployeeRespValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2171,24 +2211,24 @@ type CreateInviteEmployeeRespValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateInviteEmployeeRespValidationError) Field() string { return e.field }
+func (e CreateInviteRecordForEmployeeRespValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateInviteEmployeeRespValidationError) Reason() string { return e.reason }
+func (e CreateInviteRecordForEmployeeRespValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateInviteEmployeeRespValidationError) Cause() error { return e.cause }
+func (e CreateInviteRecordForEmployeeRespValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateInviteEmployeeRespValidationError) Key() bool { return e.key }
+func (e CreateInviteRecordForEmployeeRespValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateInviteEmployeeRespValidationError) ErrorName() string {
-	return "CreateInviteEmployeeRespValidationError"
+func (e CreateInviteRecordForEmployeeRespValidationError) ErrorName() string {
+	return "CreateInviteRecordForEmployeeRespValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateInviteEmployeeRespValidationError) Error() string {
+func (e CreateInviteRecordForEmployeeRespValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2200,14 +2240,14 @@ func (e CreateInviteEmployeeRespValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateInviteEmployeeResp.%s: %s%s",
+		"invalid %sCreateInviteRecordForEmployeeResp.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateInviteEmployeeRespValidationError{}
+var _ error = CreateInviteRecordForEmployeeRespValidationError{}
 
 var _ interface {
 	Field() string
@@ -2215,24 +2255,25 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateInviteEmployeeRespValidationError{}
+} = CreateInviteRecordForEmployeeRespValidationError{}
 
-// Validate checks the field values on CreateInviteEmployeeRespData with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CreateInviteEmployeeRespData) Validate() error {
+// Validate checks the field values on CreateInviteRecordForEmployeeRespData
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *CreateInviteRecordForEmployeeRespData) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CreateInviteEmployeeRespData with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// CreateInviteEmployeeRespDataMultiError, or nil if none found.
-func (m *CreateInviteEmployeeRespData) ValidateAll() error {
+// ValidateAll checks the field values on CreateInviteRecordForEmployeeRespData
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// CreateInviteRecordForEmployeeRespDataMultiError, or nil if none found.
+func (m *CreateInviteRecordForEmployeeRespData) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CreateInviteEmployeeRespData) validate(all bool) error {
+func (m *CreateInviteRecordForEmployeeRespData) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -2247,7 +2288,7 @@ func (m *CreateInviteEmployeeRespData) validate(all bool) error {
 		switch v := interface{}(m.GetExpireTime()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CreateInviteEmployeeRespDataValidationError{
+				errors = append(errors, CreateInviteRecordForEmployeeRespDataValidationError{
 					field:  "ExpireTime",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -2255,7 +2296,7 @@ func (m *CreateInviteEmployeeRespData) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CreateInviteEmployeeRespDataValidationError{
+				errors = append(errors, CreateInviteRecordForEmployeeRespDataValidationError{
 					field:  "ExpireTime",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -2264,7 +2305,7 @@ func (m *CreateInviteEmployeeRespData) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetExpireTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateInviteEmployeeRespDataValidationError{
+			return CreateInviteRecordForEmployeeRespDataValidationError{
 				field:  "ExpireTime",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -2275,19 +2316,20 @@ func (m *CreateInviteEmployeeRespData) validate(all bool) error {
 	// no validation rules for AssignEmployeeId
 
 	if len(errors) > 0 {
-		return CreateInviteEmployeeRespDataMultiError(errors)
+		return CreateInviteRecordForEmployeeRespDataMultiError(errors)
 	}
 
 	return nil
 }
 
-// CreateInviteEmployeeRespDataMultiError is an error wrapping multiple
-// validation errors returned by CreateInviteEmployeeRespData.ValidateAll() if
-// the designated constraints aren't met.
-type CreateInviteEmployeeRespDataMultiError []error
+// CreateInviteRecordForEmployeeRespDataMultiError is an error wrapping
+// multiple validation errors returned by
+// CreateInviteRecordForEmployeeRespData.ValidateAll() if the designated
+// constraints aren't met.
+type CreateInviteRecordForEmployeeRespDataMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CreateInviteEmployeeRespDataMultiError) Error() string {
+func (m CreateInviteRecordForEmployeeRespDataMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2296,12 +2338,12 @@ func (m CreateInviteEmployeeRespDataMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CreateInviteEmployeeRespDataMultiError) AllErrors() []error { return m }
+func (m CreateInviteRecordForEmployeeRespDataMultiError) AllErrors() []error { return m }
 
-// CreateInviteEmployeeRespDataValidationError is the validation error returned
-// by CreateInviteEmployeeRespData.Validate if the designated constraints
-// aren't met.
-type CreateInviteEmployeeRespDataValidationError struct {
+// CreateInviteRecordForEmployeeRespDataValidationError is the validation error
+// returned by CreateInviteRecordForEmployeeRespData.Validate if the
+// designated constraints aren't met.
+type CreateInviteRecordForEmployeeRespDataValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2309,24 +2351,24 @@ type CreateInviteEmployeeRespDataValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateInviteEmployeeRespDataValidationError) Field() string { return e.field }
+func (e CreateInviteRecordForEmployeeRespDataValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateInviteEmployeeRespDataValidationError) Reason() string { return e.reason }
+func (e CreateInviteRecordForEmployeeRespDataValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateInviteEmployeeRespDataValidationError) Cause() error { return e.cause }
+func (e CreateInviteRecordForEmployeeRespDataValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateInviteEmployeeRespDataValidationError) Key() bool { return e.key }
+func (e CreateInviteRecordForEmployeeRespDataValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateInviteEmployeeRespDataValidationError) ErrorName() string {
-	return "CreateInviteEmployeeRespDataValidationError"
+func (e CreateInviteRecordForEmployeeRespDataValidationError) ErrorName() string {
+	return "CreateInviteRecordForEmployeeRespDataValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CreateInviteEmployeeRespDataValidationError) Error() string {
+func (e CreateInviteRecordForEmployeeRespDataValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2338,14 +2380,14 @@ func (e CreateInviteEmployeeRespDataValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateInviteEmployeeRespData.%s: %s%s",
+		"invalid %sCreateInviteRecordForEmployeeRespData.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateInviteEmployeeRespDataValidationError{}
+var _ error = CreateInviteRecordForEmployeeRespDataValidationError{}
 
 var _ interface {
 	Field() string
@@ -2353,4 +2395,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateInviteEmployeeRespDataValidationError{}
+} = CreateInviteRecordForEmployeeRespDataValidationError{}

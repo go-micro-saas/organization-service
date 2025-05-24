@@ -63,10 +63,24 @@ func (s *orgV1Service) AddEmployee(ctx context.Context, req *resourcev1.AddEmplo
 	}, nil
 }
 
-func (s *orgV1Service) GenerateInviteLink(ctx context.Context, req *resourcev1.GenerateInviteLinkReq) (*resourcev1.GenerateInviteLinkResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GenerateInviteLink(ctx, req)
+func (s *orgV1Service) CreateInviteRecordForLink(ctx context.Context, req *resourcev1.CreateInviteRecordForLinkReq) (*resourcev1.CreateInviteRecordForLinkResp, error) {
+	param := dto.OrgDto.ToBoCreateInviteRecordForLinkParam(req)
+	reply, err := s.orgBiz.CreateInviteRecordForLink(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.CreateInviteRecordForLinkResp{
+		Data: dto.OrgDto.ToPbCreateInviteRecordForLinkRespData(reply),
+	}, nil
 }
 
-func (s *orgV1Service) CreateInviteEmployee(ctx context.Context, req *resourcev1.CreateInviteEmployeeReq) (*resourcev1.CreateInviteEmployeeResp, error) {
-	return s.UnimplementedSrvOrgV1Server.CreateInviteEmployee(ctx, req)
+func (s *orgV1Service) CreateInviteRecordForEmployee(ctx context.Context, req *resourcev1.CreateInviteRecordForEmployeeReq) (*resourcev1.CreateInviteRecordForEmployeeResp, error) {
+	param := dto.OrgDto.ToBoCreateInviteRecordForEmployeeParam(req)
+	reply, err := s.orgBiz.CreateInviteRecordForEmployee(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.CreateInviteRecordForEmployeeResp{
+		Data: dto.OrgDto.ToPbCreateInviteRecordForEmployeeRespData(reply),
+	}, nil
 }

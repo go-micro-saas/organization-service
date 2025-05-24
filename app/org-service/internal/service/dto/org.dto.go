@@ -3,6 +3,8 @@ package dto
 import (
 	resourcev1 "github.com/go-micro-saas/organization-service/api/org-service/v1/resources"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/biz/bo"
+	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 var (
@@ -85,6 +87,47 @@ func (s *orgDto) ToPbAddEmployeeRespData(dataModel *bo.AddEmployeeReply) *resour
 		EmployeeAvatar: dataModel.EmployeeAvatar,
 		EmployeeStatus: dataModel.EmployeeStatus,
 		EmployeeRole:   dataModel.EmployeeRole,
+	}
+	return res
+}
+
+func (s *orgDto) ToBoCreateInviteRecordForLinkParam(req *resourcev1.CreateInviteRecordForLinkReq) *bo.CreateInviteRecordForLinkParam {
+	res := &bo.CreateInviteRecordForLinkParam{
+		OperatorUid: req.OperatorUid,
+		OrgId:       req.OrgId,
+		ExpireTime:  req.ExpireTime.AsTime(),
+	}
+	return res
+}
+
+func (s *orgDto) ToPbCreateInviteRecordForLinkRespData(dataModel *po.OrgInviteRecord) *resourcev1.CreateInviteRecordForLinkRespData {
+	res := &resourcev1.CreateInviteRecordForLinkRespData{
+		InviteId:   dataModel.InviteId,
+		InviteCode: dataModel.InviteCode,
+		ExpireTime: timestamppb.New(dataModel.ExpireTime),
+	}
+	return res
+}
+
+func (s *orgDto) ToBoCreateInviteRecordForEmployeeParam(req *resourcev1.CreateInviteRecordForEmployeeReq) *bo.CreateInviteRecordForEmployeeParam {
+	res := &bo.CreateInviteRecordForEmployeeParam{
+		OperatorUid:        req.OperatorUid,
+		OrgId:              req.OrgId,
+		ExpireTime:         req.ExpireTime.AsTime(),
+		InviteUserId:       req.InviteUserId,
+		InviteAccount:      req.InviteAccount,
+		InviteAccountType:  req.InviteAccountType,
+		InviteEmployeeRole: req.InviteEmployeeRole,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbCreateInviteRecordForEmployeeRespData(dataModel *po.OrgInviteRecord) *resourcev1.CreateInviteRecordForEmployeeRespData {
+	res := &resourcev1.CreateInviteRecordForEmployeeRespData{
+		InviteId:         dataModel.InviteId,
+		InviteCode:       dataModel.InviteCode,
+		ExpireTime:       timestamppb.New(dataModel.ExpireTime),
+		AssignEmployeeId: dataModel.AssignEmployeeId,
 	}
 	return res
 }

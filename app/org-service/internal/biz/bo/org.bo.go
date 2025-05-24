@@ -94,13 +94,13 @@ type InviteEmployeeParam struct {
 	InviteID uint64
 }
 
-type GenerateInviteLinkParam struct {
+type CreateInviteRecordForLinkParam struct {
 	OperatorUid uint64    // 操作人ID
 	OrgId       uint64    // 组织ID
 	ExpireTime  time.Time //
 }
 
-type GenerateInviteEmployeeParam struct {
+type CreateInviteRecordForEmployeeParam struct {
 	OperatorUid        uint64    // 操作人ID
 	OrgId              uint64    // 组织ID
 	ExpireTime         time.Time //
