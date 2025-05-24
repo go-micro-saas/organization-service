@@ -4,8 +4,10 @@ package po
 
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
+	errorv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/errors"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
 	randompkg "github.com/ikaiguang/go-srv-kit/kit/random"
+	timepkg "github.com/ikaiguang/go-srv-kit/kit/time"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	time "time"
 )
@@ -34,13 +36,37 @@ type OrgInviteRecord struct {
 	InviteCode          string                                               `gorm:"column:invite_code" json:"invite_code"`                     // 邀请码
 }
 
+func (s *OrgInviteRecord) IsJoinStatus() bool {
+	return s.InviteStatus == enumv1.OrgInviteStatusEnum_UNSPECIFIED ||
+		s.InviteStatus == enumv1.OrgInviteStatusEnum_INVITING
+}
+
+func (s *OrgInviteRecord) IsValidInviteRecord(inviteCode string) error {
+	if s.InviteCode != inviteCode {
+		e := errorv1.DefaultErrorS105InvalidInviteRecord()
+		return errorpkg.WithStack(e)
+	}
+	if !s.IsJoinStatus() {
+		e := errorv1.DefaultErrorS105InvalidInviteStatus()
+		return errorpkg.WithStack(e)
+	}
+	if s.ExpireTime.Before(time.Now()) {
+		e := errorv1.DefaultErrorS105InvitationHasExpired()
+		return errorpkg.WithStack(e)
+	}
+	return nil
+}
+
 func (s *OrgInviteRecord) CheckAndSetExpireTime(expireTime time.Time) {
+	now := time.Now()
 	if !expireTime.After(time.Now()) {
+		s.ExpireTime = now.Add(DefaultOrgInviteRecordExpireTime)
 		return
 	}
-	maxTime := time.Date(9999, 1, 1, 0, 0, 1, 0, time.Local)
+	maxTime := timepkg.Time9999()
 	if expireTime.After(maxTime) {
-		expireTime = maxTime
+		s.ExpireTime = maxTime
+		return
 	}
 	s.ExpireTime = expireTime
 }

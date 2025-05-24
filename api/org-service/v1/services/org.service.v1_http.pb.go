@@ -24,6 +24,7 @@ const OperationSrvOrgV1AddEmployee = "/saas.api.org.servicev1.SrvOrgV1/AddEmploy
 const OperationSrvOrgV1CreateInviteRecordForEmployee = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForEmployee"
 const OperationSrvOrgV1CreateInviteRecordForLink = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForLink"
 const OperationSrvOrgV1CreateOrg = "/saas.api.org.servicev1.SrvOrgV1/CreateOrg"
+const OperationSrvOrgV1JoinByInviteLink = "/saas.api.org.servicev1.SrvOrgV1/JoinByInviteLink"
 const OperationSrvOrgV1OnlyCreateOrg = "/saas.api.org.servicev1.SrvOrgV1/OnlyCreateOrg"
 const OperationSrvOrgV1Ping = "/saas.api.org.servicev1.SrvOrgV1/Ping"
 
@@ -32,6 +33,7 @@ type SrvOrgV1HTTPServer interface {
 	CreateInviteRecordForEmployee(context.Context, *resources.CreateInviteRecordForEmployeeReq) (*resources.CreateInviteRecordForEmployeeResp, error)
 	CreateInviteRecordForLink(context.Context, *resources.CreateInviteRecordForLinkReq) (*resources.CreateInviteRecordForLinkResp, error)
 	CreateOrg(context.Context, *resources.CreateOrgReq) (*resources.CreateOrgResp, error)
+	JoinByInviteLink(context.Context, *resources.JoinByInviteLinkReq) (*resources.JoinByInviteLinkResp, error)
 	OnlyCreateOrg(context.Context, *resources.OnlyCreateOrgReq) (*resources.CreateOrgResp, error)
 	// Ping Ping ping
 	Ping(context.Context, *resources.PingReq) (*resources.PingResp, error)
@@ -45,6 +47,7 @@ func RegisterSrvOrgV1HTTPServer(s *http.Server, srv SrvOrgV1HTTPServer) {
 	r.POST("/api/v1/org/add-employee", _SrvOrgV1_AddEmployee0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/create-invite-record-for-link", _SrvOrgV1_CreateInviteRecordForLink0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/create-invite-record-for-employee", _SrvOrgV1_CreateInviteRecordForEmployee0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/join-by-invite-link", _SrvOrgV1_JoinByInviteLink0_HTTP_Handler(srv))
 }
 
 func _SrvOrgV1_Ping0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
@@ -176,11 +179,34 @@ func _SrvOrgV1_CreateInviteRecordForEmployee0_HTTP_Handler(srv SrvOrgV1HTTPServe
 	}
 }
 
+func _SrvOrgV1_JoinByInviteLink0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.JoinByInviteLinkReq
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1JoinByInviteLink)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.JoinByInviteLink(ctx, req.(*resources.JoinByInviteLinkReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.JoinByInviteLinkResp)
+		return ctx.Result(200, reply)
+	}
+}
+
 type SrvOrgV1HTTPClient interface {
 	AddEmployee(ctx context.Context, req *resources.AddEmployeeReq, opts ...http.CallOption) (rsp *resources.AddEmployeeResp, err error)
 	CreateInviteRecordForEmployee(ctx context.Context, req *resources.CreateInviteRecordForEmployeeReq, opts ...http.CallOption) (rsp *resources.CreateInviteRecordForEmployeeResp, err error)
 	CreateInviteRecordForLink(ctx context.Context, req *resources.CreateInviteRecordForLinkReq, opts ...http.CallOption) (rsp *resources.CreateInviteRecordForLinkResp, err error)
 	CreateOrg(ctx context.Context, req *resources.CreateOrgReq, opts ...http.CallOption) (rsp *resources.CreateOrgResp, err error)
+	JoinByInviteLink(ctx context.Context, req *resources.JoinByInviteLinkReq, opts ...http.CallOption) (rsp *resources.JoinByInviteLinkResp, err error)
 	OnlyCreateOrg(ctx context.Context, req *resources.OnlyCreateOrgReq, opts ...http.CallOption) (rsp *resources.CreateOrgResp, err error)
 	Ping(ctx context.Context, req *resources.PingReq, opts ...http.CallOption) (rsp *resources.PingResp, err error)
 }
@@ -237,6 +263,19 @@ func (c *SrvOrgV1HTTPClientImpl) CreateOrg(ctx context.Context, in *resources.Cr
 	pattern := "/api/v1/org/create"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationSrvOrgV1CreateOrg))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) JoinByInviteLink(ctx context.Context, in *resources.JoinByInviteLinkReq, opts ...http.CallOption) (*resources.JoinByInviteLinkResp, error) {
+	var out resources.JoinByInviteLinkResp
+	pattern := "/api/v1/org/join-by-invite-link"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationSrvOrgV1JoinByInviteLink))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

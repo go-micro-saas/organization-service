@@ -25,6 +25,9 @@ var ERROR_http_code = map[string]int{
 	"S105_EMPLOYEE_DISABLE":       400,
 	"S105_EMPLOYEE_NO_PERMISSION": 400,
 	"S105_NOT_ORG_EMPLOYEE":       400,
+	"S105_INVALID_INVITE_RECORD":  400,
+	"S105_INVITATION_HAS_EXPIRED": 400,
+	"S105_INVALID_INVITE_STATUS":  400,
 }
 
 func (x ERROR) HTTPCode() int {
@@ -142,5 +145,26 @@ func DefaultErrorS105EmployeeNoPermission() *errors.Error {
 func DefaultErrorS105NotOrgEmployee() *errors.Error {
 	e := errors.New(400, ERROR_S105_NOT_ORG_EMPLOYEE.String(), "不是组织的成员")
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_ORG_EMPLOYEE.Number()))}
+	return e
+}
+
+// 无效的邀请
+func DefaultErrorS105InvalidInviteRecord() *errors.Error {
+	e := errors.New(400, ERROR_S105_INVALID_INVITE_RECORD.String(), "无效的邀请")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_INVITE_RECORD.Number()))}
+	return e
+}
+
+// 邀请已过期
+func DefaultErrorS105InvitationHasExpired() *errors.Error {
+	e := errors.New(400, ERROR_S105_INVITATION_HAS_EXPIRED.String(), "邀请已过期")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVITATION_HAS_EXPIRED.Number()))}
+	return e
+}
+
+// 无效的邀请状态
+func DefaultErrorS105InvalidInviteStatus() *errors.Error {
+	e := errors.New(400, ERROR_S105_INVALID_INVITE_STATUS.String(), "无效的邀请状态")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_INVITE_STATUS.Number()))}
 	return e
 }

@@ -191,6 +191,25 @@ func (s *orgInviteRecordRepo) QueryOneByIdWithDBConn(ctx context.Context, dbConn
 	return s.queryOneById(ctx, dbConn, id)
 }
 
+func (s *orgInviteRecordRepo) QueryOneByInviteID(ctx context.Context, inviteID uint64) (dataModel *po.OrgInviteRecord, isNotFound bool, err error) {
+	dataModel = new(po.OrgInviteRecord)
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgInviteRecordSchema.TableName()).
+		Where(schemas.FieldInviteId+" = ?", inviteID).
+		First(dataModel).Error
+	if err != nil {
+		if gormpkg.IsErrRecordNotFound(err) {
+			err = nil
+			isNotFound = true
+		} else {
+			e := errorpkg.ErrorInternalServer("")
+			err = errorpkg.Wrap(e, err)
+		}
+		return
+	}
+	return
+}
+
 // queryOneByConditions query one by conditions
 func (s *orgInviteRecordRepo) queryOneByConditions(ctx context.Context, dbConn *gorm.DB, conditions map[string]interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error) {
 	dataModel = new(po.OrgInviteRecord)

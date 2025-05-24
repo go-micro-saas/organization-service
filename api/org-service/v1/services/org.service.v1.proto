@@ -49,12 +49,12 @@ service SrvOrgV1 {
       body: "*"
     };
   }
-  //  rpc JoinByInviteLink(resourcev1.JoinByInviteLinkReq) returns (resourcev1.JoinByInviteLinkResp) {
-  //    option (google.api.http) = {
-  //      post: "/api/v1/org/join-by-invite-link"
-  //      body: "*"
-  //    };
-  //  }
+  rpc JoinByInviteLink(resourcev1.JoinByInviteLinkReq) returns (resourcev1.JoinByInviteLinkResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/join-by-invite-link"
+      body: "*"
+    };
+  }
   //  rpc AgreeOrRefuseInvite(resourcev1.AgreeOrRefuseInviteReq) returns (resourcev1.AgreeOrRefuseInviteResp) {
   //    option (google.api.http) = {
   //      post: "/api/v1/org/agree-or-refuse-invite"

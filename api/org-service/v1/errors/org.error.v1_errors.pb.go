@@ -265,3 +265,51 @@ func ErrorS105NotOrgEmployee(format string, args ...interface{}) *errors.Error {
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_ORG_EMPLOYEE.Number()))}
 	return e
 }
+
+// 无效的邀请
+func IsS105InvalidInviteRecord(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_INVALID_INVITE_RECORD.String() && e.Code == 400
+}
+
+// 无效的邀请
+func ErrorS105InvalidInviteRecord(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_INVALID_INVITE_RECORD.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_INVITE_RECORD.Number()))}
+	return e
+}
+
+// 邀请已过期
+func IsS105InvitationHasExpired(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_INVITATION_HAS_EXPIRED.String() && e.Code == 400
+}
+
+// 邀请已过期
+func ErrorS105InvitationHasExpired(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_INVITATION_HAS_EXPIRED.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVITATION_HAS_EXPIRED.Number()))}
+	return e
+}
+
+// 无效的邀请状态
+func IsS105InvalidInviteStatus(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_INVALID_INVITE_STATUS.String() && e.Code == 400
+}
+
+// 无效的邀请状态
+func ErrorS105InvalidInviteStatus(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_INVALID_INVITE_STATUS.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_INVITE_STATUS.Number()))}
+	return e
+}

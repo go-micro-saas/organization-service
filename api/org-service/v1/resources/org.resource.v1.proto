@@ -109,9 +109,10 @@ message AddEmployeeRespData {
 }
 
 message CreateInviteRecordForLinkReq {
-  uint64 operator_uid                   = 100 [(validate.rules).uint64.gt = 0];                  // 操作人ID
-  uint64 org_id                         = 1 [(validate.rules).uint64.gt = 0];                    // 组织ID
-  google.protobuf.Timestamp expire_time = 2 [(validate.rules).timestamp = { required: false }];  // 过期时间;默认1天
+  uint64 operator_uid                                             = 100 [(validate.rules).uint64.gt = 0];                  // 操作人ID
+  uint64 org_id                                                   = 1 [(validate.rules).uint64.gt = 0];                    // 组织ID
+  google.protobuf.Timestamp expire_time                           = 2 [(validate.rules).timestamp = { required: false }];  // 过期时间;默认1天
+  enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole invite_employee_role = 3 [(validate.rules).enum = { not_in: [ 0 ] }];         // 被邀请人角色
 }
 message CreateInviteRecordForLinkResp {
   int32 code                             = 1;
@@ -130,11 +131,11 @@ message CreateInviteRecordForEmployeeReq {
   uint64 operator_uid = 100 [(validate.rules).uint64.gt = 0];  // 操作人ID
   uint64 org_id       = 101 [(validate.rules).uint64.gt = 0];  // 组织ID
 
-  uint64 invite_user_id                                                    = 1 [(validate.rules).uint64.gt = 0];                    // 被邀请人ID
-  string invite_account                                                    = 2 [(validate.rules).string.min_len = 1];               // 被邀请人账号
-  google.protobuf.Timestamp expire_time                                    = 3 [(validate.rules).timestamp = { required: false }];  // 过期时间;默认1天
-  enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType invite_account_type = 4 [(validate.rules).enum = { not_in: [ 0 ] }];         // 被邀请人账号类型
-  enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole invite_employee_role          = 5 [(validate.rules).enum = { not_in: [ 0 ] }];         // 被邀请人角色
+  uint64 invite_user_id                                                    = 1 [(validate.rules).uint64.gt = 0];                          // 被邀请人ID
+  string invite_account                                                    = 2 [(validate.rules).string = { min_len: 1, max_len: 128 }];  // 被邀请人账号
+  google.protobuf.Timestamp expire_time                                    = 3 [(validate.rules).timestamp = { required: false }];        // 过期时间;默认1天
+  enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType invite_account_type = 4 [(validate.rules).enum = { not_in: [ 0 ] }];               // 被邀请人账号类型
+  enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole invite_employee_role          = 5 [(validate.rules).enum = { not_in: [ 0 ] }];               // 被邀请人角色
 }
 message CreateInviteRecordForEmployeeResp {
   int32 code                                 = 1;
@@ -148,4 +149,31 @@ message CreateInviteRecordForEmployeeRespData {
   string invite_code                    = 2;
   google.protobuf.Timestamp expire_time = 3;
   uint64 assign_employee_id             = 4;
+}
+
+message JoinByInviteLinkReq {
+  uint64 invite_id   = 100 [(validate.rules).uint64 = { gt: 0 }];
+  string invite_code = 101 [(validate.rules).string = { min_len: 1, max_len: 128 }];
+
+  uint64 user_id     = 1 [(validate.rules).uint64.gt = 0];               // 成员ID
+  string user_name   = 2 [(validate.rules).string.min_len = 1];          // 成员名称
+  string user_avatar = 5 [(validate.rules).string.ignore_empty = true];  // 成员头像
+  string user_phone  = 6 [(validate.rules).string.ignore_empty = true];  // 成员电话
+  string user_email  = 7 [(validate.rules).string.ignore_empty = true];  // 成员邮箱
+}
+message JoinByInviteLinkResp {
+  int32 code                    = 1;
+  string reason                 = 2;
+  string message                = 3;
+  map<string, string> metadata  = 4;
+  JoinByInviteLinkRespData data = 100;
+}
+message JoinByInviteLinkRespData {
+  uint64 org_id                                                               = 1;
+  uint64 user_id                                                              = 2;
+  uint64 employee_id                                                          = 3;
+  string employee_name                                                        = 4;
+  string employee_avatar                                                      = 5;
+  saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus employee_status = 6;  // 成员状态
+  saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole employee_role       = 7;  // 成员角色
 }

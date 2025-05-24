@@ -30,4 +30,7 @@ enum ERROR {
   S105_EMPLOYEE_DISABLE       = 105000013 [(errors.code) = 400];  // 成员已被禁用
   S105_EMPLOYEE_NO_PERMISSION = 105000014 [(errors.code) = 400];  // 无权限
   S105_NOT_ORG_EMPLOYEE       = 105000015 [(errors.code) = 400];  // 不是组织的成员
+  S105_INVALID_INVITE_RECORD  = 105000016 [(errors.code) = 400];  // 无效的邀请
+  S105_INVITATION_HAS_EXPIRED = 105000017 [(errors.code) = 400];  // 邀请已过期
+  S105_INVALID_INVITE_STATUS  = 105000018 [(errors.code) = 400];  // 无效的邀请状态
 }

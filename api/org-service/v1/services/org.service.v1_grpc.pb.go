@@ -26,6 +26,7 @@ const (
 	SrvOrgV1_AddEmployee_FullMethodName                   = "/saas.api.org.servicev1.SrvOrgV1/AddEmployee"
 	SrvOrgV1_CreateInviteRecordForLink_FullMethodName     = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForLink"
 	SrvOrgV1_CreateInviteRecordForEmployee_FullMethodName = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForEmployee"
+	SrvOrgV1_JoinByInviteLink_FullMethodName              = "/saas.api.org.servicev1.SrvOrgV1/JoinByInviteLink"
 )
 
 // SrvOrgV1Client is the client API for SrvOrgV1 service.
@@ -41,6 +42,7 @@ type SrvOrgV1Client interface {
 	AddEmployee(ctx context.Context, in *resources.AddEmployeeReq, opts ...grpc.CallOption) (*resources.AddEmployeeResp, error)
 	CreateInviteRecordForLink(ctx context.Context, in *resources.CreateInviteRecordForLinkReq, opts ...grpc.CallOption) (*resources.CreateInviteRecordForLinkResp, error)
 	CreateInviteRecordForEmployee(ctx context.Context, in *resources.CreateInviteRecordForEmployeeReq, opts ...grpc.CallOption) (*resources.CreateInviteRecordForEmployeeResp, error)
+	JoinByInviteLink(ctx context.Context, in *resources.JoinByInviteLinkReq, opts ...grpc.CallOption) (*resources.JoinByInviteLinkResp, error)
 }
 
 type srvOrgV1Client struct {
@@ -111,6 +113,16 @@ func (c *srvOrgV1Client) CreateInviteRecordForEmployee(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *srvOrgV1Client) JoinByInviteLink(ctx context.Context, in *resources.JoinByInviteLinkReq, opts ...grpc.CallOption) (*resources.JoinByInviteLinkResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.JoinByInviteLinkResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_JoinByInviteLink_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SrvOrgV1Server is the server API for SrvOrgV1 service.
 // All implementations must embed UnimplementedSrvOrgV1Server
 // for forward compatibility.
@@ -124,6 +136,7 @@ type SrvOrgV1Server interface {
 	AddEmployee(context.Context, *resources.AddEmployeeReq) (*resources.AddEmployeeResp, error)
 	CreateInviteRecordForLink(context.Context, *resources.CreateInviteRecordForLinkReq) (*resources.CreateInviteRecordForLinkResp, error)
 	CreateInviteRecordForEmployee(context.Context, *resources.CreateInviteRecordForEmployeeReq) (*resources.CreateInviteRecordForEmployeeResp, error)
+	JoinByInviteLink(context.Context, *resources.JoinByInviteLinkReq) (*resources.JoinByInviteLinkResp, error)
 	mustEmbedUnimplementedSrvOrgV1Server()
 }
 
@@ -151,6 +164,9 @@ func (UnimplementedSrvOrgV1Server) CreateInviteRecordForLink(context.Context, *r
 }
 func (UnimplementedSrvOrgV1Server) CreateInviteRecordForEmployee(context.Context, *resources.CreateInviteRecordForEmployeeReq) (*resources.CreateInviteRecordForEmployeeResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateInviteRecordForEmployee not implemented")
+}
+func (UnimplementedSrvOrgV1Server) JoinByInviteLink(context.Context, *resources.JoinByInviteLinkReq) (*resources.JoinByInviteLinkResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method JoinByInviteLink not implemented")
 }
 func (UnimplementedSrvOrgV1Server) mustEmbedUnimplementedSrvOrgV1Server() {}
 func (UnimplementedSrvOrgV1Server) testEmbeddedByValue()                  {}
@@ -281,6 +297,24 @@ func _SrvOrgV1_CreateInviteRecordForEmployee_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SrvOrgV1_JoinByInviteLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.JoinByInviteLinkReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).JoinByInviteLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_JoinByInviteLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).JoinByInviteLink(ctx, req.(*resources.JoinByInviteLinkReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SrvOrgV1_ServiceDesc is the grpc.ServiceDesc for SrvOrgV1 service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -311,6 +345,10 @@ var SrvOrgV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateInviteRecordForEmployee",
 			Handler:    _SrvOrgV1_CreateInviteRecordForEmployee_Handler,
+		},
+		{
+			MethodName: "JoinByInviteLink",
+			Handler:    _SrvOrgV1_JoinByInviteLink_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

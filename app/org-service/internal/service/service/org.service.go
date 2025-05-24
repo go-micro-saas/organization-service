@@ -84,3 +84,14 @@ func (s *orgV1Service) CreateInviteRecordForEmployee(ctx context.Context, req *r
 		Data: dto.OrgDto.ToPbCreateInviteRecordForEmployeeRespData(reply),
 	}, nil
 }
+
+func (s *orgV1Service) JoinByInviteLink(ctx context.Context, req *resourcev1.JoinByInviteLinkReq) (*resourcev1.JoinByInviteLinkResp, error) {
+	param := dto.OrgDto.ToBoJoinByInviteLinkParam(req)
+	reply, err := s.orgBiz.JoinByInviteLink(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.JoinByInviteLinkResp{
+		Data: dto.OrgDto.ToPbJoinByInviteLinkRespData(reply),
+	}, nil
+}

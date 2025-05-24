@@ -17,6 +17,7 @@ type OrgInviteRecordRepo interface {
 	Update(ctx context.Context, dataModel *po.OrgInviteRecord) error
 	ExistUpdate(ctx context.Context, dataModel *po.OrgInviteRecord) (anotherModel *po.OrgInviteRecord, isNotFound bool, err error)
 	QueryOneById(ctx context.Context, id interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
+	QueryOneByInviteID(ctx context.Context, inviteID uint64) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
 	QueryOneByConditions(ctx context.Context, conditions map[string]interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
 	QueryAllByConditions(ctx context.Context, conditions map[string]interface{}) (dataModels []*po.OrgInviteRecord, err error)
 	List(ctx context.Context, conditions map[string]interface{}, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgInviteRecord, totalNumber int64, err error)

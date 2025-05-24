@@ -121,10 +121,6 @@ func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*
 	return res, nil
 }
 
-func (s *orgBiz) InviteEmployee(ctx context.Context, param *bo.InviteEmployeeParam) (*bo.AddEmployeeReply, error) {
-	return nil, nil
-}
-
 func (s *orgBiz) isEmployeeExists(ctx context.Context, dataModel *po.OrgEmployee) error {
 	return s.isEmployeeExistsByEmployeeUUID(ctx, dataModel.EmployeeUuid)
 }

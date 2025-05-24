@@ -95,9 +95,10 @@ type InviteEmployeeParam struct {
 }
 
 type CreateInviteRecordForLinkParam struct {
-	OperatorUid uint64    // 操作人ID
-	OrgId       uint64    // 组织ID
-	ExpireTime  time.Time //
+	OperatorUid        uint64                                     // 操作人ID
+	OrgId              uint64                                     // 组织ID
+	ExpireTime         time.Time                                  //
+	InviteEmployeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole //
 }
 
 type CreateInviteRecordForEmployeeParam struct {
@@ -108,4 +109,14 @@ type CreateInviteRecordForEmployeeParam struct {
 	InviteAccount      string
 	InviteAccountType  enumv1.OrgInviteAccountTypeEnum_OrgInviteAccountType
 	InviteEmployeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole
+}
+
+type JoinByInviteLinkParam struct {
+	InviteId   uint64
+	InviteCode string
+	UserId     uint64 // 成员ID
+	UserName   string // 成员名称
+	UserAvatar string // 成员头像
+	UserPhone  string // 成员电话
+	UserEmail  string // 成员邮箱
 }

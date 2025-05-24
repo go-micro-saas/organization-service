@@ -93,9 +93,10 @@ func (s *orgDto) ToPbAddEmployeeRespData(dataModel *bo.AddEmployeeReply) *resour
 
 func (s *orgDto) ToBoCreateInviteRecordForLinkParam(req *resourcev1.CreateInviteRecordForLinkReq) *bo.CreateInviteRecordForLinkParam {
 	res := &bo.CreateInviteRecordForLinkParam{
-		OperatorUid: req.OperatorUid,
-		OrgId:       req.OrgId,
-		ExpireTime:  req.ExpireTime.AsTime(),
+		OperatorUid:        req.OperatorUid,
+		OrgId:              req.OrgId,
+		ExpireTime:         req.ExpireTime.AsTime(),
+		InviteEmployeeRole: req.InviteEmployeeRole,
 	}
 	return res
 }
@@ -128,6 +129,32 @@ func (s *orgDto) ToPbCreateInviteRecordForEmployeeRespData(dataModel *po.OrgInvi
 		InviteCode:       dataModel.InviteCode,
 		ExpireTime:       timestamppb.New(dataModel.ExpireTime),
 		AssignEmployeeId: dataModel.AssignEmployeeId,
+	}
+	return res
+}
+
+func (s *orgDto) ToBoJoinByInviteLinkParam(req *resourcev1.JoinByInviteLinkReq) *bo.JoinByInviteLinkParam {
+	res := &bo.JoinByInviteLinkParam{
+		InviteId:   req.InviteId,
+		InviteCode: req.GetInviteCode(),
+		UserId:     req.UserId,
+		UserName:   req.UserName,
+		UserAvatar: req.UserAvatar,
+		UserPhone:  req.UserPhone,
+		UserEmail:  req.UserEmail,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbJoinByInviteLinkRespData(dataModel *po.OrgEmployee) *resourcev1.JoinByInviteLinkRespData {
+	res := &resourcev1.JoinByInviteLinkRespData{
+		OrgId:          dataModel.OrgId,
+		UserId:         dataModel.UserId,
+		EmployeeId:     dataModel.EmployeeId,
+		EmployeeName:   dataModel.EmployeeName,
+		EmployeeAvatar: dataModel.EmployeeAvatar,
+		EmployeeStatus: dataModel.EmployeeStatus,
+		EmployeeRole:   dataModel.EmployeeRole,
 	}
 	return res
 }

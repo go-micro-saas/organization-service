@@ -1519,6 +1519,17 @@ func (m *CreateInviteRecordForLinkReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if _, ok := _CreateInviteRecordForLinkReq_InviteEmployeeRole_NotInLookup[m.GetInviteEmployeeRole()]; ok {
+		err := CreateInviteRecordForLinkReqValidationError{
+			field:  "InviteEmployeeRole",
+			reason: "value must not be in list [UNSPECIFIED]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return CreateInviteRecordForLinkReqMultiError(errors)
 	}
@@ -1599,6 +1610,10 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateInviteRecordForLinkReqValidationError{}
+
+var _CreateInviteRecordForLinkReq_InviteEmployeeRole_NotInLookup = map[enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole]struct{}{
+	0: {},
+}
 
 // Validate checks the field values on CreateInviteRecordForLinkResp with the
 // rules defined in the proto definition for this message. If any rules are
@@ -1934,10 +1949,10 @@ func (m *CreateInviteRecordForEmployeeReq) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetInviteAccount()) < 1 {
+	if l := utf8.RuneCountInString(m.GetInviteAccount()); l < 1 || l > 128 {
 		err := CreateInviteRecordForEmployeeReqValidationError{
 			field:  "InviteAccount",
-			reason: "value length must be at least 1 runes",
+			reason: "value length must be between 1 and 128 runes, inclusive",
 		}
 		if !all {
 			return err
@@ -2338,3 +2353,416 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateInviteRecordForEmployeeRespDataValidationError{}
+
+// Validate checks the field values on JoinByInviteLinkReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *JoinByInviteLinkReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on JoinByInviteLinkReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// JoinByInviteLinkReqMultiError, or nil if none found.
+func (m *JoinByInviteLinkReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *JoinByInviteLinkReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetInviteId() <= 0 {
+		err := JoinByInviteLinkReqValidationError{
+			field:  "InviteId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := utf8.RuneCountInString(m.GetInviteCode()); l < 1 || l > 128 {
+		err := JoinByInviteLinkReqValidationError{
+			field:  "InviteCode",
+			reason: "value length must be between 1 and 128 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUserId() <= 0 {
+		err := JoinByInviteLinkReqValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetUserName()) < 1 {
+		err := JoinByInviteLinkReqValidationError{
+			field:  "UserName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUserAvatar() != "" {
+
+	}
+
+	if m.GetUserPhone() != "" {
+
+	}
+
+	if m.GetUserEmail() != "" {
+
+	}
+
+	if len(errors) > 0 {
+		return JoinByInviteLinkReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// JoinByInviteLinkReqMultiError is an error wrapping multiple validation
+// errors returned by JoinByInviteLinkReq.ValidateAll() if the designated
+// constraints aren't met.
+type JoinByInviteLinkReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m JoinByInviteLinkReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m JoinByInviteLinkReqMultiError) AllErrors() []error { return m }
+
+// JoinByInviteLinkReqValidationError is the validation error returned by
+// JoinByInviteLinkReq.Validate if the designated constraints aren't met.
+type JoinByInviteLinkReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e JoinByInviteLinkReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e JoinByInviteLinkReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e JoinByInviteLinkReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e JoinByInviteLinkReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e JoinByInviteLinkReqValidationError) ErrorName() string {
+	return "JoinByInviteLinkReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e JoinByInviteLinkReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sJoinByInviteLinkReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = JoinByInviteLinkReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = JoinByInviteLinkReqValidationError{}
+
+// Validate checks the field values on JoinByInviteLinkResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *JoinByInviteLinkResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on JoinByInviteLinkResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// JoinByInviteLinkRespMultiError, or nil if none found.
+func (m *JoinByInviteLinkResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *JoinByInviteLinkResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, JoinByInviteLinkRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, JoinByInviteLinkRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return JoinByInviteLinkRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return JoinByInviteLinkRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// JoinByInviteLinkRespMultiError is an error wrapping multiple validation
+// errors returned by JoinByInviteLinkResp.ValidateAll() if the designated
+// constraints aren't met.
+type JoinByInviteLinkRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m JoinByInviteLinkRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m JoinByInviteLinkRespMultiError) AllErrors() []error { return m }
+
+// JoinByInviteLinkRespValidationError is the validation error returned by
+// JoinByInviteLinkResp.Validate if the designated constraints aren't met.
+type JoinByInviteLinkRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e JoinByInviteLinkRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e JoinByInviteLinkRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e JoinByInviteLinkRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e JoinByInviteLinkRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e JoinByInviteLinkRespValidationError) ErrorName() string {
+	return "JoinByInviteLinkRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e JoinByInviteLinkRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sJoinByInviteLinkResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = JoinByInviteLinkRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = JoinByInviteLinkRespValidationError{}
+
+// Validate checks the field values on JoinByInviteLinkRespData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *JoinByInviteLinkRespData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on JoinByInviteLinkRespData with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// JoinByInviteLinkRespDataMultiError, or nil if none found.
+func (m *JoinByInviteLinkRespData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *JoinByInviteLinkRespData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for OrgId
+
+	// no validation rules for UserId
+
+	// no validation rules for EmployeeId
+
+	// no validation rules for EmployeeName
+
+	// no validation rules for EmployeeAvatar
+
+	// no validation rules for EmployeeStatus
+
+	// no validation rules for EmployeeRole
+
+	if len(errors) > 0 {
+		return JoinByInviteLinkRespDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// JoinByInviteLinkRespDataMultiError is an error wrapping multiple validation
+// errors returned by JoinByInviteLinkRespData.ValidateAll() if the designated
+// constraints aren't met.
+type JoinByInviteLinkRespDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m JoinByInviteLinkRespDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m JoinByInviteLinkRespDataMultiError) AllErrors() []error { return m }
+
+// JoinByInviteLinkRespDataValidationError is the validation error returned by
+// JoinByInviteLinkRespData.Validate if the designated constraints aren't met.
+type JoinByInviteLinkRespDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e JoinByInviteLinkRespDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e JoinByInviteLinkRespDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e JoinByInviteLinkRespDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e JoinByInviteLinkRespDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e JoinByInviteLinkRespDataValidationError) ErrorName() string {
+	return "JoinByInviteLinkRespDataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e JoinByInviteLinkRespDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sJoinByInviteLinkRespData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = JoinByInviteLinkRespDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = JoinByInviteLinkRespDataValidationError{}
