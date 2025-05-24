@@ -6,7 +6,6 @@ import (
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/biz/bo"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
-	"time"
 )
 
 func (s *orgBiz) CreateInviteRecordForLink(ctx context.Context, param *bo.CreateInviteRecordForLinkParam) (*po.OrgInviteRecord, error) {
@@ -15,9 +14,7 @@ func (s *orgBiz) CreateInviteRecordForLink(ctx context.Context, param *bo.Create
 		return nil, err
 	}
 	recordModel.InvitedType = enumv1.OrgInviteTypeEnum_LINK
-	if param.ExpireTime.After(time.Now()) {
-		recordModel.ExpireTime = param.ExpireTime
-	}
+	recordModel.CheckAndSetExpireTime(param.ExpireTime)
 	err = s.inviteRecordData.Create(ctx, recordModel)
 	if err != nil {
 		return nil, err
@@ -42,9 +39,7 @@ func (s *orgBiz) CreateInviteRecordForEmployee(ctx context.Context, param *bo.Cr
 	if err != nil {
 		return nil, err
 	}
-	if param.ExpireTime.After(time.Now()) {
-		recordModel.ExpireTime = param.ExpireTime
-	}
+	recordModel.CheckAndSetExpireTime(param.ExpireTime)
 	recordModel.OrgId = param.OrgId
 	recordModel.InviterUserId = param.OperatorUid
 	recordModel.InviterEmployeeId = inviterModel.EmployeeId

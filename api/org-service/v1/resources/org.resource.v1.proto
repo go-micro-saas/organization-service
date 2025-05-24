@@ -109,9 +109,9 @@ message AddEmployeeRespData {
 }
 
 message CreateInviteRecordForLinkReq {
-  uint64 operator_uid                   = 100 [(validate.rules).uint64.gt = 0];  // 操作人ID
-  uint64 org_id                         = 1 [(validate.rules).uint64.gt = 0];    // 组织ID
-  google.protobuf.Timestamp expire_time = 2;                                     // 默认一天
+  uint64 operator_uid                   = 100 [(validate.rules).uint64.gt = 0];                  // 操作人ID
+  uint64 org_id                         = 1 [(validate.rules).uint64.gt = 0];                    // 组织ID
+  google.protobuf.Timestamp expire_time = 2 [(validate.rules).timestamp = { required: false }];  // 过期时间;默认1天
 }
 message CreateInviteRecordForLinkResp {
   int32 code                             = 1;
@@ -130,11 +130,11 @@ message CreateInviteRecordForEmployeeReq {
   uint64 operator_uid = 100 [(validate.rules).uint64.gt = 0];  // 操作人ID
   uint64 org_id       = 101 [(validate.rules).uint64.gt = 0];  // 组织ID
 
-  uint64 invite_user_id                                                    = 1 [(validate.rules).uint64.gt = 0];             // 被邀请人ID
-  string invite_account                                                    = 2 [(validate.rules).string.min_len = 1];        // 被邀请人账号
-  google.protobuf.Timestamp expire_time                                    = 3;                                              // 过期时间;默认1天
-  enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType invite_account_type = 4 [(validate.rules).enum = { not_in: [ 0 ] }];  // 被邀请人账号类型
-  enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole invite_employee_role          = 5 [(validate.rules).enum = { not_in: [ 0 ] }];  // 被邀请人角色
+  uint64 invite_user_id                                                    = 1 [(validate.rules).uint64.gt = 0];                    // 被邀请人ID
+  string invite_account                                                    = 2 [(validate.rules).string.min_len = 1];               // 被邀请人账号
+  google.protobuf.Timestamp expire_time                                    = 3 [(validate.rules).timestamp = { required: false }];  // 过期时间;默认1天
+  enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType invite_account_type = 4 [(validate.rules).enum = { not_in: [ 0 ] }];         // 被邀请人账号类型
+  enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole invite_employee_role          = 5 [(validate.rules).enum = { not_in: [ 0 ] }];         // 被邀请人角色
 }
 message CreateInviteRecordForEmployeeResp {
   int32 code                                 = 1;

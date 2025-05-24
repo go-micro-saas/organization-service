@@ -34,6 +34,17 @@ type OrgInviteRecord struct {
 	InviteCode          string                                               `gorm:"column:invite_code" json:"invite_code"`                     // 邀请码
 }
 
+func (s *OrgInviteRecord) CheckAndSetExpireTime(expireTime time.Time) {
+	if !expireTime.After(time.Now()) {
+		return
+	}
+	maxTime := time.Date(9999, 1, 1, 0, 0, 1, 0, time.Local)
+	if expireTime.After(maxTime) {
+		expireTime = maxTime
+	}
+	s.ExpireTime = expireTime
+}
+
 func DefaultInviteRecord() *OrgInviteRecord {
 	res := &OrgInviteRecord{
 		Id:                  0,
