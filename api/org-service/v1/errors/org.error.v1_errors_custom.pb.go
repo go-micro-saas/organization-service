@@ -28,6 +28,8 @@ var ERROR_http_code = map[string]int{
 	"S105_INVALID_INVITE_RECORD":  400,
 	"S105_INVITATION_HAS_EXPIRED": 400,
 	"S105_INVALID_INVITE_STATUS":  400,
+	"S105_NOT_INVITED_USER":       400,
+	"S105_INCORRECT_INVITE_TYPE":  400,
 }
 
 func (x ERROR) HTTPCode() int {
@@ -166,5 +168,19 @@ func DefaultErrorS105InvitationHasExpired() *errors.Error {
 func DefaultErrorS105InvalidInviteStatus() *errors.Error {
 	e := errors.New(400, ERROR_S105_INVALID_INVITE_STATUS.String(), "无效的邀请状态")
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_INVITE_STATUS.Number()))}
+	return e
+}
+
+// 不是被邀请用户
+func DefaultErrorS105NotInvitedUser() *errors.Error {
+	e := errors.New(400, ERROR_S105_NOT_INVITED_USER.String(), "不是被邀请用户")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_INVITED_USER.Number()))}
+	return e
+}
+
+// 邀请类型不正确
+func DefaultErrorS105IncorrectInviteType() *errors.Error {
+	e := errors.New(400, ERROR_S105_INCORRECT_INVITE_TYPE.String(), "邀请类型不正确")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INCORRECT_INVITE_TYPE.Number()))}
 	return e
 }

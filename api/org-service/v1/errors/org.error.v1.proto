@@ -33,4 +33,6 @@ enum ERROR {
   S105_INVALID_INVITE_RECORD  = 105000016 [(errors.code) = 400];  // 无效的邀请
   S105_INVITATION_HAS_EXPIRED = 105000017 [(errors.code) = 400];  // 邀请已过期
   S105_INVALID_INVITE_STATUS  = 105000018 [(errors.code) = 400];  // 无效的邀请状态
+  S105_NOT_INVITED_USER       = 105000019 [(errors.code) = 400];  // 不是被邀请用户
+  S105_INCORRECT_INVITE_TYPE  = 105000020 [(errors.code) = 400];  // 邀请类型不正确
 }

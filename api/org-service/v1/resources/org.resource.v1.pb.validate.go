@@ -2766,3 +2766,419 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = JoinByInviteLinkRespDataValidationError{}
+
+// Validate checks the field values on AgreeOrRefuseInviteReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AgreeOrRefuseInviteReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AgreeOrRefuseInviteReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AgreeOrRefuseInviteReqMultiError, or nil if none found.
+func (m *AgreeOrRefuseInviteReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AgreeOrRefuseInviteReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetInviteId() <= 0 {
+		err := AgreeOrRefuseInviteReqValidationError{
+			field:  "InviteId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if l := utf8.RuneCountInString(m.GetInviteCode()); l < 1 || l > 128 {
+		err := AgreeOrRefuseInviteReqValidationError{
+			field:  "InviteCode",
+			reason: "value length must be between 1 and 128 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for IsAgree
+
+	if m.GetUserId() <= 0 {
+		err := AgreeOrRefuseInviteReqValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetUserName()) < 1 {
+		err := AgreeOrRefuseInviteReqValidationError{
+			field:  "UserName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUserAvatar() != "" {
+
+	}
+
+	if m.GetUserPhone() != "" {
+
+	}
+
+	if m.GetUserEmail() != "" {
+
+	}
+
+	if len(errors) > 0 {
+		return AgreeOrRefuseInviteReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// AgreeOrRefuseInviteReqMultiError is an error wrapping multiple validation
+// errors returned by AgreeOrRefuseInviteReq.ValidateAll() if the designated
+// constraints aren't met.
+type AgreeOrRefuseInviteReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AgreeOrRefuseInviteReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AgreeOrRefuseInviteReqMultiError) AllErrors() []error { return m }
+
+// AgreeOrRefuseInviteReqValidationError is the validation error returned by
+// AgreeOrRefuseInviteReq.Validate if the designated constraints aren't met.
+type AgreeOrRefuseInviteReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AgreeOrRefuseInviteReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AgreeOrRefuseInviteReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AgreeOrRefuseInviteReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AgreeOrRefuseInviteReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AgreeOrRefuseInviteReqValidationError) ErrorName() string {
+	return "AgreeOrRefuseInviteReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AgreeOrRefuseInviteReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAgreeOrRefuseInviteReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AgreeOrRefuseInviteReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AgreeOrRefuseInviteReqValidationError{}
+
+// Validate checks the field values on AgreeOrRefuseInviteResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AgreeOrRefuseInviteResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AgreeOrRefuseInviteResp with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AgreeOrRefuseInviteRespMultiError, or nil if none found.
+func (m *AgreeOrRefuseInviteResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AgreeOrRefuseInviteResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, AgreeOrRefuseInviteRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, AgreeOrRefuseInviteRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AgreeOrRefuseInviteRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return AgreeOrRefuseInviteRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// AgreeOrRefuseInviteRespMultiError is an error wrapping multiple validation
+// errors returned by AgreeOrRefuseInviteResp.ValidateAll() if the designated
+// constraints aren't met.
+type AgreeOrRefuseInviteRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AgreeOrRefuseInviteRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AgreeOrRefuseInviteRespMultiError) AllErrors() []error { return m }
+
+// AgreeOrRefuseInviteRespValidationError is the validation error returned by
+// AgreeOrRefuseInviteResp.Validate if the designated constraints aren't met.
+type AgreeOrRefuseInviteRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AgreeOrRefuseInviteRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AgreeOrRefuseInviteRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AgreeOrRefuseInviteRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AgreeOrRefuseInviteRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AgreeOrRefuseInviteRespValidationError) ErrorName() string {
+	return "AgreeOrRefuseInviteRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AgreeOrRefuseInviteRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAgreeOrRefuseInviteResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AgreeOrRefuseInviteRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AgreeOrRefuseInviteRespValidationError{}
+
+// Validate checks the field values on AgreeOrRefuseInviteRespData with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AgreeOrRefuseInviteRespData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AgreeOrRefuseInviteRespData with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AgreeOrRefuseInviteRespDataMultiError, or nil if none found.
+func (m *AgreeOrRefuseInviteRespData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AgreeOrRefuseInviteRespData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for OrgId
+
+	// no validation rules for UserId
+
+	// no validation rules for EmployeeId
+
+	// no validation rules for EmployeeName
+
+	// no validation rules for EmployeeAvatar
+
+	// no validation rules for EmployeeStatus
+
+	// no validation rules for EmployeeRole
+
+	if len(errors) > 0 {
+		return AgreeOrRefuseInviteRespDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// AgreeOrRefuseInviteRespDataMultiError is an error wrapping multiple
+// validation errors returned by AgreeOrRefuseInviteRespData.ValidateAll() if
+// the designated constraints aren't met.
+type AgreeOrRefuseInviteRespDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AgreeOrRefuseInviteRespDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AgreeOrRefuseInviteRespDataMultiError) AllErrors() []error { return m }
+
+// AgreeOrRefuseInviteRespDataValidationError is the validation error returned
+// by AgreeOrRefuseInviteRespData.Validate if the designated constraints
+// aren't met.
+type AgreeOrRefuseInviteRespDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AgreeOrRefuseInviteRespDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AgreeOrRefuseInviteRespDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AgreeOrRefuseInviteRespDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AgreeOrRefuseInviteRespDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AgreeOrRefuseInviteRespDataValidationError) ErrorName() string {
+	return "AgreeOrRefuseInviteRespDataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AgreeOrRefuseInviteRespDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAgreeOrRefuseInviteRespData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AgreeOrRefuseInviteRespDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AgreeOrRefuseInviteRespDataValidationError{}

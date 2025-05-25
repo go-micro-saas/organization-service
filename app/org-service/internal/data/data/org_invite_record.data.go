@@ -5,6 +5,7 @@ package data
 import (
 	"bytes"
 	context "context"
+	"database/sql"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	datarepos "github.com/go-micro-saas/organization-service/app/org-service/internal/data/repo"
 	schemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_invite_record"
@@ -25,6 +26,10 @@ func NewOrgInviteRecordRepo(dbConn *gorm.DB) datarepos.OrgInviteRecordRepo {
 	return &orgInviteRecordRepo{
 		dbConn: dbConn,
 	}
+}
+
+func (s *orgInviteRecordRepo) NewTransaction(ctx context.Context, opts ...*sql.TxOptions) gormpkg.TransactionInterface {
+	return gormpkg.NewTransaction(ctx, s.dbConn, opts...)
 }
 
 // =============== 创建 ===============
@@ -126,6 +131,37 @@ func (s *orgInviteRecordRepo) Update(ctx context.Context, dataModel *po.OrgInvit
 // UpdateWithDBConn update
 func (s *orgInviteRecordRepo) UpdateWithDBConn(ctx context.Context, dbConn *gorm.DB, dataModel *po.OrgInviteRecord) error {
 	return s.update(ctx, dbConn, dataModel)
+}
+
+func (s *orgInviteRecordRepo) updateInviteStatus(ctx context.Context, dbConn *gorm.DB, dataModel *po.OrgInviteRecord) (err error) {
+	updates := map[string]interface{}{
+		schemas.FieldInviteStatus: dataModel.InviteStatus,
+		schemas.FieldUpdatedTime:  dataModel.UpdatedTime,
+	}
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgInviteRecordSchema.TableName()).
+		Where(schemas.FieldId+" = ?", dataModel.Id).
+		UpdateColumns(updates).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		return errorpkg.Wrap(e, err)
+	}
+	return
+}
+
+func (s *orgInviteRecordRepo) UpdateInviteStatus(ctx context.Context, dataModel *po.OrgInviteRecord) (err error) {
+	return s.updateInviteStatus(ctx, s.dbConn, dataModel)
+}
+
+func (s *orgInviteRecordRepo) UpdateInviteStatusWithTransaction(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.OrgInviteRecord) (err error) {
+	fc := func(ctx context.Context, tx *gorm.DB) error {
+		return s.updateInviteStatus(ctx, tx, dataModel)
+	}
+	err = tx.Do(ctx, fc)
+	if err != nil {
+		return err
+	}
+	return
 }
 
 // existUpdate exist update

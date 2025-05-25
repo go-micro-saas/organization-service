@@ -120,3 +120,14 @@ type JoinByInviteLinkParam struct {
 	UserPhone  string // 成员电话
 	UserEmail  string // 成员邮箱
 }
+
+type AgreeOrRefuseInviteParam struct {
+	InviteId   uint64
+	InviteCode string
+	IsAgree    bool
+	UserId     uint64 // 成员ID
+	UserName   string // 成员名称
+	UserAvatar string // 成员头像
+	UserPhone  string // 成员电话
+	UserEmail  string // 成员邮箱
+}

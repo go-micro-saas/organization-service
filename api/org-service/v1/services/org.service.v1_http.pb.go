@@ -21,6 +21,7 @@ var _ = binding.EncodeURL
 const _ = http.SupportPackageIsVersion1
 
 const OperationSrvOrgV1AddEmployee = "/saas.api.org.servicev1.SrvOrgV1/AddEmployee"
+const OperationSrvOrgV1AgreeOrRefuseInvite = "/saas.api.org.servicev1.SrvOrgV1/AgreeOrRefuseInvite"
 const OperationSrvOrgV1CreateInviteRecordForEmployee = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForEmployee"
 const OperationSrvOrgV1CreateInviteRecordForLink = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForLink"
 const OperationSrvOrgV1CreateOrg = "/saas.api.org.servicev1.SrvOrgV1/CreateOrg"
@@ -30,6 +31,7 @@ const OperationSrvOrgV1Ping = "/saas.api.org.servicev1.SrvOrgV1/Ping"
 
 type SrvOrgV1HTTPServer interface {
 	AddEmployee(context.Context, *resources.AddEmployeeReq) (*resources.AddEmployeeResp, error)
+	AgreeOrRefuseInvite(context.Context, *resources.AgreeOrRefuseInviteReq) (*resources.AgreeOrRefuseInviteResp, error)
 	CreateInviteRecordForEmployee(context.Context, *resources.CreateInviteRecordForEmployeeReq) (*resources.CreateInviteRecordForEmployeeResp, error)
 	CreateInviteRecordForLink(context.Context, *resources.CreateInviteRecordForLinkReq) (*resources.CreateInviteRecordForLinkResp, error)
 	CreateOrg(context.Context, *resources.CreateOrgReq) (*resources.CreateOrgResp, error)
@@ -48,6 +50,7 @@ func RegisterSrvOrgV1HTTPServer(s *http.Server, srv SrvOrgV1HTTPServer) {
 	r.POST("/api/v1/org/create-invite-record-for-link", _SrvOrgV1_CreateInviteRecordForLink0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/create-invite-record-for-employee", _SrvOrgV1_CreateInviteRecordForEmployee0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/join-by-invite-link", _SrvOrgV1_JoinByInviteLink0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/agree-or-refuse-invite", _SrvOrgV1_AgreeOrRefuseInvite0_HTTP_Handler(srv))
 }
 
 func _SrvOrgV1_Ping0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
@@ -201,8 +204,31 @@ func _SrvOrgV1_JoinByInviteLink0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx h
 	}
 }
 
+func _SrvOrgV1_AgreeOrRefuseInvite0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.AgreeOrRefuseInviteReq
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1AgreeOrRefuseInvite)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.AgreeOrRefuseInvite(ctx, req.(*resources.AgreeOrRefuseInviteReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.AgreeOrRefuseInviteResp)
+		return ctx.Result(200, reply)
+	}
+}
+
 type SrvOrgV1HTTPClient interface {
 	AddEmployee(ctx context.Context, req *resources.AddEmployeeReq, opts ...http.CallOption) (rsp *resources.AddEmployeeResp, err error)
+	AgreeOrRefuseInvite(ctx context.Context, req *resources.AgreeOrRefuseInviteReq, opts ...http.CallOption) (rsp *resources.AgreeOrRefuseInviteResp, err error)
 	CreateInviteRecordForEmployee(ctx context.Context, req *resources.CreateInviteRecordForEmployeeReq, opts ...http.CallOption) (rsp *resources.CreateInviteRecordForEmployeeResp, err error)
 	CreateInviteRecordForLink(ctx context.Context, req *resources.CreateInviteRecordForLinkReq, opts ...http.CallOption) (rsp *resources.CreateInviteRecordForLinkResp, err error)
 	CreateOrg(ctx context.Context, req *resources.CreateOrgReq, opts ...http.CallOption) (rsp *resources.CreateOrgResp, err error)
@@ -224,6 +250,19 @@ func (c *SrvOrgV1HTTPClientImpl) AddEmployee(ctx context.Context, in *resources.
 	pattern := "/api/v1/org/add-employee"
 	path := binding.EncodeURL(pattern, in, false)
 	opts = append(opts, http.Operation(OperationSrvOrgV1AddEmployee))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) AgreeOrRefuseInvite(ctx context.Context, in *resources.AgreeOrRefuseInviteReq, opts ...http.CallOption) (*resources.AgreeOrRefuseInviteResp, error) {
+	var out resources.AgreeOrRefuseInviteResp
+	pattern := "/api/v1/org/agree-or-refuse-invite"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationSrvOrgV1AgreeOrRefuseInvite))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {

@@ -158,3 +158,30 @@ func (s *orgDto) ToPbJoinByInviteLinkRespData(dataModel *po.OrgEmployee) *resour
 	}
 	return res
 }
+
+func (s *orgDto) ToBoAgreeOrRefuseInviteParam(req *resourcev1.AgreeOrRefuseInviteReq) *bo.AgreeOrRefuseInviteParam {
+	res := &bo.AgreeOrRefuseInviteParam{
+		InviteId:   req.InviteId,
+		InviteCode: req.GetInviteCode(),
+		IsAgree:    req.IsAgree,
+		UserId:     req.UserId,
+		UserName:   req.UserName,
+		UserAvatar: req.UserAvatar,
+		UserPhone:  req.UserPhone,
+		UserEmail:  req.UserEmail,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbAgreeOrRefuseInviteRespData(dataModel *po.OrgEmployee) *resourcev1.AgreeOrRefuseInviteRespData {
+	res := &resourcev1.AgreeOrRefuseInviteRespData{
+		OrgId:          dataModel.OrgId,
+		UserId:         dataModel.UserId,
+		EmployeeId:     dataModel.EmployeeId,
+		EmployeeName:   dataModel.EmployeeName,
+		EmployeeAvatar: dataModel.EmployeeAvatar,
+		EmployeeStatus: dataModel.EmployeeStatus,
+		EmployeeRole:   dataModel.EmployeeRole,
+	}
+	return res
+}

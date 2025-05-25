@@ -313,3 +313,35 @@ func ErrorS105InvalidInviteStatus(format string, args ...interface{}) *errors.Er
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INVALID_INVITE_STATUS.Number()))}
 	return e
 }
+
+// 不是被邀请用户
+func IsS105NotInvitedUser(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_NOT_INVITED_USER.String() && e.Code == 400
+}
+
+// 不是被邀请用户
+func ErrorS105NotInvitedUser(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_NOT_INVITED_USER.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_INVITED_USER.Number()))}
+	return e
+}
+
+// 邀请类型不正确
+func IsS105IncorrectInviteType(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_INCORRECT_INVITE_TYPE.String() && e.Code == 400
+}
+
+// 邀请类型不正确
+func ErrorS105IncorrectInviteType(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_INCORRECT_INVITE_TYPE.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INCORRECT_INVITE_TYPE.Number()))}
+	return e
+}

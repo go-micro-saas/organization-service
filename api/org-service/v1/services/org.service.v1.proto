@@ -55,10 +55,10 @@ service SrvOrgV1 {
       body: "*"
     };
   }
-  //  rpc AgreeOrRefuseInvite(resourcev1.AgreeOrRefuseInviteReq) returns (resourcev1.AgreeOrRefuseInviteResp) {
-  //    option (google.api.http) = {
-  //      post: "/api/v1/org/agree-or-refuse-invite"
-  //      body: "*"
-  //    };
-  //  }
+  rpc AgreeOrRefuseInvite(resourcev1.AgreeOrRefuseInviteReq) returns (resourcev1.AgreeOrRefuseInviteResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/agree-or-refuse-invite"
+      body: "*"
+    };
+  }
 }

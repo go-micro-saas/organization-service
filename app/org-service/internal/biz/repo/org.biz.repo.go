@@ -12,4 +12,5 @@ type OrgBizRepo interface {
 	CreateInviteRecordForLink(ctx context.Context, param *bo.CreateInviteRecordForLinkParam) (*po.OrgInviteRecord, error)
 	CreateInviteRecordForEmployee(ctx context.Context, param *bo.CreateInviteRecordForEmployeeParam) (*po.OrgInviteRecord, error)
 	JoinByInviteLink(ctx context.Context, param *bo.JoinByInviteLinkParam) (*po.OrgEmployee, error)
+	AgreeOrRefuseInvite(ctx context.Context, param *bo.AgreeOrRefuseInviteParam) (*po.OrgEmployee, error)
 }

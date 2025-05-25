@@ -4,18 +4,22 @@ package datarepos
 
 import (
 	context "context"
+	"database/sql"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	gormpkg "github.com/ikaiguang/go-srv-kit/data/gorm"
 )
 
 // OrgInviteRecordRepo repo
 type OrgInviteRecordRepo interface {
+	NewTransaction(ctx context.Context, opts ...*sql.TxOptions) gormpkg.TransactionInterface
 	Create(ctx context.Context, dataModel *po.OrgInviteRecord) error
 	ExistCreate(ctx context.Context, dataModel *po.OrgInviteRecord) (anotherModel *po.OrgInviteRecord, isNotFound bool, err error)
 	CreateInBatches(ctx context.Context, dataModels []*po.OrgInviteRecord, batchSize int) error
 	Insert(ctx context.Context, dataModels []*po.OrgInviteRecord) error
 	Update(ctx context.Context, dataModel *po.OrgInviteRecord) error
 	ExistUpdate(ctx context.Context, dataModel *po.OrgInviteRecord) (anotherModel *po.OrgInviteRecord, isNotFound bool, err error)
+	UpdateInviteStatus(ctx context.Context, dataModel *po.OrgInviteRecord) (err error)
+	UpdateInviteStatusWithTransaction(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.OrgInviteRecord) (err error)
 	QueryOneById(ctx context.Context, id interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
 	QueryOneByInviteID(ctx context.Context, inviteID uint64) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
 	QueryOneByConditions(ctx context.Context, conditions map[string]interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)

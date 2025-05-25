@@ -95,3 +95,14 @@ func (s *orgV1Service) JoinByInviteLink(ctx context.Context, req *resourcev1.Joi
 		Data: dto.OrgDto.ToPbJoinByInviteLinkRespData(reply),
 	}, nil
 }
+
+func (s *orgV1Service) AgreeOrRefuseInvite(ctx context.Context, req *resourcev1.AgreeOrRefuseInviteReq) (*resourcev1.AgreeOrRefuseInviteResp, error) {
+	param := dto.OrgDto.ToBoAgreeOrRefuseInviteParam(req)
+	reply, err := s.orgBiz.AgreeOrRefuseInvite(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.AgreeOrRefuseInviteResp{
+		Data: dto.OrgDto.ToPbAgreeOrRefuseInviteRespData(reply),
+	}, nil
+}

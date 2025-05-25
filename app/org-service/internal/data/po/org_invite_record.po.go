@@ -88,7 +88,7 @@ func DefaultInviteRecord() *OrgInviteRecord {
 		InviteStatus:        enumv1.OrgInviteStatusEnum_INVITING,
 		ExpireTime:          time.Now().Add(DefaultOrgInviteRecordExpireTime),
 		AssignEmployeeId:    0,
-		InviteCode:          randompkg.AlphabetLower(6),
+		InviteCode:          randompkg.Strings(9),
 	}
 	return res
 }
