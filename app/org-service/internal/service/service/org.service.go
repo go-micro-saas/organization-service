@@ -108,19 +108,63 @@ func (s *orgV1Service) AgreeOrRefuseInvite(ctx context.Context, req *resourcev1.
 }
 
 func (s *orgV1Service) GetOrgInfo(ctx context.Context, req *resourcev1.GetOrgInfoReq) (*resourcev1.GetOrgInfoResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GetOrgInfo(ctx, req)
+	dataModel, err := s.orgBiz.GetOrgInfo(ctx, req.OrgId)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.GetOrgInfoResp{
+		Data: dto.OrgDto.ToPbOrg(dataModel),
+	}, nil
 }
 
 func (s *orgV1Service) GetOrgInfoList(ctx context.Context, req *resourcev1.GetOrgInfoListReq) (*resourcev1.GetOrgInfoListResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GetOrgInfoList(ctx, req)
+	dataModels, err := s.orgBiz.GetOrgInfoList(ctx, req.OrgIds)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.GetOrgInfoListResp{
+		Data: dto.OrgDto.ToPbOrgList(dataModels),
+	}, nil
 }
 
 func (s *orgV1Service) GetOrgEmployeeInfo(ctx context.Context, req *resourcev1.GetOrgEmployeeInfoReq) (*resourcev1.GetOrgEmployeeInfoResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GetOrgEmployeeInfo(ctx, req)
+	dataModel, err := s.orgBiz.GetEmployeeInfo(ctx, req.EmployeeId)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.GetOrgEmployeeInfoResp{
+		Data: dto.OrgDto.ToPbOrgEmployee(dataModel),
+	}, nil
 }
 
 func (s *orgV1Service) GetOrgEmployeeInfoList(ctx context.Context, req *resourcev1.GetOrgEmployeeInfoListReq) (*resourcev1.GetOrgEmployeeInfoListResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GetOrgEmployeeInfoList(ctx, req)
+	dataModels, err := s.orgBiz.GetEmployeeInfoList(ctx, req.EmployeeIds)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.GetOrgEmployeeInfoListResp{
+		Data: dto.OrgDto.ToPbOrgEmployeeList(dataModels),
+	}, nil
+}
+
+func (s *orgV1Service) GetOrgInviteRecordInfo(ctx context.Context, req *resourcev1.GetOrgInviteRecordInfoReq) (*resourcev1.GetOrgInviteRecordInfoResp, error) {
+	dataModel, err := s.orgBiz.GetInviteRecordInfo(ctx, req.InviteId)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.GetOrgInviteRecordInfoResp{
+		Data: dto.OrgDto.ToPbOrgInviteRecord(dataModel),
+	}, nil
+}
+
+func (s *orgV1Service) GetOrgInviteRecordInfoList(ctx context.Context, req *resourcev1.GetOrgInviteRecordInfoListReq) (*resourcev1.GetOrgInviteRecordInfoListResp, error) {
+	dataModels, err := s.orgBiz.GetInviteRecordInfoList(ctx, req.InviteIds)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.GetOrgInviteRecordInfoListResp{
+		Data: dto.OrgDto.ToPbOrgInviteRecordList(dataModels),
+	}, nil
 }
 
 func (s *orgV1Service) GetOrgList(ctx context.Context, req *resourcev1.GetOrgListReq) (*resourcev1.GetOrgListResp, error) {

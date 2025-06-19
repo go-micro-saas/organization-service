@@ -251,6 +251,23 @@ func (s *orgEmployeeRepo) QueryOneByEmployeeID(ctx context.Context, employeeID u
 	return
 }
 
+func (s *orgEmployeeRepo) QueryByEmployeeIDList(ctx context.Context, employeeIDList []uint64) ([]*po.OrgEmployee, error) {
+	if len(employeeIDList) == 0 {
+		return nil, nil
+	}
+	var dataModels []*po.OrgEmployee
+	err := s.dbConn.WithContext(ctx).
+		Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldEmployeeId+" in (?)", employeeIDList).
+		Find(&dataModels).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		err = errorpkg.Wrap(e, err)
+		return nil, err
+	}
+	return dataModels, nil
+}
+
 // queryOneByConditions query one by conditions
 func (s *orgEmployeeRepo) queryOneByConditions(ctx context.Context, dbConn *gorm.DB, conditions map[string]interface{}) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
 	dataModel = new(po.OrgEmployee)

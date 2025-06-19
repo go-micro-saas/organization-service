@@ -92,6 +92,18 @@ service SrvOrgV1 {
       get: "/api/v1/org/get-org-employee-info-list"
     };
   }
+  // 组织-获取组织邀请记录信息
+  rpc GetOrgInviteRecordInfo(resourcev1.GetOrgInviteRecordInfoReq) returns (resourcev1.GetOrgInviteRecordInfoResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-invite-record-info"
+    };
+  }
+  // 组织-获取组织邀请记录信息列表
+  rpc GetOrgInviteRecordInfoList(resourcev1.GetOrgInviteRecordInfoListReq) returns (resourcev1.GetOrgInviteRecordInfoListResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-invite-record-info-list"
+    };
+  }
   // 组织-获取组织列表
   rpc GetOrgList(resourcev1.GetOrgListReq) returns (resourcev1.GetOrgListResp) {
     option (google.api.http) = {

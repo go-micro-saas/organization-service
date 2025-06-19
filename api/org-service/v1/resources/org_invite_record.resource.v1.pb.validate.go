@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = enumv1.OrgInviteTypeEnum_OrgInviteType(0)
 )
 
 // Validate checks the field values on OrgInviteRecord with the rules defined

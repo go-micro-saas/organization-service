@@ -221,7 +221,7 @@ message GetOrgInfoResp {
 }
 
 message GetOrgInfoListReq {
-  repeated uint64 org_id = 100 [(validate.rules).repeated = { min_items: 1 }];  // 组织ID
+  repeated uint64 org_ids = 100 [(validate.rules).repeated = { min_items: 1 }];  // 组织ID
 }
 message GetOrgInfoListResp {
   int32 code                   = 1;
@@ -243,7 +243,7 @@ message GetOrgEmployeeInfoResp {
 }
 
 message GetOrgEmployeeInfoListReq {
-  repeated uint64 employee_id = 100 [(validate.rules).repeated = { min_items: 1 }];
+  repeated uint64 employee_ids = 100 [(validate.rules).repeated = { min_items: 1 }];
 }
 message GetOrgEmployeeInfoListResp {
   int32 code                   = 1;
@@ -251,6 +251,28 @@ message GetOrgEmployeeInfoListResp {
   string message               = 3;
   map<string, string> metadata = 4;
   repeated OrgEmployee data    = 100;
+}
+
+message GetOrgInviteRecordInfoReq {
+  uint64 invite_id = 100 [(validate.rules).uint64.gt = 0];
+}
+message GetOrgInviteRecordInfoResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+  OrgInviteRecord data         = 100;
+}
+
+message GetOrgInviteRecordInfoListReq {
+  repeated uint64 invite_ids = 100 [(validate.rules).repeated = { min_items: 1 }];
+}
+message GetOrgInviteRecordInfoListResp {
+  int32 code                    = 1;
+  string reason                 = 2;
+  string message                = 3;
+  map<string, string> metadata  = 4;
+  repeated OrgInviteRecord data = 100;
 }
 
 message GetOrgListReq {
@@ -299,7 +321,7 @@ message GetOrgInviteRecordListReq {
   repeated uint64 org_ids      = 100;  // 组织ids
   repeated uint64 employee_ids = 101;  // 成员ids
   repeated uint64 user_ids     = 102;  // 用户ids
-  string employee_name         = 103;  // 成员名称
+  repeated uint64 invite_ids   = 103;  // 邀请ids
 }
 message GetOrgInviteRecordListResp {
   int32 code                   = 1;

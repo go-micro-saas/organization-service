@@ -178,11 +178,11 @@ func (s *orgRepo) ExistUpdateWithDBConn(ctx context.Context, dbConn *gorm.DB, da
 // =============== query one : 查一个 ===============
 
 // queryOneById query one by id
-func (s *orgRepo) queryOneById(ctx context.Context, dbConn *gorm.DB, id interface{}) (dataModel *po.Org, isNotFound bool, err error) {
+func (s *orgRepo) queryOneById(ctx context.Context, dbConn *gorm.DB, orgID uint64) (dataModel *po.Org, isNotFound bool, err error) {
 	dataModel = new(po.Org)
 	err = dbConn.WithContext(ctx).
 		Table(s.OrgSchema.TableName()).
-		Where(schemas.FieldId+" = ?", id).
+		Where(schemas.FieldOrgId+" = ?", orgID).
 		First(dataModel).Error
 	if err != nil {
 		if gormpkg.IsErrRecordNotFound(err) {
@@ -197,14 +197,25 @@ func (s *orgRepo) queryOneById(ctx context.Context, dbConn *gorm.DB, id interfac
 	return
 }
 
-// QueryOneById query one by id
-func (s *orgRepo) QueryOneById(ctx context.Context, id interface{}) (dataModel *po.Org, isNotFound bool, err error) {
-	return s.queryOneById(ctx, s.dbConn, id)
+func (s *orgRepo) QueryOneByOrgID(ctx context.Context, orgID uint64) (dataModel *po.Org, isNotFound bool, err error) {
+	return s.queryOneById(ctx, s.dbConn, orgID)
 }
 
-// QueryOneByIdWithDBConn query one by id
-func (s *orgRepo) QueryOneByIdWithDBConn(ctx context.Context, dbConn *gorm.DB, id interface{}) (dataModel *po.Org, isNotFound bool, err error) {
-	return s.queryOneById(ctx, dbConn, id)
+func (s *orgRepo) QueryByOrgIDList(ctx context.Context, orgIDList []uint64) ([]*po.Org, error) {
+	if len(orgIDList) == 0 {
+		return nil, nil
+	}
+	var dataModels []*po.Org
+	err := s.dbConn.WithContext(ctx).
+		Table(s.OrgSchema.TableName()).
+		Where(schemas.FieldOrgId+" in (?)", orgIDList).
+		Find(&dataModels).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		err = errorpkg.Wrap(e, err)
+		return nil, err
+	}
+	return dataModels, nil
 }
 
 // queryOneByConditions query one by conditions

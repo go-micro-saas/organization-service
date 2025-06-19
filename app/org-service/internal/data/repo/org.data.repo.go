@@ -19,7 +19,8 @@ type OrgRepo interface {
 	Insert(ctx context.Context, dataModels []*po.Org) error
 	Update(ctx context.Context, dataModel *po.Org) error
 	ExistUpdate(ctx context.Context, dataModel *po.Org) (anotherModel *po.Org, isNotFound bool, err error)
-	QueryOneById(ctx context.Context, id interface{}) (dataModel *po.Org, isNotFound bool, err error)
+	QueryOneByOrgID(ctx context.Context, id uint64) (dataModel *po.Org, isNotFound bool, err error)
+	QueryByOrgIDList(ctx context.Context, idList []uint64) ([]*po.Org, error)
 	QueryOneByConditions(ctx context.Context, conditions map[string]interface{}) (dataModel *po.Org, isNotFound bool, err error)
 	QueryAllByConditions(ctx context.Context, conditions map[string]interface{}) (dataModels []*po.Org, err error)
 	List(ctx context.Context, conditions map[string]interface{}, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.Org, totalNumber int64, err error)

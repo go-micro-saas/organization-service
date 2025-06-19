@@ -3453,9 +3453,9 @@ func (m *GetOrgInfoListReq) validate(all bool) error {
 
 	var errors []error
 
-	if len(m.GetOrgId()) < 1 {
+	if len(m.GetOrgIds()) < 1 {
 		err := GetOrgInfoListReqValidationError{
-			field:  "OrgId",
+			field:  "OrgIds",
 			reason: "value must contain at least 1 item(s)",
 		}
 		if !all {
@@ -3962,9 +3962,9 @@ func (m *GetOrgEmployeeInfoListReq) validate(all bool) error {
 
 	var errors []error
 
-	if len(m.GetEmployeeId()) < 1 {
+	if len(m.GetEmployeeIds()) < 1 {
 		err := GetOrgEmployeeInfoListReqValidationError{
-			field:  "EmployeeId",
+			field:  "EmployeeIds",
 			reason: "value must contain at least 1 item(s)",
 		}
 		if !all {
@@ -4196,6 +4196,517 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetOrgEmployeeInfoListRespValidationError{}
+
+// Validate checks the field values on GetOrgInviteRecordInfoReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInviteRecordInfoReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInviteRecordInfoReq with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgInviteRecordInfoReqMultiError, or nil if none found.
+func (m *GetOrgInviteRecordInfoReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInviteRecordInfoReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetInviteId() <= 0 {
+		err := GetOrgInviteRecordInfoReqValidationError{
+			field:  "InviteId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInviteRecordInfoReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInviteRecordInfoReqMultiError is an error wrapping multiple validation
+// errors returned by GetOrgInviteRecordInfoReq.ValidateAll() if the
+// designated constraints aren't met.
+type GetOrgInviteRecordInfoReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInviteRecordInfoReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInviteRecordInfoReqMultiError) AllErrors() []error { return m }
+
+// GetOrgInviteRecordInfoReqValidationError is the validation error returned by
+// GetOrgInviteRecordInfoReq.Validate if the designated constraints aren't met.
+type GetOrgInviteRecordInfoReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInviteRecordInfoReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInviteRecordInfoReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInviteRecordInfoReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInviteRecordInfoReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInviteRecordInfoReqValidationError) ErrorName() string {
+	return "GetOrgInviteRecordInfoReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInviteRecordInfoReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInviteRecordInfoReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInviteRecordInfoReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInviteRecordInfoReqValidationError{}
+
+// Validate checks the field values on GetOrgInviteRecordInfoResp with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInviteRecordInfoResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInviteRecordInfoResp with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgInviteRecordInfoRespMultiError, or nil if none found.
+func (m *GetOrgInviteRecordInfoResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInviteRecordInfoResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgInviteRecordInfoRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgInviteRecordInfoRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgInviteRecordInfoRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInviteRecordInfoRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInviteRecordInfoRespMultiError is an error wrapping multiple
+// validation errors returned by GetOrgInviteRecordInfoResp.ValidateAll() if
+// the designated constraints aren't met.
+type GetOrgInviteRecordInfoRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInviteRecordInfoRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInviteRecordInfoRespMultiError) AllErrors() []error { return m }
+
+// GetOrgInviteRecordInfoRespValidationError is the validation error returned
+// by GetOrgInviteRecordInfoResp.Validate if the designated constraints aren't met.
+type GetOrgInviteRecordInfoRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInviteRecordInfoRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInviteRecordInfoRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInviteRecordInfoRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInviteRecordInfoRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInviteRecordInfoRespValidationError) ErrorName() string {
+	return "GetOrgInviteRecordInfoRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInviteRecordInfoRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInviteRecordInfoResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInviteRecordInfoRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInviteRecordInfoRespValidationError{}
+
+// Validate checks the field values on GetOrgInviteRecordInfoListReq with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInviteRecordInfoListReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInviteRecordInfoListReq with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// GetOrgInviteRecordInfoListReqMultiError, or nil if none found.
+func (m *GetOrgInviteRecordInfoListReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInviteRecordInfoListReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(m.GetInviteIds()) < 1 {
+		err := GetOrgInviteRecordInfoListReqValidationError{
+			field:  "InviteIds",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInviteRecordInfoListReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInviteRecordInfoListReqMultiError is an error wrapping multiple
+// validation errors returned by GetOrgInviteRecordInfoListReq.ValidateAll()
+// if the designated constraints aren't met.
+type GetOrgInviteRecordInfoListReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInviteRecordInfoListReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInviteRecordInfoListReqMultiError) AllErrors() []error { return m }
+
+// GetOrgInviteRecordInfoListReqValidationError is the validation error
+// returned by GetOrgInviteRecordInfoListReq.Validate if the designated
+// constraints aren't met.
+type GetOrgInviteRecordInfoListReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInviteRecordInfoListReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInviteRecordInfoListReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInviteRecordInfoListReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInviteRecordInfoListReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInviteRecordInfoListReqValidationError) ErrorName() string {
+	return "GetOrgInviteRecordInfoListReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInviteRecordInfoListReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInviteRecordInfoListReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInviteRecordInfoListReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInviteRecordInfoListReqValidationError{}
+
+// Validate checks the field values on GetOrgInviteRecordInfoListResp with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInviteRecordInfoListResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInviteRecordInfoListResp with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// GetOrgInviteRecordInfoListRespMultiError, or nil if none found.
+func (m *GetOrgInviteRecordInfoListResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInviteRecordInfoListResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetOrgInviteRecordInfoListRespValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetOrgInviteRecordInfoListRespValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetOrgInviteRecordInfoListRespValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInviteRecordInfoListRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInviteRecordInfoListRespMultiError is an error wrapping multiple
+// validation errors returned by GetOrgInviteRecordInfoListResp.ValidateAll()
+// if the designated constraints aren't met.
+type GetOrgInviteRecordInfoListRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInviteRecordInfoListRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInviteRecordInfoListRespMultiError) AllErrors() []error { return m }
+
+// GetOrgInviteRecordInfoListRespValidationError is the validation error
+// returned by GetOrgInviteRecordInfoListResp.Validate if the designated
+// constraints aren't met.
+type GetOrgInviteRecordInfoListRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInviteRecordInfoListRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInviteRecordInfoListRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInviteRecordInfoListRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInviteRecordInfoListRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInviteRecordInfoListRespValidationError) ErrorName() string {
+	return "GetOrgInviteRecordInfoListRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInviteRecordInfoListRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInviteRecordInfoListResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInviteRecordInfoListRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInviteRecordInfoListRespValidationError{}
 
 // Validate checks the field values on GetOrgListReq with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
@@ -5117,8 +5628,6 @@ func (m *GetOrgInviteRecordListReq) validate(all bool) error {
 			}
 		}
 	}
-
-	// no validation rules for EmployeeName
 
 	if len(errors) > 0 {
 		return GetOrgInviteRecordListReqMultiError(errors)

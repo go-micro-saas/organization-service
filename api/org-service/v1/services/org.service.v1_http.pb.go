@@ -30,6 +30,8 @@ const OperationSrvOrgV1GetOrgEmployeeInfoList = "/saas.api.org.servicev1.SrvOrgV
 const OperationSrvOrgV1GetOrgEmployeeList = "/saas.api.org.servicev1.SrvOrgV1/GetOrgEmployeeList"
 const OperationSrvOrgV1GetOrgInfo = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInfo"
 const OperationSrvOrgV1GetOrgInfoList = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInfoList"
+const OperationSrvOrgV1GetOrgInviteRecordInfo = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInviteRecordInfo"
+const OperationSrvOrgV1GetOrgInviteRecordInfoList = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInviteRecordInfoList"
 const OperationSrvOrgV1GetOrgInviteRecordList = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInviteRecordList"
 const OperationSrvOrgV1GetOrgList = "/saas.api.org.servicev1.SrvOrgV1/GetOrgList"
 const OperationSrvOrgV1JoinByInviteLink = "/saas.api.org.servicev1.SrvOrgV1/JoinByInviteLink"
@@ -57,6 +59,10 @@ type SrvOrgV1HTTPServer interface {
 	GetOrgInfo(context.Context, *resources.GetOrgInfoReq) (*resources.GetOrgInfoResp, error)
 	// GetOrgInfoList 组织-获取组织信息列表
 	GetOrgInfoList(context.Context, *resources.GetOrgInfoListReq) (*resources.GetOrgInfoListResp, error)
+	// GetOrgInviteRecordInfo 组织-获取组织邀请记录信息
+	GetOrgInviteRecordInfo(context.Context, *resources.GetOrgInviteRecordInfoReq) (*resources.GetOrgInviteRecordInfoResp, error)
+	// GetOrgInviteRecordInfoList 组织-获取组织邀请记录信息列表
+	GetOrgInviteRecordInfoList(context.Context, *resources.GetOrgInviteRecordInfoListReq) (*resources.GetOrgInviteRecordInfoListResp, error)
 	// GetOrgInviteRecordList 组织-获取组织邀请记录列表
 	GetOrgInviteRecordList(context.Context, *resources.GetOrgInviteRecordListReq) (*resources.GetOrgInviteRecordListResp, error)
 	// GetOrgList 组织-获取组织列表
@@ -83,6 +89,8 @@ func RegisterSrvOrgV1HTTPServer(s *http.Server, srv SrvOrgV1HTTPServer) {
 	r.GET("/api/v1/org/get-org-info-list", _SrvOrgV1_GetOrgInfoList0_HTTP_Handler(srv))
 	r.GET("/api/v1/org/get-org-employee-info", _SrvOrgV1_GetOrgEmployeeInfo0_HTTP_Handler(srv))
 	r.GET("/api/v1/org/get-org-employee-info-list", _SrvOrgV1_GetOrgEmployeeInfoList0_HTTP_Handler(srv))
+	r.GET("/api/v1/org/get-org-invite-record-info", _SrvOrgV1_GetOrgInviteRecordInfo0_HTTP_Handler(srv))
+	r.GET("/api/v1/org/get-org-invite-record-info-list", _SrvOrgV1_GetOrgInviteRecordInfoList0_HTTP_Handler(srv))
 	r.GET("/api/v1/org/get-org-list", _SrvOrgV1_GetOrgList0_HTTP_Handler(srv))
 	r.GET("/api/v1/org/get-org-employee-list", _SrvOrgV1_GetOrgEmployeeList0_HTTP_Handler(srv))
 	r.GET("/api/v1/org/get-org-invite-record-list", _SrvOrgV1_GetOrgInviteRecordList0_HTTP_Handler(srv))
@@ -337,6 +345,44 @@ func _SrvOrgV1_GetOrgEmployeeInfoList0_HTTP_Handler(srv SrvOrgV1HTTPServer) func
 	}
 }
 
+func _SrvOrgV1_GetOrgInviteRecordInfo0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.GetOrgInviteRecordInfoReq
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1GetOrgInviteRecordInfo)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.GetOrgInviteRecordInfo(ctx, req.(*resources.GetOrgInviteRecordInfoReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.GetOrgInviteRecordInfoResp)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _SrvOrgV1_GetOrgInviteRecordInfoList0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.GetOrgInviteRecordInfoListReq
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1GetOrgInviteRecordInfoList)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.GetOrgInviteRecordInfoList(ctx, req.(*resources.GetOrgInviteRecordInfoListReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.GetOrgInviteRecordInfoListResp)
+		return ctx.Result(200, reply)
+	}
+}
+
 func _SrvOrgV1_GetOrgList0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in resources.GetOrgListReq
@@ -405,6 +451,8 @@ type SrvOrgV1HTTPClient interface {
 	GetOrgEmployeeList(ctx context.Context, req *resources.GetOrgEmployeeListReq, opts ...http.CallOption) (rsp *resources.GetOrgEmployeeListResp, err error)
 	GetOrgInfo(ctx context.Context, req *resources.GetOrgInfoReq, opts ...http.CallOption) (rsp *resources.GetOrgInfoResp, err error)
 	GetOrgInfoList(ctx context.Context, req *resources.GetOrgInfoListReq, opts ...http.CallOption) (rsp *resources.GetOrgInfoListResp, err error)
+	GetOrgInviteRecordInfo(ctx context.Context, req *resources.GetOrgInviteRecordInfoReq, opts ...http.CallOption) (rsp *resources.GetOrgInviteRecordInfoResp, err error)
+	GetOrgInviteRecordInfoList(ctx context.Context, req *resources.GetOrgInviteRecordInfoListReq, opts ...http.CallOption) (rsp *resources.GetOrgInviteRecordInfoListResp, err error)
 	GetOrgInviteRecordList(ctx context.Context, req *resources.GetOrgInviteRecordListReq, opts ...http.CallOption) (rsp *resources.GetOrgInviteRecordListResp, err error)
 	GetOrgList(ctx context.Context, req *resources.GetOrgListReq, opts ...http.CallOption) (rsp *resources.GetOrgListResp, err error)
 	JoinByInviteLink(ctx context.Context, req *resources.JoinByInviteLinkReq, opts ...http.CallOption) (rsp *resources.JoinByInviteLinkResp, err error)
@@ -542,6 +590,32 @@ func (c *SrvOrgV1HTTPClientImpl) GetOrgInfoList(ctx context.Context, in *resourc
 	pattern := "/api/v1/org/get-org-info-list"
 	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation(OperationSrvOrgV1GetOrgInfoList))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) GetOrgInviteRecordInfo(ctx context.Context, in *resources.GetOrgInviteRecordInfoReq, opts ...http.CallOption) (*resources.GetOrgInviteRecordInfoResp, error) {
+	var out resources.GetOrgInviteRecordInfoResp
+	pattern := "/api/v1/org/get-org-invite-record-info"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationSrvOrgV1GetOrgInviteRecordInfo))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) GetOrgInviteRecordInfoList(ctx context.Context, in *resources.GetOrgInviteRecordInfoListReq, opts ...http.CallOption) (*resources.GetOrgInviteRecordInfoListResp, error) {
+	var out resources.GetOrgInviteRecordInfoListResp
+	pattern := "/api/v1/org/get-org-invite-record-info-list"
+	path := binding.EncodeURL(pattern, in, true)
+	opts = append(opts, http.Operation(OperationSrvOrgV1GetOrgInviteRecordInfoList))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

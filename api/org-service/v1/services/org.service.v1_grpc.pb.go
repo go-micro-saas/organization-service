@@ -32,6 +32,8 @@ const (
 	SrvOrgV1_GetOrgInfoList_FullMethodName                = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInfoList"
 	SrvOrgV1_GetOrgEmployeeInfo_FullMethodName            = "/saas.api.org.servicev1.SrvOrgV1/GetOrgEmployeeInfo"
 	SrvOrgV1_GetOrgEmployeeInfoList_FullMethodName        = "/saas.api.org.servicev1.SrvOrgV1/GetOrgEmployeeInfoList"
+	SrvOrgV1_GetOrgInviteRecordInfo_FullMethodName        = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInviteRecordInfo"
+	SrvOrgV1_GetOrgInviteRecordInfoList_FullMethodName    = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInviteRecordInfoList"
 	SrvOrgV1_GetOrgList_FullMethodName                    = "/saas.api.org.servicev1.SrvOrgV1/GetOrgList"
 	SrvOrgV1_GetOrgEmployeeList_FullMethodName            = "/saas.api.org.servicev1.SrvOrgV1/GetOrgEmployeeList"
 	SrvOrgV1_GetOrgInviteRecordList_FullMethodName        = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInviteRecordList"
@@ -67,6 +69,10 @@ type SrvOrgV1Client interface {
 	GetOrgEmployeeInfo(ctx context.Context, in *resources.GetOrgEmployeeInfoReq, opts ...grpc.CallOption) (*resources.GetOrgEmployeeInfoResp, error)
 	// 组织-获取组织成员信息列表
 	GetOrgEmployeeInfoList(ctx context.Context, in *resources.GetOrgEmployeeInfoListReq, opts ...grpc.CallOption) (*resources.GetOrgEmployeeInfoListResp, error)
+	// 组织-获取组织邀请记录信息
+	GetOrgInviteRecordInfo(ctx context.Context, in *resources.GetOrgInviteRecordInfoReq, opts ...grpc.CallOption) (*resources.GetOrgInviteRecordInfoResp, error)
+	// 组织-获取组织邀请记录信息列表
+	GetOrgInviteRecordInfoList(ctx context.Context, in *resources.GetOrgInviteRecordInfoListReq, opts ...grpc.CallOption) (*resources.GetOrgInviteRecordInfoListResp, error)
 	// 组织-获取组织列表
 	GetOrgList(ctx context.Context, in *resources.GetOrgListReq, opts ...grpc.CallOption) (*resources.GetOrgListResp, error)
 	// 组织-获取组织成员列表
@@ -203,6 +209,26 @@ func (c *srvOrgV1Client) GetOrgEmployeeInfoList(ctx context.Context, in *resourc
 	return out, nil
 }
 
+func (c *srvOrgV1Client) GetOrgInviteRecordInfo(ctx context.Context, in *resources.GetOrgInviteRecordInfoReq, opts ...grpc.CallOption) (*resources.GetOrgInviteRecordInfoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.GetOrgInviteRecordInfoResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_GetOrgInviteRecordInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *srvOrgV1Client) GetOrgInviteRecordInfoList(ctx context.Context, in *resources.GetOrgInviteRecordInfoListReq, opts ...grpc.CallOption) (*resources.GetOrgInviteRecordInfoListResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.GetOrgInviteRecordInfoListResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_GetOrgInviteRecordInfoList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *srvOrgV1Client) GetOrgList(ctx context.Context, in *resources.GetOrgListReq, opts ...grpc.CallOption) (*resources.GetOrgListResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(resources.GetOrgListResp)
@@ -263,6 +289,10 @@ type SrvOrgV1Server interface {
 	GetOrgEmployeeInfo(context.Context, *resources.GetOrgEmployeeInfoReq) (*resources.GetOrgEmployeeInfoResp, error)
 	// 组织-获取组织成员信息列表
 	GetOrgEmployeeInfoList(context.Context, *resources.GetOrgEmployeeInfoListReq) (*resources.GetOrgEmployeeInfoListResp, error)
+	// 组织-获取组织邀请记录信息
+	GetOrgInviteRecordInfo(context.Context, *resources.GetOrgInviteRecordInfoReq) (*resources.GetOrgInviteRecordInfoResp, error)
+	// 组织-获取组织邀请记录信息列表
+	GetOrgInviteRecordInfoList(context.Context, *resources.GetOrgInviteRecordInfoListReq) (*resources.GetOrgInviteRecordInfoListResp, error)
 	// 组织-获取组织列表
 	GetOrgList(context.Context, *resources.GetOrgListReq) (*resources.GetOrgListResp, error)
 	// 组织-获取组织成员列表
@@ -314,6 +344,12 @@ func (UnimplementedSrvOrgV1Server) GetOrgEmployeeInfo(context.Context, *resource
 }
 func (UnimplementedSrvOrgV1Server) GetOrgEmployeeInfoList(context.Context, *resources.GetOrgEmployeeInfoListReq) (*resources.GetOrgEmployeeInfoListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrgEmployeeInfoList not implemented")
+}
+func (UnimplementedSrvOrgV1Server) GetOrgInviteRecordInfo(context.Context, *resources.GetOrgInviteRecordInfoReq) (*resources.GetOrgInviteRecordInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrgInviteRecordInfo not implemented")
+}
+func (UnimplementedSrvOrgV1Server) GetOrgInviteRecordInfoList(context.Context, *resources.GetOrgInviteRecordInfoListReq) (*resources.GetOrgInviteRecordInfoListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrgInviteRecordInfoList not implemented")
 }
 func (UnimplementedSrvOrgV1Server) GetOrgList(context.Context, *resources.GetOrgListReq) (*resources.GetOrgListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrgList not implemented")
@@ -561,6 +597,42 @@ func _SrvOrgV1_GetOrgEmployeeInfoList_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SrvOrgV1_GetOrgInviteRecordInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.GetOrgInviteRecordInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).GetOrgInviteRecordInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_GetOrgInviteRecordInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).GetOrgInviteRecordInfo(ctx, req.(*resources.GetOrgInviteRecordInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SrvOrgV1_GetOrgInviteRecordInfoList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.GetOrgInviteRecordInfoListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).GetOrgInviteRecordInfoList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_GetOrgInviteRecordInfoList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).GetOrgInviteRecordInfoList(ctx, req.(*resources.GetOrgInviteRecordInfoListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SrvOrgV1_GetOrgList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(resources.GetOrgListReq)
 	if err := dec(in); err != nil {
@@ -669,6 +741,14 @@ var SrvOrgV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrgEmployeeInfoList",
 			Handler:    _SrvOrgV1_GetOrgEmployeeInfoList_Handler,
+		},
+		{
+			MethodName: "GetOrgInviteRecordInfo",
+			Handler:    _SrvOrgV1_GetOrgInviteRecordInfo_Handler,
+		},
+		{
+			MethodName: "GetOrgInviteRecordInfoList",
+			Handler:    _SrvOrgV1_GetOrgInviteRecordInfoList_Handler,
 		},
 		{
 			MethodName: "GetOrgList",

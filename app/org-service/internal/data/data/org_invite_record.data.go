@@ -246,6 +246,23 @@ func (s *orgInviteRecordRepo) QueryOneByInviteID(ctx context.Context, inviteID u
 	return
 }
 
+func (s *orgInviteRecordRepo) QueryByInviteIDList(ctx context.Context, inviteIDList []uint64) ([]*po.OrgInviteRecord, error) {
+	if len(inviteIDList) == 0 {
+		return nil, nil
+	}
+	var dataModels []*po.OrgInviteRecord
+	err := s.dbConn.WithContext(ctx).
+		Table(s.OrgInviteRecordSchema.TableName()).
+		Where(schemas.FieldInviteId+" in (?)", inviteIDList).
+		Find(&dataModels).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		err = errorpkg.Wrap(e, err)
+		return nil, err
+	}
+	return dataModels, nil
+}
+
 // queryOneByConditions query one by conditions
 func (s *orgInviteRecordRepo) queryOneByConditions(ctx context.Context, dbConn *gorm.DB, conditions map[string]interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error) {
 	dataModel = new(po.OrgInviteRecord)

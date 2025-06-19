@@ -71,13 +71,9 @@ func (s *orgBiz) CreateInviteRecordForEmployee(ctx context.Context, param *bo.Cr
 }
 
 func (s *orgBiz) JoinByInviteLink(ctx context.Context, param *bo.JoinByInviteLinkParam) (*po.OrgEmployee, error) {
-	inviteModel, isNotFound, err := s.inviteRecordData.QueryOneByInviteID(ctx, param.InviteId)
+	inviteModel, err := s.GetInviteRecordInfo(ctx, param.InviteId)
 	if err != nil {
 		return nil, err
-	}
-	if isNotFound {
-		e := errorpkg.ErrorRecordNotFound("invite not found")
-		return nil, errorpkg.WithStack(e)
 	}
 	if err = inviteModel.IsValidInviteRecord(param.InviteCode); err != nil {
 		return nil, err
@@ -192,4 +188,24 @@ func (s *orgBiz) AgreeOrRefuseInvite(ctx context.Context, param *bo.AgreeOrRefus
 		return employeeModel, err
 	}
 	return employeeModel, err
+}
+
+func (s *orgBiz) GetInviteRecordInfo(ctx context.Context, inviteID uint64) (*po.OrgInviteRecord, error) {
+	dataModel, isNotFound, err := s.inviteRecordData.QueryOneByInviteID(ctx, inviteID)
+	if err != nil {
+		return nil, err
+	}
+	if isNotFound {
+		e := errorpkg.ErrorRecordNotFound("invite not found")
+		return nil, errorpkg.WithStack(e)
+	}
+	return dataModel, nil
+}
+
+func (s *orgBiz) GetInviteRecordInfoList(ctx context.Context, inviteIDList []uint64) ([]*po.OrgInviteRecord, error) {
+	dataModels, err := s.inviteRecordData.QueryByInviteIDList(ctx, inviteIDList)
+	if err != nil {
+		return nil, err
+	}
+	return dataModels, nil
 }

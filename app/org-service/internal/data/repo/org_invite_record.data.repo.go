@@ -22,6 +22,7 @@ type OrgInviteRecordRepo interface {
 	UpdateInviteStatusWithTransaction(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.OrgInviteRecord) (err error)
 	QueryOneById(ctx context.Context, id interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
 	QueryOneByInviteID(ctx context.Context, inviteID uint64) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
+	QueryByInviteIDList(ctx context.Context, inviteIDList []uint64) ([]*po.OrgInviteRecord, error)
 	QueryOneByConditions(ctx context.Context, conditions map[string]interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
 	QueryAllByConditions(ctx context.Context, conditions map[string]interface{}) (dataModels []*po.OrgInviteRecord, err error)
 	List(ctx context.Context, conditions map[string]interface{}, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgInviteRecord, totalNumber int64, err error)

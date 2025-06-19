@@ -4,6 +4,7 @@ import (
 	resourcev1 "github.com/go-micro-saas/organization-service/api/org-service/v1/resources"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/biz/bo"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
+	timepkg "github.com/ikaiguang/go-srv-kit/kit/time"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -182,6 +183,94 @@ func (s *orgDto) ToPbAgreeOrRefuseInviteRespData(dataModel *po.OrgEmployee) *res
 		EmployeeAvatar: dataModel.EmployeeAvatar,
 		EmployeeStatus: dataModel.EmployeeStatus,
 		EmployeeRole:   dataModel.EmployeeRole,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbOrgList(dataModels []*po.Org) []*resourcev1.Org {
+	res := make([]*resourcev1.Org, 0, len(dataModels))
+	for i := range dataModels {
+		res = append(res, s.ToPbOrg(dataModels[i]))
+	}
+	return res
+}
+
+func (s *orgDto) ToPbOrg(dataModel *po.Org) *resourcev1.Org {
+	res := &resourcev1.Org{
+		Id:              dataModel.Id,
+		CreatedTime:     dataModel.CreatedTime.Format(timepkg.YmdHms),
+		UpdatedTime:     dataModel.UpdatedTime.Format(timepkg.YmdHms),
+		DeletedTime:     dataModel.DeletedTime,
+		OrgId:           dataModel.OrgId,
+		OrgName:         dataModel.OrgName,
+		OrgAvatar:       dataModel.OrgAvatar,
+		OrgContactName:  dataModel.OrgContactName,
+		OrgContactPhone: dataModel.OrgContactPhone,
+		OrgContactEmail: dataModel.OrgContactEmail,
+		OrgType:         dataModel.OrgType,
+		OrgStatus:       dataModel.OrgStatus,
+		OrgIndustryId:   dataModel.OrgIndustryId,
+		OrgScaleId:      dataModel.OrgScaleId,
+		OrgAddress:      dataModel.OrgAddress,
+		OrgZipCode:      dataModel.OrgZipCode,
+		OrgCreatorId:    dataModel.OrgCreatorId,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbOrgEmployeeList(dataModels []*po.OrgEmployee) []*resourcev1.OrgEmployee {
+	res := make([]*resourcev1.OrgEmployee, 0, len(dataModels))
+	for i := range dataModels {
+		res = append(res, s.ToPbOrgEmployee(dataModels[i]))
+	}
+	return res
+}
+
+func (s *orgDto) ToPbOrgEmployee(dataModel *po.OrgEmployee) *resourcev1.OrgEmployee {
+	res := &resourcev1.OrgEmployee{
+		Id:              dataModel.Id,
+		CreatedTime:     "" + dataModel.CreatedTime.Format(timepkg.YmdHms),
+		UpdatedTime:     dataModel.UpdatedTime.Format(timepkg.YmdHms),
+		DeletedTime:     dataModel.DeletedTime,
+		EmployeeId:      dataModel.EmployeeId,
+		UserId:          dataModel.UserId,
+		OrgId:           dataModel.OrgId,
+		EmployeeName:    dataModel.EmployeeName,
+		EmployeeAvatar:  dataModel.EmployeeAvatar,
+		EmployeePhone:   dataModel.EmployeePhone,
+		EmployeeEmail:   dataModel.EmployeeEmail,
+		EmployeeRole:    dataModel.EmployeeRole,
+		EmployeeStatus:  dataModel.EmployeeStatus,
+		InviterRecordId: dataModel.InviterRecordId,
+		InviterUserId:   dataModel.InviterUserId,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbOrgInviteRecordList(dataModels []*po.OrgInviteRecord) []*resourcev1.OrgInviteRecord {
+	res := make([]*resourcev1.OrgInviteRecord, 0, len(dataModels))
+	for i := range dataModels {
+		res = append(res, s.ToPbOrgInviteRecord(dataModels[i]))
+	}
+	return res
+}
+
+func (s *orgDto) ToPbOrgInviteRecord(dataModel *po.OrgInviteRecord) *resourcev1.OrgInviteRecord {
+	res := &resourcev1.OrgInviteRecord{
+		Id:                  dataModel.Id,
+		CreatedTime:         dataModel.CreatedTime.Format(timepkg.YmdHms),
+		UpdatedTime:         dataModel.UpdatedTime.Format(timepkg.YmdHms),
+		InviteId:            dataModel.InviteId,
+		OrgId:               dataModel.OrgId,
+		InviterEmployeeId:   dataModel.InviterEmployeeId,
+		InvitedType:         dataModel.InvitedType,
+		InvitedUserId:       dataModel.InviterUserId,
+		InvitedAccount:      dataModel.InvitedAccount,
+		InvitedAccountType:  dataModel.InvitedAccountType,
+		InvitedEmployeeRole: dataModel.InvitedEmployeeRole,
+		InviteStatus:        dataModel.InviteStatus,
+		AssignEmployeeId:    dataModel.AssignEmployeeId,
+		InviteCode:          dataModel.InviteCode,
 	}
 	return res
 }
