@@ -9,8 +9,11 @@ option java_package         = "saas.api.org.resourcev1";
 option java_outer_classname = "SaasApiOrgResourceV1";
 
 import "validate/validate.proto";
-import "api/org-service/v1/enums/org.enum.v1.proto";
 import "google/protobuf/timestamp.proto";
+import "github.com/ikaiguang/go-srv-kit/kit/page/page.kit.proto";
+import "api/org-service/v1/enums/org.enum.v1.proto";
+import "api/org-service/v1/resources/org_employee.resource.v1.proto";
+import "api/org-service/v1/resources/org_invite_record.resource.v1.proto";
 
 message PingReq {
   string message = 1;
@@ -204,4 +207,109 @@ message AgreeOrRefuseInviteRespData {
   string employee_avatar                                                      = 5;
   saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus employee_status = 6;  // 成员状态
   saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole employee_role       = 7;  // 成员角色
+}
+
+message GetOrgInfoReq {
+  uint64 org_id = 100 [(validate.rules).uint64.gt = 0];  // 组织ID
+}
+message GetOrgInfoResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+  Org data                     = 100;
+}
+
+message GetOrgInfoListReq {
+  repeated uint64 org_id = 100 [(validate.rules).repeated = { min_items: 1 }];  // 组织ID
+}
+message GetOrgInfoListResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+  repeated Org data            = 100;
+}
+
+message GetOrgEmployeeInfoReq {
+  uint64 employee_id = 100 [(validate.rules).uint64.gt = 0];
+}
+message GetOrgEmployeeInfoResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+  OrgEmployee data             = 100;
+}
+
+message GetOrgEmployeeInfoListReq {
+  repeated uint64 employee_id = 100 [(validate.rules).repeated = { min_items: 1 }];
+}
+message GetOrgEmployeeInfoListResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+  repeated OrgEmployee data    = 100;
+}
+
+message GetOrgListReq {
+  kit.page.pagepkg.PageRequest page_request = 1;
+
+  repeated uint64 org_ids = 100;  // 组织ids
+  string org_name         = 101;  // 组织名称
+}
+message GetOrgListResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+
+  GetOrgListRespData data = 100;
+}
+message GetOrgListRespData {
+  repeated Org list                       = 1;
+  kit.page.pagepkg.PageResponse page_info = 2;
+}
+
+message GetOrgEmployeeListReq {
+  kit.page.pagepkg.PageRequest page_request = 1;
+
+  repeated uint64 org_ids      = 100;  // 组织ids
+  repeated uint64 employee_ids = 101;  // 成员ids
+  repeated uint64 user_ids     = 102;  // 用户ids
+  string employee_name         = 103;  // 成员名称
+}
+message GetOrgEmployeeListResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+
+  GetOrgEmployeeListRespData data = 100;
+}
+message GetOrgEmployeeListRespData {
+  repeated OrgEmployee list               = 1;
+  kit.page.pagepkg.PageResponse page_info = 2;
+}
+
+message GetOrgInviteRecordListReq {
+  kit.page.pagepkg.PageRequest page_request = 1;
+
+  repeated uint64 org_ids      = 100;  // 组织ids
+  repeated uint64 employee_ids = 101;  // 成员ids
+  repeated uint64 user_ids     = 102;  // 用户ids
+  string employee_name         = 103;  // 成员名称
+}
+message GetOrgInviteRecordListResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+
+  GetOrgInviteRecordListRespData data = 100;
+}
+message GetOrgInviteRecordListRespData {
+  repeated OrgInviteRecord list           = 1;
+  kit.page.pagepkg.PageResponse page_info = 2;
 }

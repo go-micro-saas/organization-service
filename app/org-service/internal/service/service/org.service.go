@@ -106,3 +106,31 @@ func (s *orgV1Service) AgreeOrRefuseInvite(ctx context.Context, req *resourcev1.
 		Data: dto.OrgDto.ToPbAgreeOrRefuseInviteRespData(reply),
 	}, nil
 }
+
+func (s *orgV1Service) GetOrgInfo(ctx context.Context, req *resourcev1.GetOrgInfoReq) (*resourcev1.GetOrgInfoResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GetOrgInfo(ctx, req)
+}
+
+func (s *orgV1Service) GetOrgInfoList(ctx context.Context, req *resourcev1.GetOrgInfoListReq) (*resourcev1.GetOrgInfoListResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GetOrgInfoList(ctx, req)
+}
+
+func (s *orgV1Service) GetOrgEmployeeInfo(ctx context.Context, req *resourcev1.GetOrgEmployeeInfoReq) (*resourcev1.GetOrgEmployeeInfoResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GetOrgEmployeeInfo(ctx, req)
+}
+
+func (s *orgV1Service) GetOrgEmployeeInfoList(ctx context.Context, req *resourcev1.GetOrgEmployeeInfoListReq) (*resourcev1.GetOrgEmployeeInfoListResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GetOrgEmployeeInfoList(ctx, req)
+}
+
+func (s *orgV1Service) GetOrgList(ctx context.Context, req *resourcev1.GetOrgListReq) (*resourcev1.GetOrgListResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GetOrgList(ctx, req)
+}
+
+func (s *orgV1Service) GetOrgEmployeeList(ctx context.Context, req *resourcev1.GetOrgEmployeeListReq) (*resourcev1.GetOrgEmployeeListResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GetOrgEmployeeList(ctx, req)
+}
+
+func (s *orgV1Service) GetOrgInviteRecordList(ctx context.Context, req *resourcev1.GetOrgInviteRecordListReq) (*resourcev1.GetOrgInviteRecordListResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GetOrgInviteRecordList(ctx, req)
+}

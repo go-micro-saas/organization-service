@@ -19,46 +19,95 @@ service SrvOrgV1 {
       get: "/api/v1/org/ping"
     };
   }
+  // 组织-创建组织&添加成员
   rpc CreateOrg(resourcev1.CreateOrgReq) returns (resourcev1.CreateOrgResp) {
     option (google.api.http) = {
       post: "/api/v1/org/create"
       body: "*"
     };
   }
+  // 组织-仅创建组织
   rpc OnlyCreateOrg(resourcev1.OnlyCreateOrgReq) returns (resourcev1.CreateOrgResp) {
     option (google.api.http) = {
       post: "/api/v1/org/only-create"
       body: "*"
     };
   }
+  // 组织-添加成员
   rpc AddEmployee(resourcev1.AddEmployeeReq) returns (resourcev1.AddEmployeeResp) {
     option (google.api.http) = {
       post: "/api/v1/org/add-employee"
       body: "*"
     };
   }
+  // 组织-创建邀请链接记录
   rpc CreateInviteRecordForLink(resourcev1.CreateInviteRecordForLinkReq) returns (resourcev1.CreateInviteRecordForLinkResp) {
     option (google.api.http) = {
       post: "/api/v1/org/create-invite-record-for-link"
       body: "*"
     };
   }
+  // 组织-创建邀请成员记录
   rpc CreateInviteRecordForEmployee(resourcev1.CreateInviteRecordForEmployeeReq) returns (resourcev1.CreateInviteRecordForEmployeeResp) {
     option (google.api.http) = {
       post: "/api/v1/org/create-invite-record-for-employee"
       body: "*"
     };
   }
+  // 组织-通过邀请链接加入组织
   rpc JoinByInviteLink(resourcev1.JoinByInviteLinkReq) returns (resourcev1.JoinByInviteLinkResp) {
     option (google.api.http) = {
       post: "/api/v1/org/join-by-invite-link"
       body: "*"
     };
   }
+  // 组织-同意或拒绝邀请
   rpc AgreeOrRefuseInvite(resourcev1.AgreeOrRefuseInviteReq) returns (resourcev1.AgreeOrRefuseInviteResp) {
     option (google.api.http) = {
       post: "/api/v1/org/agree-or-refuse-invite"
       body: "*"
+    };
+  }
+  // 组织-获取组织信息
+  rpc GetOrgInfo(resourcev1.GetOrgInfoReq) returns (resourcev1.GetOrgInfoResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-info"
+    };
+  }
+  // 组织-获取组织信息列表
+  rpc GetOrgInfoList(resourcev1.GetOrgInfoListReq) returns (resourcev1.GetOrgInfoListResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-info-list"
+    };
+  }
+  // 组织-获取组织成员信息
+  rpc GetOrgEmployeeInfo(resourcev1.GetOrgEmployeeInfoReq) returns (resourcev1.GetOrgEmployeeInfoResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-employee-info"
+    };
+  }
+  // 组织-获取组织成员信息列表
+  rpc GetOrgEmployeeInfoList(resourcev1.GetOrgEmployeeInfoListReq) returns (resourcev1.GetOrgEmployeeInfoListResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-employee-info-list"
+    };
+  }
+  // 组织-获取组织列表
+  rpc GetOrgList(resourcev1.GetOrgListReq) returns (resourcev1.GetOrgListResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-list"
+    };
+  }
+  // 组织-获取组织成员列表
+  rpc GetOrgEmployeeList(resourcev1.GetOrgEmployeeListReq) returns (resourcev1.GetOrgEmployeeListResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-employee-list"
+    };
+  }
+  // 组织-获取组织邀请记录列表
+  rpc GetOrgInviteRecordList(resourcev1.GetOrgInviteRecordListReq) returns (resourcev1.GetOrgInviteRecordListResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-org-invite-record-list"
     };
   }
 }

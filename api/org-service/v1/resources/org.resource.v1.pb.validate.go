@@ -3182,3 +3182,2325 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = AgreeOrRefuseInviteRespDataValidationError{}
+
+// Validate checks the field values on GetOrgInfoReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInfoReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInfoReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetOrgInfoReqMultiError, or
+// nil if none found.
+func (m *GetOrgInfoReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInfoReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetOrgId() <= 0 {
+		err := GetOrgInfoReqValidationError{
+			field:  "OrgId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInfoReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInfoReqMultiError is an error wrapping multiple validation errors
+// returned by GetOrgInfoReq.ValidateAll() if the designated constraints
+// aren't met.
+type GetOrgInfoReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInfoReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInfoReqMultiError) AllErrors() []error { return m }
+
+// GetOrgInfoReqValidationError is the validation error returned by
+// GetOrgInfoReq.Validate if the designated constraints aren't met.
+type GetOrgInfoReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInfoReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInfoReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInfoReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInfoReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInfoReqValidationError) ErrorName() string { return "GetOrgInfoReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetOrgInfoReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInfoReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInfoReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInfoReqValidationError{}
+
+// Validate checks the field values on GetOrgInfoResp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInfoResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInfoResp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetOrgInfoRespMultiError,
+// or nil if none found.
+func (m *GetOrgInfoResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInfoResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgInfoRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgInfoRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgInfoRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInfoRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInfoRespMultiError is an error wrapping multiple validation errors
+// returned by GetOrgInfoResp.ValidateAll() if the designated constraints
+// aren't met.
+type GetOrgInfoRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInfoRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInfoRespMultiError) AllErrors() []error { return m }
+
+// GetOrgInfoRespValidationError is the validation error returned by
+// GetOrgInfoResp.Validate if the designated constraints aren't met.
+type GetOrgInfoRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInfoRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInfoRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInfoRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInfoRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInfoRespValidationError) ErrorName() string { return "GetOrgInfoRespValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetOrgInfoRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInfoResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInfoRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInfoRespValidationError{}
+
+// Validate checks the field values on GetOrgInfoListReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInfoListReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInfoListReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgInfoListReqMultiError, or nil if none found.
+func (m *GetOrgInfoListReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInfoListReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(m.GetOrgId()) < 1 {
+		err := GetOrgInfoListReqValidationError{
+			field:  "OrgId",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInfoListReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInfoListReqMultiError is an error wrapping multiple validation errors
+// returned by GetOrgInfoListReq.ValidateAll() if the designated constraints
+// aren't met.
+type GetOrgInfoListReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInfoListReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInfoListReqMultiError) AllErrors() []error { return m }
+
+// GetOrgInfoListReqValidationError is the validation error returned by
+// GetOrgInfoListReq.Validate if the designated constraints aren't met.
+type GetOrgInfoListReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInfoListReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInfoListReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInfoListReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInfoListReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInfoListReqValidationError) ErrorName() string {
+	return "GetOrgInfoListReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInfoListReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInfoListReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInfoListReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInfoListReqValidationError{}
+
+// Validate checks the field values on GetOrgInfoListResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInfoListResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInfoListResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgInfoListRespMultiError, or nil if none found.
+func (m *GetOrgInfoListResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInfoListResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetOrgInfoListRespValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetOrgInfoListRespValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetOrgInfoListRespValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInfoListRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInfoListRespMultiError is an error wrapping multiple validation errors
+// returned by GetOrgInfoListResp.ValidateAll() if the designated constraints
+// aren't met.
+type GetOrgInfoListRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInfoListRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInfoListRespMultiError) AllErrors() []error { return m }
+
+// GetOrgInfoListRespValidationError is the validation error returned by
+// GetOrgInfoListResp.Validate if the designated constraints aren't met.
+type GetOrgInfoListRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInfoListRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInfoListRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInfoListRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInfoListRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInfoListRespValidationError) ErrorName() string {
+	return "GetOrgInfoListRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInfoListRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInfoListResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInfoListRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInfoListRespValidationError{}
+
+// Validate checks the field values on GetOrgEmployeeInfoReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgEmployeeInfoReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgEmployeeInfoReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgEmployeeInfoReqMultiError, or nil if none found.
+func (m *GetOrgEmployeeInfoReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgEmployeeInfoReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetEmployeeId() <= 0 {
+		err := GetOrgEmployeeInfoReqValidationError{
+			field:  "EmployeeId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetOrgEmployeeInfoReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgEmployeeInfoReqMultiError is an error wrapping multiple validation
+// errors returned by GetOrgEmployeeInfoReq.ValidateAll() if the designated
+// constraints aren't met.
+type GetOrgEmployeeInfoReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgEmployeeInfoReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgEmployeeInfoReqMultiError) AllErrors() []error { return m }
+
+// GetOrgEmployeeInfoReqValidationError is the validation error returned by
+// GetOrgEmployeeInfoReq.Validate if the designated constraints aren't met.
+type GetOrgEmployeeInfoReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgEmployeeInfoReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgEmployeeInfoReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgEmployeeInfoReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgEmployeeInfoReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgEmployeeInfoReqValidationError) ErrorName() string {
+	return "GetOrgEmployeeInfoReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgEmployeeInfoReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgEmployeeInfoReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgEmployeeInfoReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgEmployeeInfoReqValidationError{}
+
+// Validate checks the field values on GetOrgEmployeeInfoResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgEmployeeInfoResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgEmployeeInfoResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgEmployeeInfoRespMultiError, or nil if none found.
+func (m *GetOrgEmployeeInfoResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgEmployeeInfoResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgEmployeeInfoRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgEmployeeInfoRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgEmployeeInfoRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgEmployeeInfoRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgEmployeeInfoRespMultiError is an error wrapping multiple validation
+// errors returned by GetOrgEmployeeInfoResp.ValidateAll() if the designated
+// constraints aren't met.
+type GetOrgEmployeeInfoRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgEmployeeInfoRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgEmployeeInfoRespMultiError) AllErrors() []error { return m }
+
+// GetOrgEmployeeInfoRespValidationError is the validation error returned by
+// GetOrgEmployeeInfoResp.Validate if the designated constraints aren't met.
+type GetOrgEmployeeInfoRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgEmployeeInfoRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgEmployeeInfoRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgEmployeeInfoRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgEmployeeInfoRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgEmployeeInfoRespValidationError) ErrorName() string {
+	return "GetOrgEmployeeInfoRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgEmployeeInfoRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgEmployeeInfoResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgEmployeeInfoRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgEmployeeInfoRespValidationError{}
+
+// Validate checks the field values on GetOrgEmployeeInfoListReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgEmployeeInfoListReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgEmployeeInfoListReq with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgEmployeeInfoListReqMultiError, or nil if none found.
+func (m *GetOrgEmployeeInfoListReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgEmployeeInfoListReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(m.GetEmployeeId()) < 1 {
+		err := GetOrgEmployeeInfoListReqValidationError{
+			field:  "EmployeeId",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetOrgEmployeeInfoListReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgEmployeeInfoListReqMultiError is an error wrapping multiple validation
+// errors returned by GetOrgEmployeeInfoListReq.ValidateAll() if the
+// designated constraints aren't met.
+type GetOrgEmployeeInfoListReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgEmployeeInfoListReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgEmployeeInfoListReqMultiError) AllErrors() []error { return m }
+
+// GetOrgEmployeeInfoListReqValidationError is the validation error returned by
+// GetOrgEmployeeInfoListReq.Validate if the designated constraints aren't met.
+type GetOrgEmployeeInfoListReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgEmployeeInfoListReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgEmployeeInfoListReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgEmployeeInfoListReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgEmployeeInfoListReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgEmployeeInfoListReqValidationError) ErrorName() string {
+	return "GetOrgEmployeeInfoListReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgEmployeeInfoListReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgEmployeeInfoListReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgEmployeeInfoListReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgEmployeeInfoListReqValidationError{}
+
+// Validate checks the field values on GetOrgEmployeeInfoListResp with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgEmployeeInfoListResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgEmployeeInfoListResp with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgEmployeeInfoListRespMultiError, or nil if none found.
+func (m *GetOrgEmployeeInfoListResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgEmployeeInfoListResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	for idx, item := range m.GetData() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetOrgEmployeeInfoListRespValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetOrgEmployeeInfoListRespValidationError{
+						field:  fmt.Sprintf("Data[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetOrgEmployeeInfoListRespValidationError{
+					field:  fmt.Sprintf("Data[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return GetOrgEmployeeInfoListRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgEmployeeInfoListRespMultiError is an error wrapping multiple
+// validation errors returned by GetOrgEmployeeInfoListResp.ValidateAll() if
+// the designated constraints aren't met.
+type GetOrgEmployeeInfoListRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgEmployeeInfoListRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgEmployeeInfoListRespMultiError) AllErrors() []error { return m }
+
+// GetOrgEmployeeInfoListRespValidationError is the validation error returned
+// by GetOrgEmployeeInfoListResp.Validate if the designated constraints aren't met.
+type GetOrgEmployeeInfoListRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgEmployeeInfoListRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgEmployeeInfoListRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgEmployeeInfoListRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgEmployeeInfoListRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgEmployeeInfoListRespValidationError) ErrorName() string {
+	return "GetOrgEmployeeInfoListRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgEmployeeInfoListRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgEmployeeInfoListResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgEmployeeInfoListRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgEmployeeInfoListRespValidationError{}
+
+// Validate checks the field values on GetOrgListReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetOrgListReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgListReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetOrgListReqMultiError, or
+// nil if none found.
+func (m *GetOrgListReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgListReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetPageRequest()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgListReqValidationError{
+					field:  "PageRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgListReqValidationError{
+					field:  "PageRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPageRequest()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgListReqValidationError{
+				field:  "PageRequest",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for OrgName
+
+	if len(errors) > 0 {
+		return GetOrgListReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgListReqMultiError is an error wrapping multiple validation errors
+// returned by GetOrgListReq.ValidateAll() if the designated constraints
+// aren't met.
+type GetOrgListReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgListReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgListReqMultiError) AllErrors() []error { return m }
+
+// GetOrgListReqValidationError is the validation error returned by
+// GetOrgListReq.Validate if the designated constraints aren't met.
+type GetOrgListReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgListReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgListReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgListReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgListReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgListReqValidationError) ErrorName() string { return "GetOrgListReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetOrgListReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgListReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgListReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgListReqValidationError{}
+
+// Validate checks the field values on GetOrgListResp with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetOrgListResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgListResp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetOrgListRespMultiError,
+// or nil if none found.
+func (m *GetOrgListResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgListResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgListRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgListRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgListRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgListRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgListRespMultiError is an error wrapping multiple validation errors
+// returned by GetOrgListResp.ValidateAll() if the designated constraints
+// aren't met.
+type GetOrgListRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgListRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgListRespMultiError) AllErrors() []error { return m }
+
+// GetOrgListRespValidationError is the validation error returned by
+// GetOrgListResp.Validate if the designated constraints aren't met.
+type GetOrgListRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgListRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgListRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgListRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgListRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgListRespValidationError) ErrorName() string { return "GetOrgListRespValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetOrgListRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgListResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgListRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgListRespValidationError{}
+
+// Validate checks the field values on GetOrgListRespData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgListRespData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgListRespData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgListRespDataMultiError, or nil if none found.
+func (m *GetOrgListRespData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgListRespData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetList() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetOrgListRespDataValidationError{
+						field:  fmt.Sprintf("List[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetOrgListRespDataValidationError{
+						field:  fmt.Sprintf("List[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetOrgListRespDataValidationError{
+					field:  fmt.Sprintf("List[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if all {
+		switch v := interface{}(m.GetPageInfo()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgListRespDataValidationError{
+					field:  "PageInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgListRespDataValidationError{
+					field:  "PageInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPageInfo()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgListRespDataValidationError{
+				field:  "PageInfo",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgListRespDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgListRespDataMultiError is an error wrapping multiple validation errors
+// returned by GetOrgListRespData.ValidateAll() if the designated constraints
+// aren't met.
+type GetOrgListRespDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgListRespDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgListRespDataMultiError) AllErrors() []error { return m }
+
+// GetOrgListRespDataValidationError is the validation error returned by
+// GetOrgListRespData.Validate if the designated constraints aren't met.
+type GetOrgListRespDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgListRespDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgListRespDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgListRespDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgListRespDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgListRespDataValidationError) ErrorName() string {
+	return "GetOrgListRespDataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgListRespDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgListRespData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgListRespDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgListRespDataValidationError{}
+
+// Validate checks the field values on GetOrgEmployeeListReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgEmployeeListReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgEmployeeListReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgEmployeeListReqMultiError, or nil if none found.
+func (m *GetOrgEmployeeListReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgEmployeeListReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetPageRequest()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgEmployeeListReqValidationError{
+					field:  "PageRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgEmployeeListReqValidationError{
+					field:  "PageRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPageRequest()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgEmployeeListReqValidationError{
+				field:  "PageRequest",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for EmployeeName
+
+	if len(errors) > 0 {
+		return GetOrgEmployeeListReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgEmployeeListReqMultiError is an error wrapping multiple validation
+// errors returned by GetOrgEmployeeListReq.ValidateAll() if the designated
+// constraints aren't met.
+type GetOrgEmployeeListReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgEmployeeListReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgEmployeeListReqMultiError) AllErrors() []error { return m }
+
+// GetOrgEmployeeListReqValidationError is the validation error returned by
+// GetOrgEmployeeListReq.Validate if the designated constraints aren't met.
+type GetOrgEmployeeListReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgEmployeeListReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgEmployeeListReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgEmployeeListReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgEmployeeListReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgEmployeeListReqValidationError) ErrorName() string {
+	return "GetOrgEmployeeListReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgEmployeeListReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgEmployeeListReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgEmployeeListReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgEmployeeListReqValidationError{}
+
+// Validate checks the field values on GetOrgEmployeeListResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgEmployeeListResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgEmployeeListResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgEmployeeListRespMultiError, or nil if none found.
+func (m *GetOrgEmployeeListResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgEmployeeListResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgEmployeeListRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgEmployeeListRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgEmployeeListRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgEmployeeListRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgEmployeeListRespMultiError is an error wrapping multiple validation
+// errors returned by GetOrgEmployeeListResp.ValidateAll() if the designated
+// constraints aren't met.
+type GetOrgEmployeeListRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgEmployeeListRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgEmployeeListRespMultiError) AllErrors() []error { return m }
+
+// GetOrgEmployeeListRespValidationError is the validation error returned by
+// GetOrgEmployeeListResp.Validate if the designated constraints aren't met.
+type GetOrgEmployeeListRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgEmployeeListRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgEmployeeListRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgEmployeeListRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgEmployeeListRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgEmployeeListRespValidationError) ErrorName() string {
+	return "GetOrgEmployeeListRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgEmployeeListRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgEmployeeListResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgEmployeeListRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgEmployeeListRespValidationError{}
+
+// Validate checks the field values on GetOrgEmployeeListRespData with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgEmployeeListRespData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgEmployeeListRespData with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgEmployeeListRespDataMultiError, or nil if none found.
+func (m *GetOrgEmployeeListRespData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgEmployeeListRespData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetList() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetOrgEmployeeListRespDataValidationError{
+						field:  fmt.Sprintf("List[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetOrgEmployeeListRespDataValidationError{
+						field:  fmt.Sprintf("List[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetOrgEmployeeListRespDataValidationError{
+					field:  fmt.Sprintf("List[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if all {
+		switch v := interface{}(m.GetPageInfo()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgEmployeeListRespDataValidationError{
+					field:  "PageInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgEmployeeListRespDataValidationError{
+					field:  "PageInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPageInfo()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgEmployeeListRespDataValidationError{
+				field:  "PageInfo",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgEmployeeListRespDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgEmployeeListRespDataMultiError is an error wrapping multiple
+// validation errors returned by GetOrgEmployeeListRespData.ValidateAll() if
+// the designated constraints aren't met.
+type GetOrgEmployeeListRespDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgEmployeeListRespDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgEmployeeListRespDataMultiError) AllErrors() []error { return m }
+
+// GetOrgEmployeeListRespDataValidationError is the validation error returned
+// by GetOrgEmployeeListRespData.Validate if the designated constraints aren't met.
+type GetOrgEmployeeListRespDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgEmployeeListRespDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgEmployeeListRespDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgEmployeeListRespDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgEmployeeListRespDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgEmployeeListRespDataValidationError) ErrorName() string {
+	return "GetOrgEmployeeListRespDataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgEmployeeListRespDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgEmployeeListRespData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgEmployeeListRespDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgEmployeeListRespDataValidationError{}
+
+// Validate checks the field values on GetOrgInviteRecordListReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInviteRecordListReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInviteRecordListReq with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgInviteRecordListReqMultiError, or nil if none found.
+func (m *GetOrgInviteRecordListReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInviteRecordListReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetPageRequest()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgInviteRecordListReqValidationError{
+					field:  "PageRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgInviteRecordListReqValidationError{
+					field:  "PageRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPageRequest()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgInviteRecordListReqValidationError{
+				field:  "PageRequest",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for EmployeeName
+
+	if len(errors) > 0 {
+		return GetOrgInviteRecordListReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInviteRecordListReqMultiError is an error wrapping multiple validation
+// errors returned by GetOrgInviteRecordListReq.ValidateAll() if the
+// designated constraints aren't met.
+type GetOrgInviteRecordListReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInviteRecordListReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInviteRecordListReqMultiError) AllErrors() []error { return m }
+
+// GetOrgInviteRecordListReqValidationError is the validation error returned by
+// GetOrgInviteRecordListReq.Validate if the designated constraints aren't met.
+type GetOrgInviteRecordListReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInviteRecordListReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInviteRecordListReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInviteRecordListReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInviteRecordListReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInviteRecordListReqValidationError) ErrorName() string {
+	return "GetOrgInviteRecordListReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInviteRecordListReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInviteRecordListReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInviteRecordListReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInviteRecordListReqValidationError{}
+
+// Validate checks the field values on GetOrgInviteRecordListResp with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInviteRecordListResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInviteRecordListResp with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetOrgInviteRecordListRespMultiError, or nil if none found.
+func (m *GetOrgInviteRecordListResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInviteRecordListResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgInviteRecordListRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgInviteRecordListRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgInviteRecordListRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInviteRecordListRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInviteRecordListRespMultiError is an error wrapping multiple
+// validation errors returned by GetOrgInviteRecordListResp.ValidateAll() if
+// the designated constraints aren't met.
+type GetOrgInviteRecordListRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInviteRecordListRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInviteRecordListRespMultiError) AllErrors() []error { return m }
+
+// GetOrgInviteRecordListRespValidationError is the validation error returned
+// by GetOrgInviteRecordListResp.Validate if the designated constraints aren't met.
+type GetOrgInviteRecordListRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInviteRecordListRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInviteRecordListRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInviteRecordListRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInviteRecordListRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInviteRecordListRespValidationError) ErrorName() string {
+	return "GetOrgInviteRecordListRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInviteRecordListRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInviteRecordListResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInviteRecordListRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInviteRecordListRespValidationError{}
+
+// Validate checks the field values on GetOrgInviteRecordListRespData with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetOrgInviteRecordListRespData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetOrgInviteRecordListRespData with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// GetOrgInviteRecordListRespDataMultiError, or nil if none found.
+func (m *GetOrgInviteRecordListRespData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetOrgInviteRecordListRespData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetList() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetOrgInviteRecordListRespDataValidationError{
+						field:  fmt.Sprintf("List[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetOrgInviteRecordListRespDataValidationError{
+						field:  fmt.Sprintf("List[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetOrgInviteRecordListRespDataValidationError{
+					field:  fmt.Sprintf("List[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if all {
+		switch v := interface{}(m.GetPageInfo()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetOrgInviteRecordListRespDataValidationError{
+					field:  "PageInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetOrgInviteRecordListRespDataValidationError{
+					field:  "PageInfo",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPageInfo()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetOrgInviteRecordListRespDataValidationError{
+				field:  "PageInfo",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetOrgInviteRecordListRespDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetOrgInviteRecordListRespDataMultiError is an error wrapping multiple
+// validation errors returned by GetOrgInviteRecordListRespData.ValidateAll()
+// if the designated constraints aren't met.
+type GetOrgInviteRecordListRespDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetOrgInviteRecordListRespDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetOrgInviteRecordListRespDataMultiError) AllErrors() []error { return m }
+
+// GetOrgInviteRecordListRespDataValidationError is the validation error
+// returned by GetOrgInviteRecordListRespData.Validate if the designated
+// constraints aren't met.
+type GetOrgInviteRecordListRespDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetOrgInviteRecordListRespDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetOrgInviteRecordListRespDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetOrgInviteRecordListRespDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetOrgInviteRecordListRespDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetOrgInviteRecordListRespDataValidationError) ErrorName() string {
+	return "GetOrgInviteRecordListRespDataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetOrgInviteRecordListRespDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetOrgInviteRecordListRespData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetOrgInviteRecordListRespDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetOrgInviteRecordListRespDataValidationError{}
