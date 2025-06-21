@@ -5629,6 +5629,10 @@ func (m *GetOrgInviteRecordListReq) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for InviteCode
+
+	// no validation rules for InviteAccount
+
 	if len(errors) > 0 {
 		return GetOrgInviteRecordListReqMultiError(errors)
 	}

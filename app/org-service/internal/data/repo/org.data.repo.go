@@ -24,6 +24,7 @@ type OrgRepo interface {
 	QueryOneByConditions(ctx context.Context, conditions map[string]interface{}) (dataModel *po.Org, isNotFound bool, err error)
 	QueryAllByConditions(ctx context.Context, conditions map[string]interface{}) (dataModels []*po.Org, err error)
 	List(ctx context.Context, conditions map[string]interface{}, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.Org, totalNumber int64, err error)
+	ListOrg(ctx context.Context, queryParam *po.OrgListParam, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.Org, recordCount int64, err error)
 	Delete(ctx context.Context, dataModel *po.Org) error
 	DeleteByIds(ctx context.Context, ids interface{}) error
 }

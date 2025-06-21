@@ -274,3 +274,35 @@ func (s *orgDto) ToPbOrgInviteRecord(dataModel *po.OrgInviteRecord) *resourcev1.
 	}
 	return res
 }
+
+func (s *orgDto) ToBoOrgListParam(req *resourcev1.GetOrgListReq) *bo.OrgListParam {
+	res := &bo.OrgListParam{
+		OrgIDList:     req.OrgIds,
+		OrgName:       req.OrgName,
+		PaginatorArgs: nil,
+	}
+	return res
+}
+
+func (s *orgDto) ToBoOrgEmployeeListParam(req *resourcev1.GetOrgEmployeeListReq) *bo.OrgEmployeeListParam {
+	res := &bo.OrgEmployeeListParam{
+		OrgIDList:      req.OrgIds,
+		EmployeeIDList: req.EmployeeIds,
+		UserIDList:     req.UserIds,
+		EmployeeName:   req.EmployeeName,
+		PaginatorArgs:  nil,
+	}
+	return res
+}
+
+func (s *orgDto) ToBoOrgInviteRecordListParam(req *resourcev1.GetOrgInviteRecordListReq) *bo.OrgInviteRecordListParam {
+	res := &bo.OrgInviteRecordListParam{
+		OrgIDList:         req.OrgIds,
+		InviterUserIDList: req.InviterUserIds,
+		InviteIDList:      req.InviteIds,
+		InviteCode:        req.InviteCode,
+		InviteAccount:     req.InviteAccount,
+		PaginatorArgs:     nil,
+	}
+	return res
+}

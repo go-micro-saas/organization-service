@@ -362,6 +362,33 @@ func (s *orgEmployeeRepo) ListWithDBConn(ctx context.Context, dbConn *gorm.DB, c
 	return s.list(ctx, dbConn, conditions, paginatorArgs)
 }
 
+func (s *orgEmployeeRepo) ListOrgEmployee(ctx context.Context, queryParam *po.OrgEmployeeListParam, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgEmployee, recordCount int64, err error) {
+	// query where
+	dbConn := s.dbConn.WithContext(ctx).Table(s.OrgEmployeeSchema.TableName())
+	dbConn = queryParam.WhereConditions(dbConn)
+	dbConn = gormpkg.AssembleWheres(dbConn, paginatorArgs.PageWheres)
+
+	err = dbConn.Count(&recordCount).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		err = errorpkg.Wrap(e, err)
+		return
+	} else if recordCount == 0 {
+		return // empty
+	}
+
+	// pagination
+	dbConn = gormpkg.AssembleOrders(dbConn, paginatorArgs.PageOrders)
+	err = gormpkg.Paginator(dbConn, paginatorArgs.PageOption).
+		Find(&dataModels).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		err = errorpkg.Wrap(e, err)
+		return
+	}
+	return
+}
+
 // =============== delete : 删除 ===============
 
 // delete delete one

@@ -3,6 +3,7 @@ package bo
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
+	gormpkg "github.com/ikaiguang/go-srv-kit/data/gorm"
 	"time"
 )
 
@@ -130,4 +131,30 @@ type AgreeOrRefuseInviteParam struct {
 	UserAvatar string // 成员头像
 	UserPhone  string // 成员电话
 	UserEmail  string // 成员邮箱
+}
+
+type OrgListParam struct {
+	OrgIDList []uint64 // 用户ID列表
+	OrgName   string   // 组织名称
+
+	PaginatorArgs *gormpkg.PaginatorArgs
+}
+
+type OrgEmployeeListParam struct {
+	OrgIDList      []uint64 // 用户ID列表
+	EmployeeIDList []uint64 // 成员ID列表
+	UserIDList     []uint64 // 用户ID列表
+	EmployeeName   string   // 成员名称
+
+	PaginatorArgs *gormpkg.PaginatorArgs
+}
+
+type OrgInviteRecordListParam struct {
+	OrgIDList         []uint64 // 用户ID列表
+	InviterUserIDList []uint64 // 邀请者用户ID列表
+	InviteIDList      []uint64 // 邀请ID列表
+	InviteCode        string   // 邀请码
+	InviteAccount     string   // 邀请账号
+
+	PaginatorArgs *gormpkg.PaginatorArgs
 }

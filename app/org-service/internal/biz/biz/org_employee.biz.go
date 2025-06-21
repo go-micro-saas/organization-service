@@ -117,3 +117,18 @@ func (s *orgBiz) GetEmployeeInfoList(ctx context.Context, employeeIDList []uint6
 	}
 	return dataModels, nil
 }
+
+func (s *orgBiz) ListOrgEmployee(ctx context.Context, param *bo.OrgEmployeeListParam) ([]*po.OrgEmployee, int64, error) {
+	queryParam := &po.OrgEmployeeListParam{
+		OrgIDList:      param.OrgIDList,
+		EmployeeIDList: param.EmployeeIDList,
+		UserIDList:     param.UserIDList,
+		EmployeeName:   param.EmployeeName,
+		PaginatorArgs:  param.PaginatorArgs,
+	}
+	dataModels, counter, err := s.employeeData.ListOrgEmployee(ctx, queryParam, param.PaginatorArgs)
+	if err != nil {
+		return dataModels, counter, err
+	}
+	return dataModels, counter, err
+}

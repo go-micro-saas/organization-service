@@ -67,6 +67,10 @@ func (s *OrgInviteRecord) TableName() string {
 	return TableName
 }
 
+func (s *OrgInviteRecord) FieldName(fieldName string) string {
+	return TableName + "." + fieldName
+}
+
 // CreateTableMigrator create table migrator
 func (s *OrgInviteRecord) CreateTableMigrator(migrator gorm.Migrator) migrationuitl.MigrationInterface {
 	return migrationuitl.NewCreateTable(migrator, migrationuitl.Version, s)

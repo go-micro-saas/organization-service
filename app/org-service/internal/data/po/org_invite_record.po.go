@@ -5,10 +5,13 @@ package po
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 	errorv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/errors"
+	schemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_invite_record"
+	gormpkg "github.com/ikaiguang/go-srv-kit/data/gorm"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
 	randompkg "github.com/ikaiguang/go-srv-kit/kit/random"
 	timepkg "github.com/ikaiguang/go-srv-kit/kit/time"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
+	"gorm.io/gorm"
 	time "time"
 )
 
@@ -101,4 +104,39 @@ func DefaultInviteRecordWithID(idGenerator idpkg.Snowflake) (dataModel *OrgInvit
 		return dataModel, errorpkg.WithStack(e)
 	}
 	return dataModel, err
+}
+
+type OrgInviteRecordListParam struct {
+	OrgIDList         []uint64 // 用户ID列表
+	InviterUserIDList []uint64 // 邀请者用户ID列表
+	InviteIDList      []uint64 // 邀请ID列表
+	InviteCode        string   // 邀请码
+	InviteAccount     string   // 邀请账号
+
+	PaginatorArgs *gormpkg.PaginatorArgs
+}
+
+func (s *OrgInviteRecordListParam) WhereConditions(dbConn *gorm.DB) *gorm.DB {
+	if len(s.OrgIDList) == 1 {
+		dbConn = dbConn.Where(schemas.OrgInviteRecordSchema.FieldName(schemas.FieldOrgId)+" = ?", s.OrgIDList[0])
+	} else if len(s.OrgIDList) > 1 {
+		dbConn = dbConn.Where(schemas.OrgInviteRecordSchema.FieldName(schemas.FieldOrgId)+" IN (?)", s.OrgIDList)
+	}
+	if len(s.InviterUserIDList) == 1 {
+		dbConn = dbConn.Where(schemas.OrgInviteRecordSchema.FieldName(schemas.FieldInviterUserId)+" = ?", s.InviterUserIDList[0])
+	} else if len(s.InviterUserIDList) > 1 {
+		dbConn = dbConn.Where(schemas.OrgInviteRecordSchema.FieldName(schemas.FieldInviterUserId)+" IN (?)", s.InviterUserIDList)
+	}
+	if len(s.InviteIDList) == 1 {
+		dbConn = dbConn.Where(schemas.OrgInviteRecordSchema.FieldName(schemas.FieldInviteId)+" = ?", s.InviteIDList[0])
+	} else if len(s.InviteIDList) > 1 {
+		dbConn = dbConn.Where(schemas.OrgInviteRecordSchema.FieldName(schemas.FieldInviteId)+" IN (?)", s.InviteIDList)
+	}
+	if s.InviteCode != "" {
+		dbConn = dbConn.Where(schemas.OrgInviteRecordSchema.FieldName(schemas.FieldInviteCode)+" = ?", s.InviteCode)
+	}
+	if s.InviteAccount != "" {
+		dbConn = dbConn.Where(schemas.OrgInviteRecordSchema.FieldName(schemas.FieldInvitedAccount)+" = ?", s.InviteAccount)
+	}
+	return dbConn
 }

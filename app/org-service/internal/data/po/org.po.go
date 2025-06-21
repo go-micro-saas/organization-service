@@ -4,9 +4,12 @@ package po
 
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
+	schemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org"
+	gormpkg "github.com/ikaiguang/go-srv-kit/data/gorm"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	datatypes "gorm.io/datatypes"
+	"gorm.io/gorm"
 	time "time"
 )
 
@@ -66,4 +69,23 @@ func DefaultOrgWithID(idGenerator idpkg.Snowflake) (dataModel *Org, err error) {
 		return dataModel, errorpkg.WithStack(e)
 	}
 	return dataModel, err
+}
+
+type OrgListParam struct {
+	OrgIDList []uint64 // 用户ID列表
+	OrgName   string   // 组织名称
+
+	PaginatorArgs *gormpkg.PaginatorArgs
+}
+
+func (s *OrgListParam) WhereConditions(dbConn *gorm.DB) *gorm.DB {
+	if len(s.OrgIDList) == 1 {
+		dbConn = dbConn.Where(schemas.OrgSchema.FieldName(schemas.FieldOrgId)+" = ?", s.OrgIDList[0])
+	} else if len(s.OrgIDList) > 1 {
+		dbConn = dbConn.Where(schemas.OrgSchema.FieldName(schemas.FieldOrgId)+" IN (?)", s.OrgIDList)
+	}
+	if len(s.OrgName) > 0 {
+		dbConn = dbConn.Where(schemas.OrgSchema.FieldName(schemas.FieldOrgName)+" LIKE ?", "%"+s.OrgName+"%")
+	}
+	return dbConn
 }

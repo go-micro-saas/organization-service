@@ -26,6 +26,7 @@ type OrgInviteRecordRepo interface {
 	QueryOneByConditions(ctx context.Context, conditions map[string]interface{}) (dataModel *po.OrgInviteRecord, isNotFound bool, err error)
 	QueryAllByConditions(ctx context.Context, conditions map[string]interface{}) (dataModels []*po.OrgInviteRecord, err error)
 	List(ctx context.Context, conditions map[string]interface{}, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgInviteRecord, totalNumber int64, err error)
+	ListOrgInviteRecord(ctx context.Context, queryParam *po.OrgInviteRecordListParam, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgInviteRecord, recordCount int64, err error)
 	Delete(ctx context.Context, dataModel *po.OrgInviteRecord) error
 	DeleteByIds(ctx context.Context, ids interface{}) error
 }

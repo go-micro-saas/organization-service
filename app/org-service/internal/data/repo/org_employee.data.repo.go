@@ -25,6 +25,7 @@ type OrgEmployeeRepo interface {
 	QueryByEmployeeIDList(ctx context.Context, employeeIDList []uint64) ([]*po.OrgEmployee, error)
 	QueryAllByConditions(ctx context.Context, conditions map[string]interface{}) (dataModels []*po.OrgEmployee, err error)
 	List(ctx context.Context, conditions map[string]interface{}, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgEmployee, totalNumber int64, err error)
+	ListOrgEmployee(ctx context.Context, queryParam *po.OrgEmployeeListParam, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgEmployee, recordCount int64, err error)
 	Delete(ctx context.Context, dataModel *po.OrgEmployee) error
 	DeleteByIds(ctx context.Context, ids interface{}) error
 }

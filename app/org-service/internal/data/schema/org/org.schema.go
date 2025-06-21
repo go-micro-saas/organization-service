@@ -69,6 +69,10 @@ func (s *Org) TableName() string {
 	return TableName
 }
 
+func (s *Org) FieldName(fieldName string) string {
+	return TableName + "." + fieldName
+}
+
 // CreateTableMigrator create table migrator
 func (s *Org) CreateTableMigrator(migrator gorm.Migrator) migrationuitl.MigrationInterface {
 	return migrationuitl.NewCreateTable(migrator, migrationuitl.Version, s)

@@ -7,6 +7,8 @@ import (
 	servicev1 "github.com/go-micro-saas/organization-service/api/org-service/v1/services"
 	bizrepos "github.com/go-micro-saas/organization-service/app/org-service/internal/biz/repo"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/service/dto"
+	gormpkg "github.com/ikaiguang/go-srv-kit/data/gorm"
+	pagepkg "github.com/ikaiguang/go-srv-kit/kit/page"
 )
 
 type orgV1Service struct {
@@ -52,61 +54,6 @@ func (s *orgV1Service) OnlyCreateOrg(ctx context.Context, req *resourcev1.OnlyCr
 	}, nil
 }
 
-func (s *orgV1Service) AddEmployee(ctx context.Context, req *resourcev1.AddEmployeeReq) (*resourcev1.AddEmployeeResp, error) {
-	param := dto.OrgDto.ToBoAddEmployeeParam(req)
-	reply, err := s.orgBiz.AddEmployee(ctx, param)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.AddEmployeeResp{
-		Data: dto.OrgDto.ToPbAddEmployeeRespData(reply),
-	}, nil
-}
-
-func (s *orgV1Service) CreateInviteRecordForLink(ctx context.Context, req *resourcev1.CreateInviteRecordForLinkReq) (*resourcev1.CreateInviteRecordForLinkResp, error) {
-	param := dto.OrgDto.ToBoCreateInviteRecordForLinkParam(req)
-	reply, err := s.orgBiz.CreateInviteRecordForLink(ctx, param)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.CreateInviteRecordForLinkResp{
-		Data: dto.OrgDto.ToPbCreateInviteRecordForLinkRespData(reply),
-	}, nil
-}
-
-func (s *orgV1Service) CreateInviteRecordForEmployee(ctx context.Context, req *resourcev1.CreateInviteRecordForEmployeeReq) (*resourcev1.CreateInviteRecordForEmployeeResp, error) {
-	param := dto.OrgDto.ToBoCreateInviteRecordForEmployeeParam(req)
-	reply, err := s.orgBiz.CreateInviteRecordForEmployee(ctx, param)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.CreateInviteRecordForEmployeeResp{
-		Data: dto.OrgDto.ToPbCreateInviteRecordForEmployeeRespData(reply),
-	}, nil
-}
-
-func (s *orgV1Service) JoinByInviteLink(ctx context.Context, req *resourcev1.JoinByInviteLinkReq) (*resourcev1.JoinByInviteLinkResp, error) {
-	param := dto.OrgDto.ToBoJoinByInviteLinkParam(req)
-	reply, err := s.orgBiz.JoinByInviteLink(ctx, param)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.JoinByInviteLinkResp{
-		Data: dto.OrgDto.ToPbJoinByInviteLinkRespData(reply),
-	}, nil
-}
-
-func (s *orgV1Service) AgreeOrRefuseInvite(ctx context.Context, req *resourcev1.AgreeOrRefuseInviteReq) (*resourcev1.AgreeOrRefuseInviteResp, error) {
-	param := dto.OrgDto.ToBoAgreeOrRefuseInviteParam(req)
-	reply, err := s.orgBiz.AgreeOrRefuseInvite(ctx, param)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.AgreeOrRefuseInviteResp{
-		Data: dto.OrgDto.ToPbAgreeOrRefuseInviteRespData(reply),
-	}, nil
-}
-
 func (s *orgV1Service) GetOrgInfo(ctx context.Context, req *resourcev1.GetOrgInfoReq) (*resourcev1.GetOrgInfoResp, error) {
 	dataModel, err := s.orgBiz.GetOrgInfo(ctx, req.OrgId)
 	if err != nil {
@@ -127,54 +74,26 @@ func (s *orgV1Service) GetOrgInfoList(ctx context.Context, req *resourcev1.GetOr
 	}, nil
 }
 
-func (s *orgV1Service) GetOrgEmployeeInfo(ctx context.Context, req *resourcev1.GetOrgEmployeeInfoReq) (*resourcev1.GetOrgEmployeeInfoResp, error) {
-	dataModel, err := s.orgBiz.GetEmployeeInfo(ctx, req.EmployeeId)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.GetOrgEmployeeInfoResp{
-		Data: dto.OrgDto.ToPbOrgEmployee(dataModel),
-	}, nil
-}
-
-func (s *orgV1Service) GetOrgEmployeeInfoList(ctx context.Context, req *resourcev1.GetOrgEmployeeInfoListReq) (*resourcev1.GetOrgEmployeeInfoListResp, error) {
-	dataModels, err := s.orgBiz.GetEmployeeInfoList(ctx, req.EmployeeIds)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.GetOrgEmployeeInfoListResp{
-		Data: dto.OrgDto.ToPbOrgEmployeeList(dataModels),
-	}, nil
-}
-
-func (s *orgV1Service) GetOrgInviteRecordInfo(ctx context.Context, req *resourcev1.GetOrgInviteRecordInfoReq) (*resourcev1.GetOrgInviteRecordInfoResp, error) {
-	dataModel, err := s.orgBiz.GetInviteRecordInfo(ctx, req.InviteId)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.GetOrgInviteRecordInfoResp{
-		Data: dto.OrgDto.ToPbOrgInviteRecord(dataModel),
-	}, nil
-}
-
-func (s *orgV1Service) GetOrgInviteRecordInfoList(ctx context.Context, req *resourcev1.GetOrgInviteRecordInfoListReq) (*resourcev1.GetOrgInviteRecordInfoListResp, error) {
-	dataModels, err := s.orgBiz.GetInviteRecordInfoList(ctx, req.InviteIds)
-	if err != nil {
-		return nil, err
-	}
-	return &resourcev1.GetOrgInviteRecordInfoListResp{
-		Data: dto.OrgDto.ToPbOrgInviteRecordList(dataModels),
-	}, nil
-}
-
 func (s *orgV1Service) GetOrgList(ctx context.Context, req *resourcev1.GetOrgListReq) (*resourcev1.GetOrgListResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GetOrgList(ctx, req)
-}
+	// paging args
+	pageRequest, pageOption := pagepkg.ParsePageRequest(req.PageRequest)
 
-func (s *orgV1Service) GetOrgEmployeeList(ctx context.Context, req *resourcev1.GetOrgEmployeeListReq) (*resourcev1.GetOrgEmployeeListResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GetOrgEmployeeList(ctx, req)
-}
+	// list
+	param := dto.OrgDto.ToBoOrgListParam(req)
+	param.PaginatorArgs = &gormpkg.PaginatorArgs{
+		PageRequest: pageRequest,
+		PageOption:  pageOption,
+	}
+	dataModels, dataCount, err := s.orgBiz.ListOrg(ctx, param)
+	if err != nil {
+		return nil, err
+	}
 
-func (s *orgV1Service) GetOrgInviteRecordList(ctx context.Context, req *resourcev1.GetOrgInviteRecordListReq) (*resourcev1.GetOrgInviteRecordListResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GetOrgInviteRecordList(ctx, req)
+	// paging result
+	return &resourcev1.GetOrgListResp{
+		Data: &resourcev1.GetOrgListRespData{
+			List:     dto.OrgDto.ToPbOrgList(dataModels),
+			PageInfo: pagepkg.CalcPageResponse(pageRequest, uint32(dataCount)),
+		},
+	}, nil
 }

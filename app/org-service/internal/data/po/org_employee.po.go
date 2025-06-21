@@ -4,10 +4,13 @@ package po
 
 import (
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
+	schemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_employee"
+	gormpkg "github.com/ikaiguang/go-srv-kit/data/gorm"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
 	uuidpkg "github.com/ikaiguang/go-srv-kit/kit/uuid"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	datatypes "gorm.io/datatypes"
+	"gorm.io/gorm"
 	"strconv"
 	time "time"
 )
@@ -106,4 +109,35 @@ type QueryEmployeeParam struct {
 	OrgID      uint64
 	UserID     uint64
 	EmployeeId uint64
+}
+
+type OrgEmployeeListParam struct {
+	OrgIDList      []uint64 // 用户ID列表
+	EmployeeIDList []uint64 // 成员ID列表
+	UserIDList     []uint64 // 用户ID列表
+	EmployeeName   string   // 成员名称
+
+	PaginatorArgs *gormpkg.PaginatorArgs
+}
+
+func (s *OrgEmployeeListParam) WhereConditions(dbConn *gorm.DB) *gorm.DB {
+	if len(s.OrgIDList) == 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldOrgId)+" = ?", s.OrgIDList[0])
+	} else if len(s.OrgIDList) > 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldOrgId)+" IN (?)", s.OrgIDList)
+	}
+	if len(s.EmployeeIDList) == 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeId)+" = ?", s.EmployeeIDList[0])
+	} else if len(s.EmployeeIDList) > 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeId)+" IN (?)", s.EmployeeIDList)
+	}
+	if len(s.UserIDList) == 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldUserId)+" = ?", s.UserIDList[0])
+	} else if len(s.UserIDList) > 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldUserId)+" IN (?)", s.UserIDList)
+	}
+	if len(s.EmployeeName) > 0 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeName)+" LIKE ?", "%"+s.EmployeeName+"%")
+	}
+	return dbConn
 }

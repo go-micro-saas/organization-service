@@ -318,10 +318,11 @@ message GetOrgEmployeeListRespData {
 message GetOrgInviteRecordListReq {
   kit.page.pagepkg.PageRequest page_request = 1;
 
-  repeated uint64 org_ids      = 100;  // 组织ids
-  repeated uint64 employee_ids = 101;  // 成员ids
-  repeated uint64 user_ids     = 102;  // 用户ids
-  repeated uint64 invite_ids   = 103;  // 邀请ids
+  repeated uint64 org_ids          = 100;  // 组织ids
+  repeated uint64 inviter_user_ids = 102;  // 邀请人ids
+  repeated uint64 invite_ids       = 103;  // 邀请ids
+  string invite_code               = 104;  // 邀请码
+  string invite_account            = 105;  // 邀请账号
 }
 message GetOrgInviteRecordListResp {
   int32 code                   = 1;

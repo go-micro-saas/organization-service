@@ -209,3 +209,19 @@ func (s *orgBiz) GetInviteRecordInfoList(ctx context.Context, inviteIDList []uin
 	}
 	return dataModels, nil
 }
+
+func (s *orgBiz) ListOrgInviteRecord(ctx context.Context, param *bo.OrgInviteRecordListParam) ([]*po.OrgInviteRecord, int64, error) {
+	queryParam := &po.OrgInviteRecordListParam{
+		OrgIDList:         param.OrgIDList,
+		InviterUserIDList: param.InviterUserIDList,
+		InviteIDList:      param.InviteIDList,
+		InviteCode:        param.InviteCode,
+		InviteAccount:     param.InviteAccount,
+		PaginatorArgs:     param.PaginatorArgs,
+	}
+	dataModels, counter, err := s.inviteRecordData.ListOrgInviteRecord(ctx, queryParam, param.PaginatorArgs)
+	if err != nil {
+		return dataModels, counter, err
+	}
+	return dataModels, counter, err
+}

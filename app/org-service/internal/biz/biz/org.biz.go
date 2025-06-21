@@ -94,7 +94,7 @@ func (s *orgBiz) GetOrgInfo(ctx context.Context, orgID uint64) (*po.Org, error) 
 	if err != nil {
 		return nil, err
 	}
-	if !isNotFound {
+	if isNotFound {
 		e := errorv1.DefaultErrorS105OrgNotFound()
 		return nil, errorpkg.WithStack(e)
 	}
@@ -107,4 +107,17 @@ func (s *orgBiz) GetOrgInfoList(ctx context.Context, orgIDList []uint64) ([]*po.
 		return nil, err
 	}
 	return dataModels, nil
+}
+
+func (s *orgBiz) ListOrg(ctx context.Context, param *bo.OrgListParam) ([]*po.Org, int64, error) {
+	queryParam := &po.OrgListParam{
+		OrgIDList:     param.OrgIDList,
+		OrgName:       param.OrgName,
+		PaginatorArgs: param.PaginatorArgs,
+	}
+	dataModels, counter, err := s.orgData.ListOrg(ctx, queryParam, param.PaginatorArgs)
+	if err != nil {
+		return dataModels, counter, err
+	}
+	return dataModels, counter, err
 }
