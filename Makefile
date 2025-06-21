@@ -99,7 +99,7 @@ include app/all-in-one/makefile_run.mk
 include app/org-service/cmd/makefile_run.mk
 
 # build
-#include devops/makefile_cicd.mk
+include devops/makefile_cicd.mk
 
 # ===== include =====
 # ===== include =====
