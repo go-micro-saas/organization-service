@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  dev-org-service:
+    image: org-service:latest
+    container_name: dev-org-service
+    ports:
+      - "10501:10501"
+      - "10502:10502"
+    networks:
+      - my-network
+    volumes:
+      - dev_org_service_data:/myworkspace/golang/src/workspace/runtime
+      - ./configs:/myworkspace/golang/src/workspace/configs
+    environment:
+      TZ: Asia/Shanghai
+    #entrypoint: ["/bin/bash"]
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:10501/api/v1/org/ping" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+networks:
+  my-network: # 已有的网络的名称
+    external: true  # 标记为外部网络，表示这是已存在的网络
+
+volumes:
+  dev_org_service_data:
+    driver: local
