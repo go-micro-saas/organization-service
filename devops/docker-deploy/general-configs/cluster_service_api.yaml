@@ -27,3 +27,19 @@ cluster_service_api:
     transport_type: grpc
     registry_type: endpoint
     service_target: grpc://my-account-service:20302
+  - service_name: admin-service-http
+    transport_type: http
+    registry_type: endpoint
+    service_target: http://my-admin-service:20401
+  - service_name: admin-service-grpc
+    transport_type: grpc
+    registry_type: endpoint
+    service_target: grpc://my-admin-service:20402
+  - service_name: org-service-http
+    transport_type: http
+    registry_type: endpoint
+    service_target: http://my-org-service:20501
+  - service_name: org-service-grpc
+    transport_type: grpc
+    registry_type: endpoint
+    service_target: grpc://my-org-service:20502
