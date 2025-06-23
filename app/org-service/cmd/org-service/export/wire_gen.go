@@ -14,6 +14,7 @@ import (
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/data"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/service/dto"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/service/service"
+	"github.com/go-micro-saas/service-api/app/account-service"
 	"github.com/go-micro-saas/service-api/app/snowflake-service"
 	"github.com/ikaiguang/go-srv-kit/service/cleanup"
 	"github.com/ikaiguang/go-srv-kit/service/setup"
@@ -48,7 +49,13 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 	orgRepo := data.NewOrgRepo(db)
 	orgEmployeeRepo := data.NewOrgEmployeeRepo(db)
 	orgInviteRecordRepo := data.NewOrgInviteRecordRepo(db)
-	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgRepo, orgEmployeeRepo, orgInviteRecordRepo)
+	v2 := dto.GetAccountV1ServiceNameForGRPC()
+	srvAccountV1Client, err := accountapi.NewAccountV1GRPCClient(serviceAPIManager, v2...)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgRepo, orgEmployeeRepo, orgInviteRecordRepo, srvAccountV1Client)
 	srvOrgV1Server := service.NewOrgV1Service(logger, orgBizRepo)
 	cleanupManager, err := service.RegisterServices(hs, gs, srvOrgV1Server)
 	if err != nil {

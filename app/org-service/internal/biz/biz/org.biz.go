@@ -9,6 +9,7 @@ import (
 	bizrepos "github.com/go-micro-saas/organization-service/app/org-service/internal/biz/repo"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	datarepos "github.com/go-micro-saas/organization-service/app/org-service/internal/data/repo"
+	accountservicev1 "github.com/go-micro-saas/service-api/api/account-service/v1/services"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 )
@@ -20,14 +21,19 @@ type orgBiz struct {
 	orgData          datarepos.OrgRepo
 	employeeData     datarepos.OrgEmployeeRepo
 	inviteRecordData datarepos.OrgInviteRecordRepo
+
+	accountV1Client accountservicev1.SrvAccountV1Client
 }
 
 func NewOrgBiz(
 	logger log.Logger,
 	idGenerator idpkg.Snowflake,
+
 	orgData datarepos.OrgRepo,
 	employeeData datarepos.OrgEmployeeRepo,
 	inviteRecordData datarepos.OrgInviteRecordRepo,
+
+	accountV1Client accountservicev1.SrvAccountV1Client,
 ) bizrepos.OrgBizRepo {
 	logHelper := log.NewHelper(log.With(logger, "module", "test-service/biz/biz"))
 
@@ -37,10 +43,18 @@ func NewOrgBiz(
 		orgData:          orgData,
 		employeeData:     employeeData,
 		inviteRecordData: inviteRecordData,
+		accountV1Client:  accountV1Client,
 	}
 }
 
 func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.CreateOrgReply, error) {
+	// check account
+	accountInfo, err := s.GetAccountInfo(ctx, param.CreatorID)
+	if err != nil {
+		return nil, err
+	}
+
+	// model
 	orgModel, err := po.DefaultOrgWithID(s.idGenerator)
 	if err != nil {
 		return nil, err
@@ -60,6 +74,8 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 	employeeModel.EmployeeName = param.CreatorName
 	employeeModel.EmployeeAvatar = param.CreatorAvatar
 	employeeModel.EmployeeRole = enumv1.OrgEmployeeRoleEnum_CREATOR
+	// set employee
+	s.SetOrgEmployeeByAccountInfo(ctx, employeeModel, accountInfo)
 
 	// 事务
 	tx := s.orgData.NewTransaction(ctx)

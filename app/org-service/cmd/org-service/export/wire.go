@@ -11,6 +11,7 @@ import (
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/data"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/service/dto"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/service/service"
+	accountapi "github.com/go-micro-saas/service-api/app/account-service"
 	snowflakeapi "github.com/go-micro-saas/service-api/app/snowflake-service"
 	"github.com/google/wire"
 	cleanuputil "github.com/ikaiguang/go-srv-kit/service/cleanup"
@@ -30,6 +31,9 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 		data.NewOrgRepo,
 		data.NewOrgEmployeeRepo,
 		data.NewOrgInviteRecordRepo,
+		// api
+		dto.GetAccountV1ServiceNameForGRPC, accountapi.NewAccountV1GRPCClient,
+		//dto.GetAccountV1ServiceNameForHTTP, accountapi.NewAccountV1HTTPClient,
 		// biz
 		biz.NewOrgBiz,
 		// service
