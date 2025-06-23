@@ -32,6 +32,13 @@ func (s *orgBiz) CreateInviteRecordForLink(ctx context.Context, param *bo.Create
 }
 
 func (s *orgBiz) CreateInviteRecordForEmployee(ctx context.Context, param *bo.CreateInviteRecordForEmployeeParam) (*po.OrgInviteRecord, error) {
+	// check account
+	_, err := s.GetAccountInfo(ctx, param.InviteUserId)
+	if err != nil {
+		return nil, err
+	}
+
+	// invite
 	inviterModel, err := s.canInviteEmployee(ctx, param.OperatorUid, param.OrgId)
 	if err != nil {
 		return nil, err
@@ -71,6 +78,13 @@ func (s *orgBiz) CreateInviteRecordForEmployee(ctx context.Context, param *bo.Cr
 }
 
 func (s *orgBiz) JoinByInviteLink(ctx context.Context, param *bo.JoinByInviteLinkParam) (*po.OrgEmployee, error) {
+	// check account
+	accountInfo, err := s.GetAccountInfo(ctx, param.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	// invite
 	inviteModel, err := s.GetInviteRecordInfo(ctx, param.InviteId)
 	if err != nil {
 		return nil, err
@@ -100,6 +114,7 @@ func (s *orgBiz) JoinByInviteLink(ctx context.Context, param *bo.JoinByInviteLin
 	if inviteModel.InvitedEmployeeRole != enumv1.OrgEmployeeRoleEnum_UNSPECIFIED {
 		employeeModel.EmployeeRole = inviteModel.InvitedEmployeeRole
 	}
+	s.SetOrgEmployeeByAccountInfo(employeeModel, accountInfo)
 	if err = s.isEmployeeExists(ctx, employeeModel); err != nil {
 		return nil, err
 	}
@@ -112,6 +127,13 @@ func (s *orgBiz) JoinByInviteLink(ctx context.Context, param *bo.JoinByInviteLin
 }
 
 func (s *orgBiz) AgreeOrRefuseInvite(ctx context.Context, param *bo.AgreeOrRefuseInviteParam) (employeeModel *po.OrgEmployee, err error) {
+	// check account
+	accountInfo, err := s.GetAccountInfo(ctx, param.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	// invite
 	inviteModel, isNotFound, err := s.inviteRecordData.QueryOneByInviteID(ctx, param.InviteId)
 	if err != nil {
 		return nil, err
@@ -156,6 +178,7 @@ func (s *orgBiz) AgreeOrRefuseInvite(ctx context.Context, param *bo.AgreeOrRefus
 	if inviteModel.InvitedEmployeeRole != enumv1.OrgEmployeeRoleEnum_UNSPECIFIED {
 		employeeModel.EmployeeRole = inviteModel.InvitedEmployeeRole
 	}
+	s.SetOrgEmployeeByAccountInfo(employeeModel, accountInfo)
 	// check
 	if param.IsAgree {
 		if err = s.isEmployeeExists(ctx, employeeModel); err != nil {

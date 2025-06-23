@@ -75,7 +75,7 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 	employeeModel.EmployeeAvatar = param.CreatorAvatar
 	employeeModel.EmployeeRole = enumv1.OrgEmployeeRoleEnum_CREATOR
 	// set employee
-	s.SetOrgEmployeeByAccountInfo(ctx, employeeModel, accountInfo)
+	s.SetOrgEmployeeByAccountInfo(employeeModel, accountInfo)
 
 	// 事务
 	tx := s.orgData.NewTransaction(ctx)

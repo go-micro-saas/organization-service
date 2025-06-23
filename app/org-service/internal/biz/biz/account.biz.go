@@ -19,7 +19,7 @@ func (s *orgBiz) GetAccountInfo(ctx context.Context, accountID uint64) (*account
 	return resp.GetData(), nil
 }
 
-func (s *orgBiz) SetOrgEmployeeByAccountInfo(ctx context.Context, dataModel *po.OrgEmployee, info *accountresourcev1.AccountInfo) {
+func (s *orgBiz) SetOrgEmployeeByAccountInfo(dataModel *po.OrgEmployee, info *accountresourcev1.AccountInfo) {
 	if dataModel.EmployeeName == "" {
 		dataModel.EmployeeName = info.GetUserNickname()
 	}

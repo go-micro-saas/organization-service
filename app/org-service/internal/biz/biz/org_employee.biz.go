@@ -10,15 +10,22 @@ import (
 )
 
 func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*bo.AddEmployeeReply, error) {
+	// check account
+	accountInfo, err := s.GetAccountInfo(ctx, param.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	// employee
 	var (
 		employee = param.NewEmployeeModel()
-		err      error
 	)
 	employee.EmployeeId, err = s.idGenerator.NextID()
 	if err != nil {
 		e := errorpkg.ErrorInternalServer(err.Error())
 		return nil, errorpkg.WithStack(e)
 	}
+	s.SetOrgEmployeeByAccountInfo(employee, accountInfo)
 
 	if err = s.cannotBeOwner(employee.EmployeeRole); err != nil {
 		return nil, err
