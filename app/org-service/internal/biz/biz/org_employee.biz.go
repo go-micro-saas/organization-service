@@ -131,7 +131,10 @@ func (s *orgBiz) ListOrgEmployee(ctx context.Context, param *bo.OrgEmployeeListP
 		EmployeeIDList: param.EmployeeIDList,
 		UserIDList:     param.UserIDList,
 		EmployeeName:   param.EmployeeName,
-		PaginatorArgs:  param.PaginatorArgs,
+
+		OnlyNotDeleted: true,
+
+		PaginatorArgs: param.PaginatorArgs,
 	}
 	dataModels, counter, err := s.employeeData.ListOrgEmployee(ctx, queryParam, param.PaginatorArgs)
 	if err != nil {

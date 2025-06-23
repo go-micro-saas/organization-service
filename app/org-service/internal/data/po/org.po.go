@@ -75,6 +75,10 @@ type OrgListParam struct {
 	OrgIDList []uint64 // 用户ID列表
 	OrgName   string   // 组织名称
 
+	IgnoreDeletedTime bool // 忽略删除时间
+	OnlyNotDeleted    bool // 只查询未删除
+	OnlyDeleted       bool // 只查询已删除
+
 	PaginatorArgs *gormpkg.PaginatorArgs
 }
 
@@ -84,6 +88,15 @@ func (s *OrgListParam) WhereConditions(dbConn *gorm.DB) *gorm.DB {
 	} else if len(s.OrgIDList) > 1 {
 		dbConn = dbConn.Where(schemas.OrgSchema.FieldName(schemas.FieldOrgId)+" IN (?)", s.OrgIDList)
 	}
+
+	if !s.IgnoreDeletedTime {
+		if s.OnlyNotDeleted {
+			dbConn = dbConn.Where("deleted_time = ?", 0)
+		} else if s.OnlyDeleted {
+			dbConn = dbConn.Where("deleted_time > ?", 0)
+		}
+	}
+	
 	if len(s.OrgName) > 0 {
 		dbConn = dbConn.Where(schemas.OrgSchema.FieldName(schemas.FieldOrgName)+" LIKE ?", "%"+s.OrgName+"%")
 	}

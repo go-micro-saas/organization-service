@@ -117,6 +117,10 @@ type OrgEmployeeListParam struct {
 	UserIDList     []uint64 // 用户ID列表
 	EmployeeName   string   // 成员名称
 
+	IgnoreDeletedTime bool // 忽略删除时间
+	OnlyNotDeleted    bool // 只查询未删除
+	OnlyDeleted       bool // 只查询已删除
+
 	PaginatorArgs *gormpkg.PaginatorArgs
 }
 
@@ -135,6 +139,13 @@ func (s *OrgEmployeeListParam) WhereConditions(dbConn *gorm.DB) *gorm.DB {
 		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldUserId)+" = ?", s.UserIDList[0])
 	} else if len(s.UserIDList) > 1 {
 		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldUserId)+" IN (?)", s.UserIDList)
+	}
+	if !s.IgnoreDeletedTime {
+		if s.OnlyNotDeleted {
+			dbConn = dbConn.Where("deleted_time = ?", 0)
+		} else if s.OnlyDeleted {
+			dbConn = dbConn.Where("deleted_time > ?", 0)
+		}
 	}
 	if len(s.EmployeeName) > 0 {
 		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeName)+" LIKE ?", "%"+s.EmployeeName+"%")

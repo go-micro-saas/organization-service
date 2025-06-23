@@ -127,8 +127,11 @@ func (s *orgBiz) GetOrgInfoList(ctx context.Context, orgIDList []uint64) ([]*po.
 
 func (s *orgBiz) ListOrg(ctx context.Context, param *bo.OrgListParam) ([]*po.Org, int64, error) {
 	queryParam := &po.OrgListParam{
-		OrgIDList:     param.OrgIDList,
-		OrgName:       param.OrgName,
+		OrgIDList: param.OrgIDList,
+		OrgName:   param.OrgName,
+
+		OnlyNotDeleted: true,
+
 		PaginatorArgs: param.PaginatorArgs,
 	}
 	dataModels, counter, err := s.orgData.ListOrg(ctx, queryParam, param.PaginatorArgs)
