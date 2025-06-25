@@ -28,6 +28,10 @@ const (
 	SrvOrgV1_CreateInviteRecordForEmployee_FullMethodName = "/saas.api.org.servicev1.SrvOrgV1/CreateInviteRecordForEmployee"
 	SrvOrgV1_JoinByInviteLink_FullMethodName              = "/saas.api.org.servicev1.SrvOrgV1/JoinByInviteLink"
 	SrvOrgV1_AgreeOrRefuseInvite_FullMethodName           = "/saas.api.org.servicev1.SrvOrgV1/AgreeOrRefuseInvite"
+	SrvOrgV1_SetOrgStatus_FullMethodName                  = "/saas.api.org.servicev1.SrvOrgV1/SetOrgStatus"
+	SrvOrgV1_RemoveEmployee_FullMethodName                = "/saas.api.org.servicev1.SrvOrgV1/RemoveEmployee"
+	SrvOrgV1_SetEmployeeRole_FullMethodName               = "/saas.api.org.servicev1.SrvOrgV1/SetEmployeeRole"
+	SrvOrgV1_SetEmployeeStatus_FullMethodName             = "/saas.api.org.servicev1.SrvOrgV1/SetEmployeeStatus"
 	SrvOrgV1_GetOrgInfo_FullMethodName                    = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInfo"
 	SrvOrgV1_GetOrgInfoList_FullMethodName                = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInfoList"
 	SrvOrgV1_GetOrgEmployeeInfo_FullMethodName            = "/saas.api.org.servicev1.SrvOrgV1/GetOrgEmployeeInfo"
@@ -61,6 +65,14 @@ type SrvOrgV1Client interface {
 	JoinByInviteLink(ctx context.Context, in *resources.JoinByInviteLinkReq, opts ...grpc.CallOption) (*resources.JoinByInviteLinkResp, error)
 	// 组织-同意或拒绝邀请
 	AgreeOrRefuseInvite(ctx context.Context, in *resources.AgreeOrRefuseInviteReq, opts ...grpc.CallOption) (*resources.AgreeOrRefuseInviteResp, error)
+	// 组织-设置组织状态
+	SetOrgStatus(ctx context.Context, in *resources.SetOrgStatusReq, opts ...grpc.CallOption) (*resources.SetOrgStatusResp, error)
+	// 组织-移除组织成员
+	RemoveEmployee(ctx context.Context, in *resources.RemoveEmployeeReq, opts ...grpc.CallOption) (*resources.RemoveEmployeeResp, error)
+	// 组织-设置组织成员角色
+	SetEmployeeRole(ctx context.Context, in *resources.SetEmployeeRoleReq, opts ...grpc.CallOption) (*resources.SetEmployeeRoleResp, error)
+	// 组织-设置组织成员状态
+	SetEmployeeStatus(ctx context.Context, in *resources.SetEmployeeStatusReq, opts ...grpc.CallOption) (*resources.SetEmployeeStatusResp, error)
 	// 组织-获取组织信息
 	GetOrgInfo(ctx context.Context, in *resources.GetOrgInfoReq, opts ...grpc.CallOption) (*resources.GetOrgInfoResp, error)
 	// 组织-获取组织信息列表
@@ -163,6 +175,46 @@ func (c *srvOrgV1Client) AgreeOrRefuseInvite(ctx context.Context, in *resources.
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(resources.AgreeOrRefuseInviteResp)
 	err := c.cc.Invoke(ctx, SrvOrgV1_AgreeOrRefuseInvite_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *srvOrgV1Client) SetOrgStatus(ctx context.Context, in *resources.SetOrgStatusReq, opts ...grpc.CallOption) (*resources.SetOrgStatusResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.SetOrgStatusResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_SetOrgStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *srvOrgV1Client) RemoveEmployee(ctx context.Context, in *resources.RemoveEmployeeReq, opts ...grpc.CallOption) (*resources.RemoveEmployeeResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.RemoveEmployeeResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_RemoveEmployee_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *srvOrgV1Client) SetEmployeeRole(ctx context.Context, in *resources.SetEmployeeRoleReq, opts ...grpc.CallOption) (*resources.SetEmployeeRoleResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.SetEmployeeRoleResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_SetEmployeeRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *srvOrgV1Client) SetEmployeeStatus(ctx context.Context, in *resources.SetEmployeeStatusReq, opts ...grpc.CallOption) (*resources.SetEmployeeStatusResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.SetEmployeeStatusResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_SetEmployeeStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -281,6 +333,14 @@ type SrvOrgV1Server interface {
 	JoinByInviteLink(context.Context, *resources.JoinByInviteLinkReq) (*resources.JoinByInviteLinkResp, error)
 	// 组织-同意或拒绝邀请
 	AgreeOrRefuseInvite(context.Context, *resources.AgreeOrRefuseInviteReq) (*resources.AgreeOrRefuseInviteResp, error)
+	// 组织-设置组织状态
+	SetOrgStatus(context.Context, *resources.SetOrgStatusReq) (*resources.SetOrgStatusResp, error)
+	// 组织-移除组织成员
+	RemoveEmployee(context.Context, *resources.RemoveEmployeeReq) (*resources.RemoveEmployeeResp, error)
+	// 组织-设置组织成员角色
+	SetEmployeeRole(context.Context, *resources.SetEmployeeRoleReq) (*resources.SetEmployeeRoleResp, error)
+	// 组织-设置组织成员状态
+	SetEmployeeStatus(context.Context, *resources.SetEmployeeStatusReq) (*resources.SetEmployeeStatusResp, error)
 	// 组织-获取组织信息
 	GetOrgInfo(context.Context, *resources.GetOrgInfoReq) (*resources.GetOrgInfoResp, error)
 	// 组织-获取组织信息列表
@@ -332,6 +392,18 @@ func (UnimplementedSrvOrgV1Server) JoinByInviteLink(context.Context, *resources.
 }
 func (UnimplementedSrvOrgV1Server) AgreeOrRefuseInvite(context.Context, *resources.AgreeOrRefuseInviteReq) (*resources.AgreeOrRefuseInviteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AgreeOrRefuseInvite not implemented")
+}
+func (UnimplementedSrvOrgV1Server) SetOrgStatus(context.Context, *resources.SetOrgStatusReq) (*resources.SetOrgStatusResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetOrgStatus not implemented")
+}
+func (UnimplementedSrvOrgV1Server) RemoveEmployee(context.Context, *resources.RemoveEmployeeReq) (*resources.RemoveEmployeeResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveEmployee not implemented")
+}
+func (UnimplementedSrvOrgV1Server) SetEmployeeRole(context.Context, *resources.SetEmployeeRoleReq) (*resources.SetEmployeeRoleResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetEmployeeRole not implemented")
+}
+func (UnimplementedSrvOrgV1Server) SetEmployeeStatus(context.Context, *resources.SetEmployeeStatusReq) (*resources.SetEmployeeStatusResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetEmployeeStatus not implemented")
 }
 func (UnimplementedSrvOrgV1Server) GetOrgInfo(context.Context, *resources.GetOrgInfoReq) (*resources.GetOrgInfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrgInfo not implemented")
@@ -521,6 +593,78 @@ func _SrvOrgV1_AgreeOrRefuseInvite_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SrvOrgV1Server).AgreeOrRefuseInvite(ctx, req.(*resources.AgreeOrRefuseInviteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SrvOrgV1_SetOrgStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.SetOrgStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).SetOrgStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_SetOrgStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).SetOrgStatus(ctx, req.(*resources.SetOrgStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SrvOrgV1_RemoveEmployee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.RemoveEmployeeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).RemoveEmployee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_RemoveEmployee_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).RemoveEmployee(ctx, req.(*resources.RemoveEmployeeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SrvOrgV1_SetEmployeeRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.SetEmployeeRoleReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).SetEmployeeRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_SetEmployeeRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).SetEmployeeRole(ctx, req.(*resources.SetEmployeeRoleReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SrvOrgV1_SetEmployeeStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.SetEmployeeStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).SetEmployeeStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_SetEmployeeStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).SetEmployeeStatus(ctx, req.(*resources.SetEmployeeStatusReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -725,6 +869,22 @@ var SrvOrgV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AgreeOrRefuseInvite",
 			Handler:    _SrvOrgV1_AgreeOrRefuseInvite_Handler,
+		},
+		{
+			MethodName: "SetOrgStatus",
+			Handler:    _SrvOrgV1_SetOrgStatus_Handler,
+		},
+		{
+			MethodName: "RemoveEmployee",
+			Handler:    _SrvOrgV1_RemoveEmployee_Handler,
+		},
+		{
+			MethodName: "SetEmployeeRole",
+			Handler:    _SrvOrgV1_SetEmployeeRole_Handler,
+		},
+		{
+			MethodName: "SetEmployeeStatus",
+			Handler:    _SrvOrgV1_SetEmployeeStatus_Handler,
 		},
 		{
 			MethodName: "GetOrgInfo",

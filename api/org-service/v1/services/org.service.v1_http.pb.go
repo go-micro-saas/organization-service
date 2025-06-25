@@ -37,6 +37,10 @@ const OperationSrvOrgV1GetOrgList = "/saas.api.org.servicev1.SrvOrgV1/GetOrgList
 const OperationSrvOrgV1JoinByInviteLink = "/saas.api.org.servicev1.SrvOrgV1/JoinByInviteLink"
 const OperationSrvOrgV1OnlyCreateOrg = "/saas.api.org.servicev1.SrvOrgV1/OnlyCreateOrg"
 const OperationSrvOrgV1Ping = "/saas.api.org.servicev1.SrvOrgV1/Ping"
+const OperationSrvOrgV1RemoveEmployee = "/saas.api.org.servicev1.SrvOrgV1/RemoveEmployee"
+const OperationSrvOrgV1SetEmployeeRole = "/saas.api.org.servicev1.SrvOrgV1/SetEmployeeRole"
+const OperationSrvOrgV1SetEmployeeStatus = "/saas.api.org.servicev1.SrvOrgV1/SetEmployeeStatus"
+const OperationSrvOrgV1SetOrgStatus = "/saas.api.org.servicev1.SrvOrgV1/SetOrgStatus"
 
 type SrvOrgV1HTTPServer interface {
 	// AddEmployee 组织-添加成员
@@ -73,6 +77,14 @@ type SrvOrgV1HTTPServer interface {
 	OnlyCreateOrg(context.Context, *resources.OnlyCreateOrgReq) (*resources.CreateOrgResp, error)
 	// Ping Ping ping
 	Ping(context.Context, *resources.PingReq) (*resources.PingResp, error)
+	// RemoveEmployee 组织-移除组织成员
+	RemoveEmployee(context.Context, *resources.RemoveEmployeeReq) (*resources.RemoveEmployeeResp, error)
+	// SetEmployeeRole 组织-设置组织成员角色
+	SetEmployeeRole(context.Context, *resources.SetEmployeeRoleReq) (*resources.SetEmployeeRoleResp, error)
+	// SetEmployeeStatus 组织-设置组织成员状态
+	SetEmployeeStatus(context.Context, *resources.SetEmployeeStatusReq) (*resources.SetEmployeeStatusResp, error)
+	// SetOrgStatus 组织-设置组织状态
+	SetOrgStatus(context.Context, *resources.SetOrgStatusReq) (*resources.SetOrgStatusResp, error)
 }
 
 func RegisterSrvOrgV1HTTPServer(s *http.Server, srv SrvOrgV1HTTPServer) {
@@ -85,6 +97,10 @@ func RegisterSrvOrgV1HTTPServer(s *http.Server, srv SrvOrgV1HTTPServer) {
 	r.POST("/api/v1/org/create-invite-record-for-employee", _SrvOrgV1_CreateInviteRecordForEmployee0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/join-by-invite-link", _SrvOrgV1_JoinByInviteLink0_HTTP_Handler(srv))
 	r.POST("/api/v1/org/agree-or-refuse-invite", _SrvOrgV1_AgreeOrRefuseInvite0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/set-org-status", _SrvOrgV1_SetOrgStatus0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/remove-employee", _SrvOrgV1_RemoveEmployee0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/set-employee-role", _SrvOrgV1_SetEmployeeRole0_HTTP_Handler(srv))
+	r.POST("/api/v1/org/set-employee-status", _SrvOrgV1_SetEmployeeStatus0_HTTP_Handler(srv))
 	r.GET("/api/v1/org/get-org-info", _SrvOrgV1_GetOrgInfo0_HTTP_Handler(srv))
 	r.GET("/api/v1/org/get-org-info-list", _SrvOrgV1_GetOrgInfoList0_HTTP_Handler(srv))
 	r.GET("/api/v1/org/get-org-employee-info", _SrvOrgV1_GetOrgEmployeeInfo0_HTTP_Handler(srv))
@@ -265,6 +281,94 @@ func _SrvOrgV1_AgreeOrRefuseInvite0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ct
 			return err
 		}
 		reply := out.(*resources.AgreeOrRefuseInviteResp)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _SrvOrgV1_SetOrgStatus0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.SetOrgStatusReq
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1SetOrgStatus)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.SetOrgStatus(ctx, req.(*resources.SetOrgStatusReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.SetOrgStatusResp)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _SrvOrgV1_RemoveEmployee0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.RemoveEmployeeReq
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1RemoveEmployee)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.RemoveEmployee(ctx, req.(*resources.RemoveEmployeeReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.RemoveEmployeeResp)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _SrvOrgV1_SetEmployeeRole0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.SetEmployeeRoleReq
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1SetEmployeeRole)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.SetEmployeeRole(ctx, req.(*resources.SetEmployeeRoleReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.SetEmployeeRoleResp)
+		return ctx.Result(200, reply)
+	}
+}
+
+func _SrvOrgV1_SetEmployeeStatus0_HTTP_Handler(srv SrvOrgV1HTTPServer) func(ctx http.Context) error {
+	return func(ctx http.Context) error {
+		var in resources.SetEmployeeStatusReq
+		if err := ctx.Bind(&in); err != nil {
+			return err
+		}
+		if err := ctx.BindQuery(&in); err != nil {
+			return err
+		}
+		http.SetOperation(ctx, OperationSrvOrgV1SetEmployeeStatus)
+		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.SetEmployeeStatus(ctx, req.(*resources.SetEmployeeStatusReq))
+		})
+		out, err := h(ctx, &in)
+		if err != nil {
+			return err
+		}
+		reply := out.(*resources.SetEmployeeStatusResp)
 		return ctx.Result(200, reply)
 	}
 }
@@ -458,6 +562,10 @@ type SrvOrgV1HTTPClient interface {
 	JoinByInviteLink(ctx context.Context, req *resources.JoinByInviteLinkReq, opts ...http.CallOption) (rsp *resources.JoinByInviteLinkResp, err error)
 	OnlyCreateOrg(ctx context.Context, req *resources.OnlyCreateOrgReq, opts ...http.CallOption) (rsp *resources.CreateOrgResp, err error)
 	Ping(ctx context.Context, req *resources.PingReq, opts ...http.CallOption) (rsp *resources.PingResp, err error)
+	RemoveEmployee(ctx context.Context, req *resources.RemoveEmployeeReq, opts ...http.CallOption) (rsp *resources.RemoveEmployeeResp, err error)
+	SetEmployeeRole(ctx context.Context, req *resources.SetEmployeeRoleReq, opts ...http.CallOption) (rsp *resources.SetEmployeeRoleResp, err error)
+	SetEmployeeStatus(ctx context.Context, req *resources.SetEmployeeStatusReq, opts ...http.CallOption) (rsp *resources.SetEmployeeStatusResp, err error)
+	SetOrgStatus(ctx context.Context, req *resources.SetOrgStatusReq, opts ...http.CallOption) (rsp *resources.SetOrgStatusResp, err error)
 }
 
 type SrvOrgV1HTTPClientImpl struct {
@@ -683,6 +791,58 @@ func (c *SrvOrgV1HTTPClientImpl) Ping(ctx context.Context, in *resources.PingReq
 	opts = append(opts, http.Operation(OperationSrvOrgV1Ping))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) RemoveEmployee(ctx context.Context, in *resources.RemoveEmployeeReq, opts ...http.CallOption) (*resources.RemoveEmployeeResp, error) {
+	var out resources.RemoveEmployeeResp
+	pattern := "/api/v1/org/remove-employee"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationSrvOrgV1RemoveEmployee))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) SetEmployeeRole(ctx context.Context, in *resources.SetEmployeeRoleReq, opts ...http.CallOption) (*resources.SetEmployeeRoleResp, error) {
+	var out resources.SetEmployeeRoleResp
+	pattern := "/api/v1/org/set-employee-role"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationSrvOrgV1SetEmployeeRole))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) SetEmployeeStatus(ctx context.Context, in *resources.SetEmployeeStatusReq, opts ...http.CallOption) (*resources.SetEmployeeStatusResp, error) {
+	var out resources.SetEmployeeStatusResp
+	pattern := "/api/v1/org/set-employee-status"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationSrvOrgV1SetEmployeeStatus))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &out, nil
+}
+
+func (c *SrvOrgV1HTTPClientImpl) SetOrgStatus(ctx context.Context, in *resources.SetOrgStatusReq, opts ...http.CallOption) (*resources.SetOrgStatusResp, error) {
+	var out resources.SetOrgStatusResp
+	pattern := "/api/v1/org/set-org-status"
+	path := binding.EncodeURL(pattern, in, false)
+	opts = append(opts, http.Operation(OperationSrvOrgV1SetOrgStatus))
+	opts = append(opts, http.PathTemplate(pattern))
+	err := c.cc.Invoke(ctx, "POST", path, in, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

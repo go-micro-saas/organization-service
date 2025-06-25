@@ -6017,3 +6017,385 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetOrgInviteRecordListRespDataValidationError{}
+
+// Validate checks the field values on SetOrgStatusReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *SetOrgStatusReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SetOrgStatusReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SetOrgStatusReqMultiError, or nil if none found.
+func (m *SetOrgStatusReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SetOrgStatusReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetOperatorEid() <= 0 {
+		err := SetOrgStatusReqValidationError{
+			field:  "OperatorEid",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetOrgId() <= 0 {
+		err := SetOrgStatusReqValidationError{
+			field:  "OrgId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if _, ok := _SetOrgStatusReq_OrgStatus_NotInLookup[m.GetOrgStatus()]; ok {
+		err := SetOrgStatusReqValidationError{
+			field:  "OrgStatus",
+			reason: "value must not be in list [UNSPECIFIED]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SetOrgStatusReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// SetOrgStatusReqMultiError is an error wrapping multiple validation errors
+// returned by SetOrgStatusReq.ValidateAll() if the designated constraints
+// aren't met.
+type SetOrgStatusReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SetOrgStatusReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SetOrgStatusReqMultiError) AllErrors() []error { return m }
+
+// SetOrgStatusReqValidationError is the validation error returned by
+// SetOrgStatusReq.Validate if the designated constraints aren't met.
+type SetOrgStatusReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SetOrgStatusReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SetOrgStatusReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SetOrgStatusReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SetOrgStatusReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SetOrgStatusReqValidationError) ErrorName() string { return "SetOrgStatusReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SetOrgStatusReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSetOrgStatusReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SetOrgStatusReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SetOrgStatusReqValidationError{}
+
+var _SetOrgStatusReq_OrgStatus_NotInLookup = map[enumv1.OrgStatusEnum_OrgStatus]struct{}{
+	0: {},
+}
+
+// Validate checks the field values on SetOrgStatusResp with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *SetOrgStatusResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SetOrgStatusResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SetOrgStatusRespMultiError, or nil if none found.
+func (m *SetOrgStatusResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SetOrgStatusResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, SetOrgStatusRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, SetOrgStatusRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SetOrgStatusRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return SetOrgStatusRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// SetOrgStatusRespMultiError is an error wrapping multiple validation errors
+// returned by SetOrgStatusResp.ValidateAll() if the designated constraints
+// aren't met.
+type SetOrgStatusRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SetOrgStatusRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SetOrgStatusRespMultiError) AllErrors() []error { return m }
+
+// SetOrgStatusRespValidationError is the validation error returned by
+// SetOrgStatusResp.Validate if the designated constraints aren't met.
+type SetOrgStatusRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SetOrgStatusRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SetOrgStatusRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SetOrgStatusRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SetOrgStatusRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SetOrgStatusRespValidationError) ErrorName() string { return "SetOrgStatusRespValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SetOrgStatusRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSetOrgStatusResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SetOrgStatusRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SetOrgStatusRespValidationError{}
+
+// Validate checks the field values on SetOrgStatusRespData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SetOrgStatusRespData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SetOrgStatusRespData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SetOrgStatusRespDataMultiError, or nil if none found.
+func (m *SetOrgStatusRespData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SetOrgStatusRespData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	// no validation rules for OrgId
+
+	// no validation rules for OrgStatus
+
+	if len(errors) > 0 {
+		return SetOrgStatusRespDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// SetOrgStatusRespDataMultiError is an error wrapping multiple validation
+// errors returned by SetOrgStatusRespData.ValidateAll() if the designated
+// constraints aren't met.
+type SetOrgStatusRespDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SetOrgStatusRespDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SetOrgStatusRespDataMultiError) AllErrors() []error { return m }
+
+// SetOrgStatusRespDataValidationError is the validation error returned by
+// SetOrgStatusRespData.Validate if the designated constraints aren't met.
+type SetOrgStatusRespDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SetOrgStatusRespDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SetOrgStatusRespDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SetOrgStatusRespDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SetOrgStatusRespDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SetOrgStatusRespDataValidationError) ErrorName() string {
+	return "SetOrgStatusRespDataValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SetOrgStatusRespDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSetOrgStatusRespData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SetOrgStatusRespDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SetOrgStatusRespDataValidationError{}

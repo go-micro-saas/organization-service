@@ -345,3 +345,67 @@ func ErrorS105IncorrectInviteType(format string, args ...interface{}) *errors.Er
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INCORRECT_INVITE_TYPE.Number()))}
 	return e
 }
+
+// 不允许设置为此状态
+func IsS105NotAllowedSetStatus(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_NOT_ALLOWED_SET_STATUS.String() && e.Code == 400
+}
+
+// 不允许设置为此状态
+func ErrorS105NotAllowedSetStatus(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_NOT_ALLOWED_SET_STATUS.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_ALLOWED_SET_STATUS.Number()))}
+	return e
+}
+
+// 组织未启用
+func IsS105OrgNotEnable(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_ORG_NOT_ENABLE.String() && e.Code == 400
+}
+
+// 组织未启用
+func ErrorS105OrgNotEnable(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_ORG_NOT_ENABLE.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_ORG_NOT_ENABLE.Number()))}
+	return e
+}
+
+// 不允许设置为此角色
+func IsS105NotAllowedSetRole(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_NOT_ALLOWED_SET_ROLE.String() && e.Code == 400
+}
+
+// 不允许设置为此角色
+func ErrorS105NotAllowedSetRole(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_NOT_ALLOWED_SET_ROLE.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_ALLOWED_SET_ROLE.Number()))}
+	return e
+}
+
+// 不能修改自己
+func IsS105CannotModifySelf(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_CANNOT_MODIFY_SELF.String() && e.Code == 400
+}
+
+// 不能修改自己
+func ErrorS105CannotModifySelf(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_CANNOT_MODIFY_SELF.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_CANNOT_MODIFY_SELF.Number()))}
+	return e
+}

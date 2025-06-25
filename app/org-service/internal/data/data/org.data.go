@@ -175,6 +175,23 @@ func (s *orgRepo) ExistUpdateWithDBConn(ctx context.Context, dbConn *gorm.DB, da
 	return s.existUpdate(ctx, dbConn, dataModel)
 }
 
+func (s *orgRepo) SetOrgStatus(ctx context.Context, dataModel *po.Org) (err error) {
+	updates := map[string]interface{}{
+		schemas.FieldUpdatedTime:      dataModel.UpdatedTime,
+		schemas.FieldOrgStatus:        dataModel.OrgStatus,
+		schemas.FieldModifyStatusTime: dataModel.ModifyStatusTime,
+	}
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgSchema.TableName()).
+		Where(schemas.FieldId+" = ?", dataModel.Id).
+		UpdateColumns(updates).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		return errorpkg.Wrap(e, err)
+	}
+	return
+}
+
 // =============== query one : 查一个 ===============
 
 // queryOneById query one by id

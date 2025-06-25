@@ -10,6 +10,7 @@ option java_outer_classname = "SaasApiOrgServiceV1";
 
 import "google/api/annotations.proto";
 import "api/org-service/v1/resources/org.resource.v1.proto";
+import "api/org-service/v1/resources/org_employee.resource.v1.proto";
 
 // SrvOrgV1
 service SrvOrgV1 {
@@ -65,6 +66,34 @@ service SrvOrgV1 {
   rpc AgreeOrRefuseInvite(resourcev1.AgreeOrRefuseInviteReq) returns (resourcev1.AgreeOrRefuseInviteResp) {
     option (google.api.http) = {
       post: "/api/v1/org/agree-or-refuse-invite"
+      body: "*"
+    };
+  }
+  // 组织-设置组织状态
+  rpc SetOrgStatus(resourcev1.SetOrgStatusReq) returns (resourcev1.SetOrgStatusResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/set-org-status"
+      body: "*"
+    };
+  }
+  // 组织-移除组织成员
+  rpc RemoveEmployee(resourcev1.RemoveEmployeeReq) returns (resourcev1.RemoveEmployeeResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/remove-employee"
+      body: "*"
+    };
+  }
+  // 组织-设置组织成员角色
+  rpc SetEmployeeRole(resourcev1.SetEmployeeRoleReq) returns (resourcev1.SetEmployeeRoleResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/set-employee-role"
+      body: "*"
+    };
+  }
+  // 组织-设置组织成员状态
+  rpc SetEmployeeStatus(resourcev1.SetEmployeeStatusReq) returns (resourcev1.SetEmployeeStatusResp) {
+    option (google.api.http) = {
+      post: "/api/v1/org/set-employee-status"
       body: "*"
     };
   }

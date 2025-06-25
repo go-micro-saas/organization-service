@@ -24,42 +24,46 @@ func NewOrgEmployee() *OrgEmployee {
 const (
 	TableName = "og_org_employee"
 
-	FieldId              = "id"
-	FieldCreatedTime     = "created_time"
-	FieldUpdatedTime     = "updated_time"
-	FieldDeletedTime     = "deleted_time"
-	FieldEmployeeId      = "employee_id"
-	FieldEmployeeUuid    = "employee_uuid"
-	FieldUserId          = "user_id"
-	FieldOrgId           = "org_id"
-	FieldEmployeeName    = "employee_name"
-	FieldEmployeeAvatar  = "employee_avatar"
-	FieldEmployeePhone   = "employee_phone"
-	FieldEmployeeEmail   = "employee_email"
-	FieldEmployeeRole    = "employee_role"
-	FieldEmployeeStatus  = "employee_status"
-	FieldInviterRecordId = "inviter_record_id"
-	FieldInviterUserId   = "inviter_user_id"
+	FieldId               = "id"
+	FieldCreatedTime      = "created_time"
+	FieldUpdatedTime      = "updated_time"
+	FieldDeletedTime      = "deleted_time"
+	FieldEmployeeId       = "employee_id"
+	FieldEmployeeUuid     = "employee_uuid"
+	FieldUserId           = "user_id"
+	FieldOrgId            = "org_id"
+	FieldEmployeeName     = "employee_name"
+	FieldEmployeeAvatar   = "employee_avatar"
+	FieldEmployeePhone    = "employee_phone"
+	FieldEmployeeEmail    = "employee_email"
+	FieldEmployeeRole     = "employee_role"
+	FieldEmployeeStatus   = "employee_status"
+	FieldInviterRecordId  = "inviter_record_id"
+	FieldInviterUserId    = "inviter_user_id"
+	FieldModifyStatusTime = "modify_status_time"
+	FieldModifyRoleTime   = "modify_role_time"
 )
 
 // OrgEmployee ENGINE InnoDB CHARSET utf8mb4 COMMENT '组织成员'
 type OrgEmployee struct {
-	Id              uint64    `gorm:"column:id;primaryKey;type:uint;autoIncrement;comment:ID" json:"id"`
-	CreatedTime     time.Time `gorm:"column:created_time;type:time;not null;comment:创建时间" json:"created_time"`
-	UpdatedTime     time.Time `gorm:"column:updated_time;type:time;not null;comment:最后修改时间" json:"updated_time"`
-	DeletedTime     uint64    `gorm:"column:deleted_time;index;type:uint;not null;default:0;comment:删除时间" json:"deleted_time"`
-	EmployeeId      uint64    `gorm:"column:employee_id;unique;type:uint;not null;default:0;comment:uuid" json:"employee_id"`
-	EmployeeUuid    string    `gorm:"column:employee_uuid;unique;type:string;size:255;not null;default:'';comment:uuid；默认orgID-employeeID；删除后设置随机uuid" json:"employee_uuid"`
-	UserId          uint64    `gorm:"column:user_id;index;type:uint;not null;default:0;comment:用户ID" json:"user_id"`
-	OrgId           uint64    `gorm:"column:org_id;index;type:uint;not null;default:0;comment:组织ID" json:"org_id"`
-	EmployeeName    string    `gorm:"column:employee_name;type:string;size:255;not null;default:'';comment:成员名称" json:"employee_name"`
-	EmployeeAvatar  string    `gorm:"column:employee_avatar;type:string;size:1023;not null;default:'';comment:成员头像" json:"employee_avatar"`
-	EmployeePhone   string    `gorm:"column:employee_phone;type:string;size:255;not null;default:'';comment:成员联系手机" json:"employee_phone"`
-	EmployeeEmail   string    `gorm:"column:employee_email;type:string;size:255;not null;default:'';comment:成员联系邮箱" json:"employee_email"`
-	EmployeeRole    uint32    `gorm:"column:employee_role;type:uint;not null;default:0;comment:角色；1：创建者，2：普通成员，3：管理员，4：超级管理员" json:"employee_role"`
-	EmployeeStatus  uint32    `gorm:"column:employee_status;type:uint;not null;default:0;comment:状态；1：ENABLE，2：DISABLE，3：DELETED" json:"employee_status"`
-	InviterRecordId uint64    `gorm:"column:inviter_record_id;type:uint;not null;default:0;comment:邀请记录ID" json:"inviter_record_id"`
-	InviterUserId   uint64    `gorm:"column:inviter_user_id;type:uint;not null;default:0;comment:邀请者ID" json:"inviter_user_id"`
+	Id               uint64    `gorm:"column:id;primaryKey;type:uint;autoIncrement;comment:ID" json:"id"`
+	CreatedTime      time.Time `gorm:"column:created_time;type:time;not null;comment:创建时间" json:"created_time"`
+	UpdatedTime      time.Time `gorm:"column:updated_time;type:time;not null;comment:最后修改时间" json:"updated_time"`
+	DeletedTime      uint64    `gorm:"column:deleted_time;index;type:uint;not null;default:0;comment:删除时间" json:"deleted_time"`
+	EmployeeId       uint64    `gorm:"column:employee_id;unique;type:uint;not null;default:0;comment:uuid" json:"employee_id"`
+	EmployeeUuid     string    `gorm:"column:employee_uuid;unique;type:string;size:255;not null;default:'';comment:uuid；默认orgID-employeeID；删除后设置随机uuid" json:"employee_uuid"`
+	UserId           uint64    `gorm:"column:user_id;index;type:uint;not null;default:0;comment:用户ID" json:"user_id"`
+	OrgId            uint64    `gorm:"column:org_id;index;type:uint;not null;default:0;comment:组织ID" json:"org_id"`
+	EmployeeName     string    `gorm:"column:employee_name;type:string;size:255;not null;default:'';comment:成员名称" json:"employee_name"`
+	EmployeeAvatar   string    `gorm:"column:employee_avatar;type:string;size:1023;not null;default:'';comment:成员头像" json:"employee_avatar"`
+	EmployeePhone    string    `gorm:"column:employee_phone;type:string;size:255;not null;default:'';comment:成员联系手机" json:"employee_phone"`
+	EmployeeEmail    string    `gorm:"column:employee_email;type:string;size:255;not null;default:'';comment:成员联系邮箱" json:"employee_email"`
+	EmployeeRole     uint32    `gorm:"column:employee_role;type:uint;not null;default:0;comment:角色；1：创建者，2：普通成员，3：管理员，4：超级管理员" json:"employee_role"`
+	EmployeeStatus   uint32    `gorm:"column:employee_status;type:uint;not null;default:0;comment:状态；1：ENABLE，2：DISABLE，3：DELETED" json:"employee_status"`
+	InviterRecordId  uint64    `gorm:"column:inviter_record_id;type:uint;not null;default:0;comment:邀请记录ID" json:"inviter_record_id"`
+	InviterUserId    uint64    `gorm:"column:inviter_user_id;type:uint;not null;default:0;comment:邀请者ID" json:"inviter_user_id"`
+	ModifyStatusTime uint64    `gorm:"column:modify_status_time;type:uint;not null;default:0;comment:修改状态时间" json:"modify_status_time"`
+	ModifyRoleTime   uint64    `gorm:"column:modify_role_time;type:uint;not null;default:0;comment:修改角色时间" json:"modify_role_time"`
 }
 
 // TableName table name
@@ -79,6 +83,62 @@ func (s *OrgEmployee) CreateTableMigrator(migrator gorm.Migrator) migrationuitl.
 // DropTableMigrator create table migrator
 func (s *OrgEmployee) DropTableMigrator(migrator gorm.Migrator) migrationuitl.MigrationInterface {
 	return migrationuitl.NewDropTable(migrator, migrationuitl.Version, s)
+}
+
+func (s *OrgEmployee) AddColumnModifyStatusTime(migrator gorm.Migrator) migrationuitl.MigrationInterface {
+	var (
+		dataModel           = &OrgEmployeeSchema
+		columnName          = "modify_status_time"
+		migrationVersion    = migrationuitl.Version
+		migrationIdentifier = migrationVersion + ":" + s.TableName() + ":add_column:" + columnName
+	)
+	migrationUp := func() error {
+		if migrator.HasColumn(dataModel, columnName) {
+			return nil
+		}
+		return migrator.AddColumn(dataModel, columnName)
+	}
+	migrationDown := func() error {
+		if !migrator.HasColumn(dataModel, columnName) {
+			return nil
+		}
+		return migrator.DropColumn(dataModel, columnName)
+	}
+
+	return migrationuitl.NewAnyMigrator(
+		migrationVersion,
+		migrationIdentifier,
+		migrationUp,
+		migrationDown,
+	)
+}
+
+func (s *OrgEmployee) AddColumnModifyRoleTime(migrator gorm.Migrator) migrationuitl.MigrationInterface {
+	var (
+		dataModel           = &OrgEmployeeSchema
+		columnName          = "modify_role_time"
+		migrationVersion    = migrationuitl.Version
+		migrationIdentifier = migrationVersion + ":" + s.TableName() + ":add_column:" + columnName
+	)
+	migrationUp := func() error {
+		if migrator.HasColumn(dataModel, columnName) {
+			return nil
+		}
+		return migrator.AddColumn(dataModel, columnName)
+	}
+	migrationDown := func() error {
+		if !migrator.HasColumn(dataModel, columnName) {
+			return nil
+		}
+		return migrator.DropColumn(dataModel, columnName)
+	}
+
+	return migrationuitl.NewAnyMigrator(
+		migrationVersion,
+		migrationIdentifier,
+		migrationUp,
+		migrationDown,
+	)
 }
 
 // TableSQL table SQL

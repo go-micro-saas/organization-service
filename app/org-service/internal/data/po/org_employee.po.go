@@ -21,22 +21,24 @@ var _ = datatypes.JSON{}
 
 // OrgEmployee ENGINE InnoDB CHARSET utf8mb4 COMMENT '组织成员'
 type OrgEmployee struct {
-	Id              uint64                                         `gorm:"column:id;primaryKey" json:"id"`                    // ID
-	CreatedTime     time.Time                                      `gorm:"column:created_time" json:"created_time"`           // 创建时间
-	UpdatedTime     time.Time                                      `gorm:"column:updated_time" json:"updated_time"`           // 最后修改时间
-	DeletedTime     uint64                                         `gorm:"column:deleted_time" json:"deleted_time"`           // 删除时间
-	EmployeeId      uint64                                         `gorm:"column:employee_id" json:"employee_id"`             // uuid
-	EmployeeUuid    string                                         `gorm:"column:employee_uuid" json:"employee_uuid"`         // uuid；默认orgID-employeeID；删除后设置随机uuid
-	UserId          uint64                                         `gorm:"column:user_id" json:"user_id"`                     // 用户ID
-	OrgId           uint64                                         `gorm:"column:org_id" json:"org_id"`                       // 组织ID
-	EmployeeName    string                                         `gorm:"column:employee_name" json:"employee_name"`         // 成员名称
-	EmployeeAvatar  string                                         `gorm:"column:employee_avatar" json:"employee_avatar"`     // 成员头像
-	EmployeePhone   string                                         `gorm:"column:employee_phone" json:"employee_phone"`       // 成员联系手机
-	EmployeeEmail   string                                         `gorm:"column:employee_email" json:"employee_email"`       // 成员联系邮箱
-	EmployeeRole    enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole     `gorm:"column:employee_role" json:"employee_role"`         // 角色；1：创建者，2：普通成员，3：管理员，4：超级管理员
-	EmployeeStatus  enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus `gorm:"column:employee_status" json:"employee_status"`     // 状态；1：ENABLE，2：DISABLE，3：DELETED
-	InviterRecordId uint64                                         `gorm:"column:inviter_record_id" json:"inviter_record_id"` // 邀请记录ID
-	InviterUserId   uint64                                         `gorm:"column:inviter_user_id" json:"inviter_user_id"`     // 邀请者ID
+	Id               uint64                                         `gorm:"column:id;primaryKey" json:"id"`                      // ID
+	CreatedTime      time.Time                                      `gorm:"column:created_time" json:"created_time"`             // 创建时间
+	UpdatedTime      time.Time                                      `gorm:"column:updated_time" json:"updated_time"`             // 最后修改时间
+	DeletedTime      uint64                                         `gorm:"column:deleted_time" json:"deleted_time"`             // 删除时间
+	EmployeeId       uint64                                         `gorm:"column:employee_id" json:"employee_id"`               // uuid
+	EmployeeUuid     string                                         `gorm:"column:employee_uuid" json:"employee_uuid"`           // uuid；默认orgID-employeeID；删除后设置随机uuid
+	UserId           uint64                                         `gorm:"column:user_id" json:"user_id"`                       // 用户ID
+	OrgId            uint64                                         `gorm:"column:org_id" json:"org_id"`                         // 组织ID
+	EmployeeName     string                                         `gorm:"column:employee_name" json:"employee_name"`           // 成员名称
+	EmployeeAvatar   string                                         `gorm:"column:employee_avatar" json:"employee_avatar"`       // 成员头像
+	EmployeePhone    string                                         `gorm:"column:employee_phone" json:"employee_phone"`         // 成员联系手机
+	EmployeeEmail    string                                         `gorm:"column:employee_email" json:"employee_email"`         // 成员联系邮箱
+	EmployeeRole     enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole     `gorm:"column:employee_role" json:"employee_role"`           // 角色；1：创建者，2：普通成员，3：管理员，4：超级管理员
+	EmployeeStatus   enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus `gorm:"column:employee_status" json:"employee_status"`       // 状态；1：ENABLE，2：DISABLE，3：DELETED
+	InviterRecordId  uint64                                         `gorm:"column:inviter_record_id" json:"inviter_record_id"`   // 邀请记录ID
+	InviterUserId    uint64                                         `gorm:"column:inviter_user_id" json:"inviter_user_id"`       // 邀请者ID
+	ModifyStatusTime uint64                                         `gorm:"column:modify_status_time" json:"modify_status_time"` // 修改状态时间
+	ModifyRoleTime   uint64                                         `gorm:"column:modify_role_time" json:"modify_role_time"`     // 修改角色时间
 }
 
 func (s *OrgEmployee) GenUUID() string {
@@ -64,6 +66,28 @@ func (s *OrgEmployee) CanAddEmployee() bool {
 
 func (s *OrgEmployee) IsOwner() bool {
 	return IsOrgOwner(s.EmployeeRole)
+}
+
+func (s *OrgEmployee) CanManageOrg() bool {
+	return s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR ||
+		s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_ADMIN ||
+		s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_SUPER
+}
+
+func (s *OrgEmployee) CanManageEmployee(target *OrgEmployee) bool {
+	switch s.EmployeeRole {
+	default:
+		return false
+	case enumv1.OrgEmployeeRoleEnum_CREATOR:
+		return target.EmployeeRole != enumv1.OrgEmployeeRoleEnum_CREATOR
+	case enumv1.OrgEmployeeRoleEnum_SUPER:
+		return target.EmployeeRole != enumv1.OrgEmployeeRoleEnum_CREATOR &&
+			target.EmployeeRole != enumv1.OrgEmployeeRoleEnum_SUPER
+	case enumv1.OrgEmployeeRoleEnum_ADMIN:
+		return target.EmployeeRole != enumv1.OrgEmployeeRoleEnum_CREATOR &&
+			target.EmployeeRole != enumv1.OrgEmployeeRoleEnum_SUPER &&
+			target.EmployeeRole != enumv1.OrgEmployeeRoleEnum_ADMIN
+	}
 }
 
 func IsOrgOwner(employeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole) bool {

@@ -30,6 +30,10 @@ var ERROR_http_code = map[string]int{
 	"S105_INVALID_INVITE_STATUS":  400,
 	"S105_NOT_INVITED_USER":       400,
 	"S105_INCORRECT_INVITE_TYPE":  400,
+	"S105_NOT_ALLOWED_SET_STATUS": 400,
+	"S105_ORG_NOT_ENABLE":         400,
+	"S105_NOT_ALLOWED_SET_ROLE":   400,
+	"S105_CANNOT_MODIFY_SELF":     400,
 }
 
 func (x ERROR) HTTPCode() int {
@@ -182,5 +186,33 @@ func DefaultErrorS105NotInvitedUser() *errors.Error {
 func DefaultErrorS105IncorrectInviteType() *errors.Error {
 	e := errors.New(400, ERROR_S105_INCORRECT_INVITE_TYPE.String(), "邀请类型不正确")
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_INCORRECT_INVITE_TYPE.Number()))}
+	return e
+}
+
+// 不允许设置为此状态
+func DefaultErrorS105NotAllowedSetStatus() *errors.Error {
+	e := errors.New(400, ERROR_S105_NOT_ALLOWED_SET_STATUS.String(), "不允许设置为此状态")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_ALLOWED_SET_STATUS.Number()))}
+	return e
+}
+
+// 组织未启用
+func DefaultErrorS105OrgNotEnable() *errors.Error {
+	e := errors.New(400, ERROR_S105_ORG_NOT_ENABLE.String(), "组织未启用")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_ORG_NOT_ENABLE.Number()))}
+	return e
+}
+
+// 不允许设置为此角色
+func DefaultErrorS105NotAllowedSetRole() *errors.Error {
+	e := errors.New(400, ERROR_S105_NOT_ALLOWED_SET_ROLE.String(), "不允许设置为此角色")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_NOT_ALLOWED_SET_ROLE.Number()))}
+	return e
+}
+
+// 不能修改自己
+func DefaultErrorS105CannotModifySelf() *errors.Error {
+	e := errors.New(400, ERROR_S105_CANNOT_MODIFY_SELF.String(), "不能修改自己")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_CANNOT_MODIFY_SELF.Number()))}
 	return e
 }

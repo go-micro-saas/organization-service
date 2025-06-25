@@ -306,3 +306,73 @@ func (s *orgDto) ToBoOrgInviteRecordListParam(req *resourcev1.GetOrgInviteRecord
 	}
 	return res
 }
+
+func (s *orgDto) ToBoSetOrgStatusParam(req *resourcev1.SetOrgStatusReq) *bo.SetOrgStatusParam {
+	res := &bo.SetOrgStatusParam{
+		OperatorEid: req.OperatorEid,
+		OrgId:       req.OrgId,
+		OrgStatus:   req.OrgStatus,
+	}
+	return res
+}
+
+func (s *orgDto) ToBoRemoveEmployeeParam(req *resourcev1.RemoveEmployeeReq) *bo.RemoveEmployeeParam {
+	res := &bo.RemoveEmployeeParam{
+		OperatorEid: req.OperatorEid,
+		EmployeeId:  req.EmployeeId,
+	}
+	return res
+}
+
+func (s *orgDto) ToBoSetEmployeeRoleParam(req *resourcev1.SetEmployeeRoleReq) *bo.SetEmployeeRoleParam {
+	res := &bo.SetEmployeeRoleParam{
+		OperatorEid:  req.OperatorEid,
+		EmployeeId:   req.EmployeeId,
+		EmployeeRole: req.EmployeeRole,
+	}
+	return res
+}
+
+func (s *orgDto) ToBoSetEmployeeStatusParam(req *resourcev1.SetEmployeeStatusReq) *bo.SetEmployeeStatusParam {
+	res := &bo.SetEmployeeStatusParam{
+		OperatorEid:    req.OperatorEid,
+		EmployeeId:     req.EmployeeId,
+		EmployeeStatus: req.EmployeeStatus,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbSetOrgStatusRespData(dataModel *po.Org) *resourcev1.SetOrgStatusRespData {
+	res := &resourcev1.SetOrgStatusRespData{
+		Success:   true,
+		OrgId:     dataModel.OrgId,
+		OrgStatus: dataModel.OrgStatus,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbRemoveEmployeeRespData(dataModel *po.OrgEmployee) *resourcev1.RemoveEmployeeRespData {
+	res := &resourcev1.RemoveEmployeeRespData{
+		Success:    true,
+		EmployeeId: dataModel.EmployeeId,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbSetEmployeeRoleRespData(dataModel *po.OrgEmployee) *resourcev1.SetEmployeeRoleRespData {
+	res := &resourcev1.SetEmployeeRoleRespData{
+		Success:      true,
+		EmployeeId:   dataModel.EmployeeId,
+		EmployeeRole: dataModel.EmployeeRole,
+	}
+	return res
+}
+
+func (s *orgDto) ToPbSetEmployeeStatusRespData(dataModel *po.OrgEmployee) *resourcev1.SetEmployeeStatusRespData {
+	res := &resourcev1.SetEmployeeStatusRespData{
+		Success:        true,
+		EmployeeId:     dataModel.EmployeeId,
+		EmployeeStatus: dataModel.EmployeeStatus,
+	}
+	return res
+}

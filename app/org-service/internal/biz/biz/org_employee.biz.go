@@ -7,6 +7,7 @@ import (
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/biz/bo"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
+	"time"
 )
 
 func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*bo.AddEmployeeReply, error) {
@@ -141,4 +142,144 @@ func (s *orgBiz) ListOrgEmployee(ctx context.Context, param *bo.OrgEmployeeListP
 		return dataModels, counter, err
 	}
 	return dataModels, counter, err
+}
+
+func (s *orgBiz) RemoveEmployee(ctx context.Context, param *bo.RemoveEmployeeParam) (*po.OrgEmployee, error) {
+	if param.OperatorEid == param.EmployeeId {
+		e := errorv1.DefaultErrorS105CannotModifySelf()
+		return nil, errorpkg.WithStack(e)
+	}
+
+	operator, err := s.GetEmployeeInfo(ctx, param.OperatorEid)
+	if err != nil {
+		return nil, err
+	}
+	if !operator.IsValid() {
+		e := errorv1.DefaultErrorS105InvalidOperator()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !operator.CanManageOrg() {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
+	}
+
+	employee, err := s.GetEmployeeInfo(ctx, param.EmployeeId)
+	if err != nil {
+		return nil, err
+	}
+	if operator.OrgId != employee.OrgId {
+		e := errorv1.DefaultErrorS105NotOrgEmployee()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !operator.CanManageEmployee(employee) {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
+	}
+
+	// set
+	employee.EmployeeStatus = enumv1.OrgEmployeeStatusEnum_REMOVED
+	employee.ModifyStatusTime = uint64(time.Now().Unix())
+	employee.UpdatedTime = time.Now()
+	if err = s.employeeData.SetOrgEmployeeStatus(ctx, employee); err != nil {
+		return nil, err
+	}
+	return employee, nil
+}
+
+func (s *orgBiz) SetEmployeeStatus(ctx context.Context, param *bo.SetEmployeeStatusParam) (*po.OrgEmployee, error) {
+	if param.OperatorEid == param.EmployeeId {
+		e := errorv1.DefaultErrorS105CannotModifySelf()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !param.CanSetEmployeeStatus() {
+		e := errorv1.DefaultErrorS105NotAllowedSetStatus()
+		return nil, errorpkg.WithStack(e)
+	}
+
+	operator, err := s.GetEmployeeInfo(ctx, param.OperatorEid)
+	if err != nil {
+		return nil, err
+	}
+	if !operator.IsValid() {
+		e := errorv1.DefaultErrorS105InvalidOperator()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !operator.CanManageOrg() {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
+	}
+
+	employee, err := s.GetEmployeeInfo(ctx, param.EmployeeId)
+	if err != nil {
+		return nil, err
+	}
+	if operator.OrgId != employee.OrgId {
+		e := errorv1.DefaultErrorS105NotOrgEmployee()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !operator.CanManageEmployee(employee) {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
+	}
+	if employee.EmployeeStatus == param.EmployeeStatus {
+		return employee, nil
+	}
+
+	// set
+	employee.EmployeeStatus = enumv1.OrgEmployeeStatusEnum_REMOVED
+	employee.ModifyStatusTime = uint64(time.Now().Unix())
+	employee.UpdatedTime = time.Now()
+	if err = s.employeeData.SetOrgEmployeeStatus(ctx, employee); err != nil {
+		return nil, err
+	}
+	return employee, nil
+}
+
+func (s *orgBiz) SetEmployeeRole(ctx context.Context, param *bo.SetEmployeeRoleParam) (*po.OrgEmployee, error) {
+	if param.OperatorEid == param.EmployeeId {
+		e := errorv1.DefaultErrorS105CannotModifySelf()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !param.CanSetEmployeeRole() {
+		e := errorv1.DefaultErrorS105NotAllowedSetRole()
+		return nil, errorpkg.WithStack(e)
+	}
+
+	operator, err := s.GetEmployeeInfo(ctx, param.OperatorEid)
+	if err != nil {
+		return nil, err
+	}
+	if !operator.IsValid() {
+		e := errorv1.DefaultErrorS105InvalidOperator()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !operator.CanManageOrg() {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
+	}
+
+	employee, err := s.GetEmployeeInfo(ctx, param.EmployeeId)
+	if err != nil {
+		return nil, err
+	}
+	if operator.OrgId != employee.OrgId {
+		e := errorv1.DefaultErrorS105NotOrgEmployee()
+		return nil, errorpkg.WithStack(e)
+	}
+	if !operator.CanManageEmployee(employee) {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
+	}
+	if employee.EmployeeRole == param.EmployeeRole {
+		return employee, nil
+	}
+
+	// set
+	employee.EmployeeRole = param.EmployeeRole
+	employee.ModifyRoleTime = uint64(time.Now().Unix())
+	employee.UpdatedTime = time.Now()
+	if err = s.employeeData.SetOrgEmployeeRole(ctx, employee); err != nil {
+		return nil, err
+	}
+	return employee, nil
 }

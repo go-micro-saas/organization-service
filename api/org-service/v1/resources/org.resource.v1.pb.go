@@ -3349,6 +3349,211 @@ func (x *GetOrgInviteRecordListRespData) GetPageInfo() *page.PageResponse {
 	return nil
 }
 
+type SetOrgStatusReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OperatorEid uint64                        `protobuf:"varint,100,opt,name=operator_eid,json=operatorEid,proto3" json:"operator_eid,omitempty"`                                          // 操作成员ID
+	OrgId       uint64                        `protobuf:"varint,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`                                                              // 组织ID
+	OrgStatus   enums.OrgStatusEnum_OrgStatus `protobuf:"varint,2,opt,name=org_status,json=orgStatus,proto3,enum=saas.api.org.enumv1.OrgStatusEnum_OrgStatus" json:"org_status,omitempty"` // 组织状态
+}
+
+func (x *SetOrgStatusReq) Reset() {
+	*x = SetOrgStatusReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[44]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetOrgStatusReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetOrgStatusReq) ProtoMessage() {}
+
+func (x *SetOrgStatusReq) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[44]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetOrgStatusReq.ProtoReflect.Descriptor instead.
+func (*SetOrgStatusReq) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_resources_org_resource_v1_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *SetOrgStatusReq) GetOperatorEid() uint64 {
+	if x != nil {
+		return x.OperatorEid
+	}
+	return 0
+}
+
+func (x *SetOrgStatusReq) GetOrgId() uint64 {
+	if x != nil {
+		return x.OrgId
+	}
+	return 0
+}
+
+func (x *SetOrgStatusReq) GetOrgStatus() enums.OrgStatusEnum_OrgStatus {
+	if x != nil {
+		return x.OrgStatus
+	}
+	return enums.OrgStatusEnum_OrgStatus(0)
+}
+
+type SetOrgStatusResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code     int32                 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Reason   string                `protobuf:"bytes,2,opt,name=reason,proto3" json:"reason,omitempty"`
+	Message  string                `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	Metadata map[string]string     `protobuf:"bytes,4,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	Data     *SetOrgStatusRespData `protobuf:"bytes,100,opt,name=data,proto3" json:"data,omitempty"`
+}
+
+func (x *SetOrgStatusResp) Reset() {
+	*x = SetOrgStatusResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[45]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetOrgStatusResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetOrgStatusResp) ProtoMessage() {}
+
+func (x *SetOrgStatusResp) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[45]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetOrgStatusResp.ProtoReflect.Descriptor instead.
+func (*SetOrgStatusResp) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_resources_org_resource_v1_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *SetOrgStatusResp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *SetOrgStatusResp) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *SetOrgStatusResp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *SetOrgStatusResp) GetMetadata() map[string]string {
+	if x != nil {
+		return x.Metadata
+	}
+	return nil
+}
+
+func (x *SetOrgStatusResp) GetData() *SetOrgStatusRespData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type SetOrgStatusRespData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Success   bool                          `protobuf:"varint,100,opt,name=success,proto3" json:"success,omitempty"`
+	OrgId     uint64                        `protobuf:"varint,1,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
+	OrgStatus enums.OrgStatusEnum_OrgStatus `protobuf:"varint,2,opt,name=org_status,json=orgStatus,proto3,enum=saas.api.org.enumv1.OrgStatusEnum_OrgStatus" json:"org_status,omitempty"`
+}
+
+func (x *SetOrgStatusRespData) Reset() {
+	*x = SetOrgStatusRespData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[46]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetOrgStatusRespData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetOrgStatusRespData) ProtoMessage() {}
+
+func (x *SetOrgStatusRespData) ProtoReflect() protoreflect.Message {
+	mi := &file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[46]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetOrgStatusRespData.ProtoReflect.Descriptor instead.
+func (*SetOrgStatusRespData) Descriptor() ([]byte, []int) {
+	return file_api_org_service_v1_resources_org_resource_v1_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *SetOrgStatusRespData) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *SetOrgStatusRespData) GetOrgId() uint64 {
+	if x != nil {
+		return x.OrgId
+	}
+	return 0
+}
+
+func (x *SetOrgStatusRespData) GetOrgStatus() enums.OrgStatusEnum_OrgStatus {
+	if x != nil {
+		return x.OrgStatus
+	}
+	return enums.OrgStatusEnum_OrgStatus(0)
+}
+
 var File_api_org_service_v1_resources_org_resource_v1_proto protoreflect.FileDescriptor
 
 var file_api_org_service_v1_resources_org_resource_v1_proto_rawDesc = []byte{
@@ -4079,17 +4284,56 @@ var file_api_org_service_v1_resources_org_resource_v1_proto_rawDesc = []byte{
 	0x74, 0x12, 0x3b, 0x0a, 0x09, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x02,
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x6b, 0x69, 0x74, 0x2e, 0x70, 0x61, 0x67, 0x65, 0x2e,
 	0x70, 0x61, 0x67, 0x65, 0x70, 0x6b, 0x67, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x52, 0x08, 0x70, 0x61, 0x67, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x42, 0x88,
-	0x01, 0x0a, 0x17, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72, 0x67, 0x2e,
-	0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x42, 0x14, 0x53, 0x61, 0x61, 0x73,
-	0x41, 0x70, 0x69, 0x4f, 0x72, 0x67, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x56, 0x31,
-	0x50, 0x01, 0x5a, 0x55, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67,
-	0x6f, 0x2d, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x2d, 0x73, 0x61, 0x61, 0x73, 0x2f, 0x6f, 0x72, 0x67,
-	0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6f, 0x72, 0x67, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
-	0x65, 0x2f, 0x76, 0x31, 0x2f, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x73, 0x3b, 0x72,
-	0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x6f, 0x6e, 0x73, 0x65, 0x52, 0x08, 0x70, 0x61, 0x67, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0xb4,
+	0x01, 0x0a, 0x0f, 0x53, 0x65, 0x74, 0x4f, 0x72, 0x67, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52,
+	0x65, 0x71, 0x12, 0x2a, 0x0a, 0x0c, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x5f, 0x65,
+	0x69, 0x64, 0x18, 0x64, 0x20, 0x01, 0x28, 0x04, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x32, 0x02, 0x20,
+	0x00, 0x52, 0x0b, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x45, 0x69, 0x64, 0x12, 0x1e,
+	0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x42, 0x07,
+	0xfa, 0x42, 0x04, 0x32, 0x02, 0x20, 0x00, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12, 0x55,
+	0x0a, 0x0a, 0x6f, 0x72, 0x67, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x0e, 0x32, 0x2c, 0x2e, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72,
+	0x67, 0x2e, 0x65, 0x6e, 0x75, 0x6d, 0x76, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x45, 0x6e, 0x75, 0x6d, 0x2e, 0x4f, 0x72, 0x67, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x42, 0x08, 0xfa, 0x42, 0x05, 0x82, 0x01, 0x02, 0x20, 0x00, 0x52, 0x09, 0x6f, 0x72, 0x67, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0xad, 0x02, 0x0a, 0x10, 0x53, 0x65, 0x74, 0x4f, 0x72, 0x67,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f,
+	0x64, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x16,
+	0x0a, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
+	0x12, 0x53, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x04, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x37, 0x2e, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72,
+	0x67, 0x2e, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x2e, 0x53, 0x65, 0x74,
+	0x4f, 0x72, 0x67, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x2e, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x08, 0x6d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x41, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x64, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f,
+	0x72, 0x67, 0x2e, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x2e, 0x53, 0x65,
+	0x74, 0x4f, 0x72, 0x67, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x44, 0x61,
+	0x74, 0x61, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x1a, 0x3b, 0x0a, 0x0d, 0x4d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76,
+	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75,
+	0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x94, 0x01, 0x0a, 0x14, 0x53, 0x65, 0x74, 0x4f, 0x72, 0x67,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x18,
+	0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x64, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x15, 0x0a, 0x06, 0x6f, 0x72, 0x67, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x6f, 0x72, 0x67, 0x49, 0x64, 0x12,
+	0x4b, 0x0a, 0x0a, 0x6f, 0x72, 0x67, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x0e, 0x32, 0x2c, 0x2e, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f,
+	0x72, 0x67, 0x2e, 0x65, 0x6e, 0x75, 0x6d, 0x76, 0x31, 0x2e, 0x4f, 0x72, 0x67, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x45, 0x6e, 0x75, 0x6d, 0x2e, 0x4f, 0x72, 0x67, 0x53, 0x74, 0x61, 0x74, 0x75,
+	0x73, 0x52, 0x09, 0x6f, 0x72, 0x67, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x42, 0x88, 0x01, 0x0a,
+	0x17, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x72, 0x65,
+	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x42, 0x14, 0x53, 0x61, 0x61, 0x73, 0x41, 0x70,
+	0x69, 0x4f, 0x72, 0x67, 0x52, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x56, 0x31, 0x50, 0x01,
+	0x5a, 0x55, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x6f, 0x2d,
+	0x6d, 0x69, 0x63, 0x72, 0x6f, 0x2d, 0x73, 0x61, 0x61, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0x61, 0x6e,
+	0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f,
+	0x61, 0x70, 0x69, 0x2f, 0x6f, 0x72, 0x67, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f,
+	0x76, 0x31, 0x2f, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x73, 0x3b, 0x72, 0x65, 0x73,
+	0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4104,7 +4348,7 @@ func file_api_org_service_v1_resources_org_resource_v1_proto_rawDescGZIP() []byt
 	return file_api_org_service_v1_resources_org_resource_v1_proto_rawDescData
 }
 
-var file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes = make([]protoimpl.MessageInfo, 60)
+var file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes = make([]protoimpl.MessageInfo, 64)
 var file_api_org_service_v1_resources_org_resource_v1_proto_goTypes = []any{
 	(*PingReq)(nil),                               // 0: saas.api.org.resourcev1.PingReq
 	(*PingResp)(nil),                              // 1: saas.api.org.resourcev1.PingResp
@@ -4150,99 +4394,107 @@ var file_api_org_service_v1_resources_org_resource_v1_proto_goTypes = []any{
 	(*GetOrgInviteRecordListReq)(nil),             // 41: saas.api.org.resourcev1.GetOrgInviteRecordListReq
 	(*GetOrgInviteRecordListResp)(nil),            // 42: saas.api.org.resourcev1.GetOrgInviteRecordListResp
 	(*GetOrgInviteRecordListRespData)(nil),        // 43: saas.api.org.resourcev1.GetOrgInviteRecordListRespData
-	nil,                                           // 44: saas.api.org.resourcev1.PingResp.MetadataEntry
-	nil,                                           // 45: saas.api.org.resourcev1.CreateOrgResp.MetadataEntry
-	nil,                                           // 46: saas.api.org.resourcev1.AddEmployeeResp.MetadataEntry
-	nil,                                           // 47: saas.api.org.resourcev1.CreateInviteRecordForLinkResp.MetadataEntry
-	nil,                                           // 48: saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp.MetadataEntry
-	nil,                                           // 49: saas.api.org.resourcev1.JoinByInviteLinkResp.MetadataEntry
-	nil,                                           // 50: saas.api.org.resourcev1.AgreeOrRefuseInviteResp.MetadataEntry
-	nil,                                           // 51: saas.api.org.resourcev1.GetOrgInfoResp.MetadataEntry
-	nil,                                           // 52: saas.api.org.resourcev1.GetOrgInfoListResp.MetadataEntry
-	nil,                                           // 53: saas.api.org.resourcev1.GetOrgEmployeeInfoResp.MetadataEntry
-	nil,                                           // 54: saas.api.org.resourcev1.GetOrgEmployeeInfoListResp.MetadataEntry
-	nil,                                           // 55: saas.api.org.resourcev1.GetOrgInviteRecordInfoResp.MetadataEntry
-	nil,                                           // 56: saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp.MetadataEntry
-	nil,                                           // 57: saas.api.org.resourcev1.GetOrgListResp.MetadataEntry
-	nil,                                           // 58: saas.api.org.resourcev1.GetOrgEmployeeListResp.MetadataEntry
-	nil,                                           // 59: saas.api.org.resourcev1.GetOrgInviteRecordListResp.MetadataEntry
-	(enums.OrgTypeEnum_OrgType)(0),                // 60: saas.api.org.enumv1.OrgTypeEnum.OrgType
-	(enums.OrgStatusEnum_OrgStatus)(0),            // 61: saas.api.org.enumv1.OrgStatusEnum.OrgStatus
-	(enums.OrgEmployeeRoleEnum_OrgEmployeeRole)(0),           // 62: saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
-	(enums.OrgEmployeeStatusEnum_OrgEmployeeStatus)(0),       // 63: saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
-	(*timestamppb.Timestamp)(nil),                            // 64: google.protobuf.Timestamp
-	(enums.OrgInviteAccountTypeEnum_OrgInviteAccountType)(0), // 65: saas.api.org.enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType
-	(*OrgEmployee)(nil),                                      // 66: saas.api.org.resourcev1.OrgEmployee
-	(*OrgInviteRecord)(nil),                                  // 67: saas.api.org.resourcev1.OrgInviteRecord
-	(*page.PageRequest)(nil),                                 // 68: kit.page.pagepkg.PageRequest
-	(*page.PageResponse)(nil),                                // 69: kit.page.pagepkg.PageResponse
+	(*SetOrgStatusReq)(nil),                       // 44: saas.api.org.resourcev1.SetOrgStatusReq
+	(*SetOrgStatusResp)(nil),                      // 45: saas.api.org.resourcev1.SetOrgStatusResp
+	(*SetOrgStatusRespData)(nil),                  // 46: saas.api.org.resourcev1.SetOrgStatusRespData
+	nil,                                           // 47: saas.api.org.resourcev1.PingResp.MetadataEntry
+	nil,                                           // 48: saas.api.org.resourcev1.CreateOrgResp.MetadataEntry
+	nil,                                           // 49: saas.api.org.resourcev1.AddEmployeeResp.MetadataEntry
+	nil,                                           // 50: saas.api.org.resourcev1.CreateInviteRecordForLinkResp.MetadataEntry
+	nil,                                           // 51: saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp.MetadataEntry
+	nil,                                           // 52: saas.api.org.resourcev1.JoinByInviteLinkResp.MetadataEntry
+	nil,                                           // 53: saas.api.org.resourcev1.AgreeOrRefuseInviteResp.MetadataEntry
+	nil,                                           // 54: saas.api.org.resourcev1.GetOrgInfoResp.MetadataEntry
+	nil,                                           // 55: saas.api.org.resourcev1.GetOrgInfoListResp.MetadataEntry
+	nil,                                           // 56: saas.api.org.resourcev1.GetOrgEmployeeInfoResp.MetadataEntry
+	nil,                                           // 57: saas.api.org.resourcev1.GetOrgEmployeeInfoListResp.MetadataEntry
+	nil,                                           // 58: saas.api.org.resourcev1.GetOrgInviteRecordInfoResp.MetadataEntry
+	nil,                                           // 59: saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp.MetadataEntry
+	nil,                                           // 60: saas.api.org.resourcev1.GetOrgListResp.MetadataEntry
+	nil,                                           // 61: saas.api.org.resourcev1.GetOrgEmployeeListResp.MetadataEntry
+	nil,                                           // 62: saas.api.org.resourcev1.GetOrgInviteRecordListResp.MetadataEntry
+	nil,                                           // 63: saas.api.org.resourcev1.SetOrgStatusResp.MetadataEntry
+	(enums.OrgTypeEnum_OrgType)(0),                // 64: saas.api.org.enumv1.OrgTypeEnum.OrgType
+	(enums.OrgStatusEnum_OrgStatus)(0),            // 65: saas.api.org.enumv1.OrgStatusEnum.OrgStatus
+	(enums.OrgEmployeeRoleEnum_OrgEmployeeRole)(0),           // 66: saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
+	(enums.OrgEmployeeStatusEnum_OrgEmployeeStatus)(0),       // 67: saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
+	(*timestamppb.Timestamp)(nil),                            // 68: google.protobuf.Timestamp
+	(enums.OrgInviteAccountTypeEnum_OrgInviteAccountType)(0), // 69: saas.api.org.enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType
+	(*OrgEmployee)(nil),                                      // 70: saas.api.org.resourcev1.OrgEmployee
+	(*OrgInviteRecord)(nil),                                  // 71: saas.api.org.resourcev1.OrgInviteRecord
+	(*page.PageRequest)(nil),                                 // 72: kit.page.pagepkg.PageRequest
+	(*page.PageResponse)(nil),                                // 73: kit.page.pagepkg.PageResponse
 }
 var file_api_org_service_v1_resources_org_resource_v1_proto_depIdxs = []int32{
-	44, // 0: saas.api.org.resourcev1.PingResp.metadata:type_name -> saas.api.org.resourcev1.PingResp.MetadataEntry
+	47, // 0: saas.api.org.resourcev1.PingResp.metadata:type_name -> saas.api.org.resourcev1.PingResp.MetadataEntry
 	2,  // 1: saas.api.org.resourcev1.PingResp.data:type_name -> saas.api.org.resourcev1.PingRespData
-	60, // 2: saas.api.org.resourcev1.Org.org_type:type_name -> saas.api.org.enumv1.OrgTypeEnum.OrgType
-	61, // 3: saas.api.org.resourcev1.Org.org_status:type_name -> saas.api.org.enumv1.OrgStatusEnum.OrgStatus
-	60, // 4: saas.api.org.resourcev1.CreateOrgReq.org_type:type_name -> saas.api.org.enumv1.OrgTypeEnum.OrgType
-	60, // 5: saas.api.org.resourcev1.OnlyCreateOrgReq.org_type:type_name -> saas.api.org.enumv1.OrgTypeEnum.OrgType
-	45, // 6: saas.api.org.resourcev1.CreateOrgResp.metadata:type_name -> saas.api.org.resourcev1.CreateOrgResp.MetadataEntry
+	64, // 2: saas.api.org.resourcev1.Org.org_type:type_name -> saas.api.org.enumv1.OrgTypeEnum.OrgType
+	65, // 3: saas.api.org.resourcev1.Org.org_status:type_name -> saas.api.org.enumv1.OrgStatusEnum.OrgStatus
+	64, // 4: saas.api.org.resourcev1.CreateOrgReq.org_type:type_name -> saas.api.org.enumv1.OrgTypeEnum.OrgType
+	64, // 5: saas.api.org.resourcev1.OnlyCreateOrgReq.org_type:type_name -> saas.api.org.enumv1.OrgTypeEnum.OrgType
+	48, // 6: saas.api.org.resourcev1.CreateOrgResp.metadata:type_name -> saas.api.org.resourcev1.CreateOrgResp.MetadataEntry
 	7,  // 7: saas.api.org.resourcev1.CreateOrgResp.data:type_name -> saas.api.org.resourcev1.CreateOrgRespData
-	60, // 8: saas.api.org.resourcev1.CreateOrgRespData.org_type:type_name -> saas.api.org.enumv1.OrgTypeEnum.OrgType
-	62, // 9: saas.api.org.resourcev1.AddEmployeeReq.employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
-	46, // 10: saas.api.org.resourcev1.AddEmployeeResp.metadata:type_name -> saas.api.org.resourcev1.AddEmployeeResp.MetadataEntry
+	64, // 8: saas.api.org.resourcev1.CreateOrgRespData.org_type:type_name -> saas.api.org.enumv1.OrgTypeEnum.OrgType
+	66, // 9: saas.api.org.resourcev1.AddEmployeeReq.employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
+	49, // 10: saas.api.org.resourcev1.AddEmployeeResp.metadata:type_name -> saas.api.org.resourcev1.AddEmployeeResp.MetadataEntry
 	10, // 11: saas.api.org.resourcev1.AddEmployeeResp.data:type_name -> saas.api.org.resourcev1.AddEmployeeRespData
-	63, // 12: saas.api.org.resourcev1.AddEmployeeRespData.employee_status:type_name -> saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
-	62, // 13: saas.api.org.resourcev1.AddEmployeeRespData.employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
-	64, // 14: saas.api.org.resourcev1.CreateInviteRecordForLinkReq.expire_time:type_name -> google.protobuf.Timestamp
-	62, // 15: saas.api.org.resourcev1.CreateInviteRecordForLinkReq.invite_employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
-	47, // 16: saas.api.org.resourcev1.CreateInviteRecordForLinkResp.metadata:type_name -> saas.api.org.resourcev1.CreateInviteRecordForLinkResp.MetadataEntry
+	67, // 12: saas.api.org.resourcev1.AddEmployeeRespData.employee_status:type_name -> saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
+	66, // 13: saas.api.org.resourcev1.AddEmployeeRespData.employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
+	68, // 14: saas.api.org.resourcev1.CreateInviteRecordForLinkReq.expire_time:type_name -> google.protobuf.Timestamp
+	66, // 15: saas.api.org.resourcev1.CreateInviteRecordForLinkReq.invite_employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
+	50, // 16: saas.api.org.resourcev1.CreateInviteRecordForLinkResp.metadata:type_name -> saas.api.org.resourcev1.CreateInviteRecordForLinkResp.MetadataEntry
 	13, // 17: saas.api.org.resourcev1.CreateInviteRecordForLinkResp.data:type_name -> saas.api.org.resourcev1.CreateInviteRecordForLinkRespData
-	64, // 18: saas.api.org.resourcev1.CreateInviteRecordForLinkRespData.expire_time:type_name -> google.protobuf.Timestamp
-	64, // 19: saas.api.org.resourcev1.CreateInviteRecordForEmployeeReq.expire_time:type_name -> google.protobuf.Timestamp
-	65, // 20: saas.api.org.resourcev1.CreateInviteRecordForEmployeeReq.invite_account_type:type_name -> saas.api.org.enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType
-	62, // 21: saas.api.org.resourcev1.CreateInviteRecordForEmployeeReq.invite_employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
-	48, // 22: saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp.metadata:type_name -> saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp.MetadataEntry
+	68, // 18: saas.api.org.resourcev1.CreateInviteRecordForLinkRespData.expire_time:type_name -> google.protobuf.Timestamp
+	68, // 19: saas.api.org.resourcev1.CreateInviteRecordForEmployeeReq.expire_time:type_name -> google.protobuf.Timestamp
+	69, // 20: saas.api.org.resourcev1.CreateInviteRecordForEmployeeReq.invite_account_type:type_name -> saas.api.org.enumv1.OrgInviteAccountTypeEnum.OrgInviteAccountType
+	66, // 21: saas.api.org.resourcev1.CreateInviteRecordForEmployeeReq.invite_employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
+	51, // 22: saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp.metadata:type_name -> saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp.MetadataEntry
 	16, // 23: saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp.data:type_name -> saas.api.org.resourcev1.CreateInviteRecordForEmployeeRespData
-	64, // 24: saas.api.org.resourcev1.CreateInviteRecordForEmployeeRespData.expire_time:type_name -> google.protobuf.Timestamp
-	49, // 25: saas.api.org.resourcev1.JoinByInviteLinkResp.metadata:type_name -> saas.api.org.resourcev1.JoinByInviteLinkResp.MetadataEntry
+	68, // 24: saas.api.org.resourcev1.CreateInviteRecordForEmployeeRespData.expire_time:type_name -> google.protobuf.Timestamp
+	52, // 25: saas.api.org.resourcev1.JoinByInviteLinkResp.metadata:type_name -> saas.api.org.resourcev1.JoinByInviteLinkResp.MetadataEntry
 	19, // 26: saas.api.org.resourcev1.JoinByInviteLinkResp.data:type_name -> saas.api.org.resourcev1.JoinByInviteLinkRespData
-	63, // 27: saas.api.org.resourcev1.JoinByInviteLinkRespData.employee_status:type_name -> saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
-	62, // 28: saas.api.org.resourcev1.JoinByInviteLinkRespData.employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
-	50, // 29: saas.api.org.resourcev1.AgreeOrRefuseInviteResp.metadata:type_name -> saas.api.org.resourcev1.AgreeOrRefuseInviteResp.MetadataEntry
+	67, // 27: saas.api.org.resourcev1.JoinByInviteLinkRespData.employee_status:type_name -> saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
+	66, // 28: saas.api.org.resourcev1.JoinByInviteLinkRespData.employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
+	53, // 29: saas.api.org.resourcev1.AgreeOrRefuseInviteResp.metadata:type_name -> saas.api.org.resourcev1.AgreeOrRefuseInviteResp.MetadataEntry
 	22, // 30: saas.api.org.resourcev1.AgreeOrRefuseInviteResp.data:type_name -> saas.api.org.resourcev1.AgreeOrRefuseInviteRespData
-	63, // 31: saas.api.org.resourcev1.AgreeOrRefuseInviteRespData.employee_status:type_name -> saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
-	62, // 32: saas.api.org.resourcev1.AgreeOrRefuseInviteRespData.employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
-	51, // 33: saas.api.org.resourcev1.GetOrgInfoResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInfoResp.MetadataEntry
+	67, // 31: saas.api.org.resourcev1.AgreeOrRefuseInviteRespData.employee_status:type_name -> saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus
+	66, // 32: saas.api.org.resourcev1.AgreeOrRefuseInviteRespData.employee_role:type_name -> saas.api.org.enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole
+	54, // 33: saas.api.org.resourcev1.GetOrgInfoResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInfoResp.MetadataEntry
 	3,  // 34: saas.api.org.resourcev1.GetOrgInfoResp.data:type_name -> saas.api.org.resourcev1.Org
-	52, // 35: saas.api.org.resourcev1.GetOrgInfoListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInfoListResp.MetadataEntry
+	55, // 35: saas.api.org.resourcev1.GetOrgInfoListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInfoListResp.MetadataEntry
 	3,  // 36: saas.api.org.resourcev1.GetOrgInfoListResp.data:type_name -> saas.api.org.resourcev1.Org
-	53, // 37: saas.api.org.resourcev1.GetOrgEmployeeInfoResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgEmployeeInfoResp.MetadataEntry
-	66, // 38: saas.api.org.resourcev1.GetOrgEmployeeInfoResp.data:type_name -> saas.api.org.resourcev1.OrgEmployee
-	54, // 39: saas.api.org.resourcev1.GetOrgEmployeeInfoListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgEmployeeInfoListResp.MetadataEntry
-	66, // 40: saas.api.org.resourcev1.GetOrgEmployeeInfoListResp.data:type_name -> saas.api.org.resourcev1.OrgEmployee
-	55, // 41: saas.api.org.resourcev1.GetOrgInviteRecordInfoResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInviteRecordInfoResp.MetadataEntry
-	67, // 42: saas.api.org.resourcev1.GetOrgInviteRecordInfoResp.data:type_name -> saas.api.org.resourcev1.OrgInviteRecord
-	56, // 43: saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp.MetadataEntry
-	67, // 44: saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp.data:type_name -> saas.api.org.resourcev1.OrgInviteRecord
-	68, // 45: saas.api.org.resourcev1.GetOrgListReq.page_request:type_name -> kit.page.pagepkg.PageRequest
-	57, // 46: saas.api.org.resourcev1.GetOrgListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgListResp.MetadataEntry
+	56, // 37: saas.api.org.resourcev1.GetOrgEmployeeInfoResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgEmployeeInfoResp.MetadataEntry
+	70, // 38: saas.api.org.resourcev1.GetOrgEmployeeInfoResp.data:type_name -> saas.api.org.resourcev1.OrgEmployee
+	57, // 39: saas.api.org.resourcev1.GetOrgEmployeeInfoListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgEmployeeInfoListResp.MetadataEntry
+	70, // 40: saas.api.org.resourcev1.GetOrgEmployeeInfoListResp.data:type_name -> saas.api.org.resourcev1.OrgEmployee
+	58, // 41: saas.api.org.resourcev1.GetOrgInviteRecordInfoResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInviteRecordInfoResp.MetadataEntry
+	71, // 42: saas.api.org.resourcev1.GetOrgInviteRecordInfoResp.data:type_name -> saas.api.org.resourcev1.OrgInviteRecord
+	59, // 43: saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp.MetadataEntry
+	71, // 44: saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp.data:type_name -> saas.api.org.resourcev1.OrgInviteRecord
+	72, // 45: saas.api.org.resourcev1.GetOrgListReq.page_request:type_name -> kit.page.pagepkg.PageRequest
+	60, // 46: saas.api.org.resourcev1.GetOrgListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgListResp.MetadataEntry
 	37, // 47: saas.api.org.resourcev1.GetOrgListResp.data:type_name -> saas.api.org.resourcev1.GetOrgListRespData
 	3,  // 48: saas.api.org.resourcev1.GetOrgListRespData.list:type_name -> saas.api.org.resourcev1.Org
-	69, // 49: saas.api.org.resourcev1.GetOrgListRespData.page_info:type_name -> kit.page.pagepkg.PageResponse
-	68, // 50: saas.api.org.resourcev1.GetOrgEmployeeListReq.page_request:type_name -> kit.page.pagepkg.PageRequest
-	58, // 51: saas.api.org.resourcev1.GetOrgEmployeeListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgEmployeeListResp.MetadataEntry
+	73, // 49: saas.api.org.resourcev1.GetOrgListRespData.page_info:type_name -> kit.page.pagepkg.PageResponse
+	72, // 50: saas.api.org.resourcev1.GetOrgEmployeeListReq.page_request:type_name -> kit.page.pagepkg.PageRequest
+	61, // 51: saas.api.org.resourcev1.GetOrgEmployeeListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgEmployeeListResp.MetadataEntry
 	40, // 52: saas.api.org.resourcev1.GetOrgEmployeeListResp.data:type_name -> saas.api.org.resourcev1.GetOrgEmployeeListRespData
-	66, // 53: saas.api.org.resourcev1.GetOrgEmployeeListRespData.list:type_name -> saas.api.org.resourcev1.OrgEmployee
-	69, // 54: saas.api.org.resourcev1.GetOrgEmployeeListRespData.page_info:type_name -> kit.page.pagepkg.PageResponse
-	68, // 55: saas.api.org.resourcev1.GetOrgInviteRecordListReq.page_request:type_name -> kit.page.pagepkg.PageRequest
-	59, // 56: saas.api.org.resourcev1.GetOrgInviteRecordListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInviteRecordListResp.MetadataEntry
+	70, // 53: saas.api.org.resourcev1.GetOrgEmployeeListRespData.list:type_name -> saas.api.org.resourcev1.OrgEmployee
+	73, // 54: saas.api.org.resourcev1.GetOrgEmployeeListRespData.page_info:type_name -> kit.page.pagepkg.PageResponse
+	72, // 55: saas.api.org.resourcev1.GetOrgInviteRecordListReq.page_request:type_name -> kit.page.pagepkg.PageRequest
+	62, // 56: saas.api.org.resourcev1.GetOrgInviteRecordListResp.metadata:type_name -> saas.api.org.resourcev1.GetOrgInviteRecordListResp.MetadataEntry
 	43, // 57: saas.api.org.resourcev1.GetOrgInviteRecordListResp.data:type_name -> saas.api.org.resourcev1.GetOrgInviteRecordListRespData
-	67, // 58: saas.api.org.resourcev1.GetOrgInviteRecordListRespData.list:type_name -> saas.api.org.resourcev1.OrgInviteRecord
-	69, // 59: saas.api.org.resourcev1.GetOrgInviteRecordListRespData.page_info:type_name -> kit.page.pagepkg.PageResponse
-	60, // [60:60] is the sub-list for method output_type
-	60, // [60:60] is the sub-list for method input_type
-	60, // [60:60] is the sub-list for extension type_name
-	60, // [60:60] is the sub-list for extension extendee
-	0,  // [0:60] is the sub-list for field type_name
+	71, // 58: saas.api.org.resourcev1.GetOrgInviteRecordListRespData.list:type_name -> saas.api.org.resourcev1.OrgInviteRecord
+	73, // 59: saas.api.org.resourcev1.GetOrgInviteRecordListRespData.page_info:type_name -> kit.page.pagepkg.PageResponse
+	65, // 60: saas.api.org.resourcev1.SetOrgStatusReq.org_status:type_name -> saas.api.org.enumv1.OrgStatusEnum.OrgStatus
+	63, // 61: saas.api.org.resourcev1.SetOrgStatusResp.metadata:type_name -> saas.api.org.resourcev1.SetOrgStatusResp.MetadataEntry
+	46, // 62: saas.api.org.resourcev1.SetOrgStatusResp.data:type_name -> saas.api.org.resourcev1.SetOrgStatusRespData
+	65, // 63: saas.api.org.resourcev1.SetOrgStatusRespData.org_status:type_name -> saas.api.org.enumv1.OrgStatusEnum.OrgStatus
+	64, // [64:64] is the sub-list for method output_type
+	64, // [64:64] is the sub-list for method input_type
+	64, // [64:64] is the sub-list for extension type_name
+	64, // [64:64] is the sub-list for extension extendee
+	0,  // [0:64] is the sub-list for field type_name
 }
 
 func init() { file_api_org_service_v1_resources_org_resource_v1_proto_init() }
@@ -4781,6 +5033,42 @@ func file_api_org_service_v1_resources_org_resource_v1_proto_init() {
 				return nil
 			}
 		}
+		file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[44].Exporter = func(v any, i int) any {
+			switch v := v.(*SetOrgStatusReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[45].Exporter = func(v any, i int) any {
+			switch v := v.(*SetOrgStatusResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_api_org_service_v1_resources_org_resource_v1_proto_msgTypes[46].Exporter = func(v any, i int) any {
+			switch v := v.(*SetOrgStatusRespData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -4788,7 +5076,7 @@ func file_api_org_service_v1_resources_org_resource_v1_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_api_org_service_v1_resources_org_resource_v1_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   60,
+			NumMessages:   64,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

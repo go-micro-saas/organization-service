@@ -179,6 +179,40 @@ func (s *orgEmployeeRepo) ExistUpdateWithDBConn(ctx context.Context, dbConn *gor
 	return s.existUpdate(ctx, dbConn, dataModel)
 }
 
+func (s *orgEmployeeRepo) SetOrgEmployeeStatus(ctx context.Context, dataModel *po.OrgEmployee) (err error) {
+	updates := map[string]interface{}{
+		schemas.FieldUpdatedTime:      dataModel.UpdatedTime,
+		schemas.FieldEmployeeStatus:   dataModel.EmployeeStatus,
+		schemas.FieldModifyStatusTime: dataModel.ModifyStatusTime,
+	}
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldId+" = ?", dataModel.Id).
+		UpdateColumns(updates).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		return errorpkg.Wrap(e, err)
+	}
+	return
+}
+
+func (s *orgEmployeeRepo) SetOrgEmployeeRole(ctx context.Context, dataModel *po.OrgEmployee) (err error) {
+	updates := map[string]interface{}{
+		schemas.FieldUpdatedTime:    dataModel.UpdatedTime,
+		schemas.FieldEmployeeRole:   dataModel.EmployeeRole,
+		schemas.FieldModifyRoleTime: dataModel.ModifyRoleTime,
+	}
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldId+" = ?", dataModel.Id).
+		UpdateColumns(updates).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		return errorpkg.Wrap(e, err)
+	}
+	return
+}
+
 // =============== query one : 查一个 ===============
 
 // queryOneById query one by id

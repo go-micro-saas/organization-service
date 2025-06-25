@@ -24,44 +24,46 @@ func NewOrg() *Org {
 const (
 	TableName = "og_org"
 
-	FieldId              = "id"
-	FieldCreatedTime     = "created_time"
-	FieldUpdatedTime     = "updated_time"
-	FieldDeletedTime     = "deleted_time"
-	FieldOrgId           = "org_id"
-	FieldOrgName         = "org_name"
-	FieldOrgAvatar       = "org_avatar"
-	FieldOrgContactName  = "org_contact_name"
-	FieldOrgContactPhone = "org_contact_phone"
-	FieldOrgContactEmail = "org_contact_email"
-	FieldOrgType         = "org_type"
-	FieldOrgStatus       = "org_status"
-	FieldOrgIndustryId   = "org_industry_id"
-	FieldOrgScaleId      = "org_scale_id"
-	FieldOrgAddress      = "org_address"
-	FieldOrgZipCode      = "org_zip_code"
-	FieldOrgCreatorId    = "org_creator_id"
+	FieldId               = "id"
+	FieldCreatedTime      = "created_time"
+	FieldUpdatedTime      = "updated_time"
+	FieldDeletedTime      = "deleted_time"
+	FieldOrgId            = "org_id"
+	FieldOrgName          = "org_name"
+	FieldOrgAvatar        = "org_avatar"
+	FieldOrgContactName   = "org_contact_name"
+	FieldOrgContactPhone  = "org_contact_phone"
+	FieldOrgContactEmail  = "org_contact_email"
+	FieldOrgType          = "org_type"
+	FieldOrgStatus        = "org_status"
+	FieldOrgIndustryId    = "org_industry_id"
+	FieldOrgScaleId       = "org_scale_id"
+	FieldOrgAddress       = "org_address"
+	FieldOrgZipCode       = "org_zip_code"
+	FieldOrgCreatorId     = "org_creator_id"
+	FieldModifyStatusTime = "modify_status_time"
 )
 
 // Org ENGINE InnoDB CHARSET utf8mb4 COMMENT '组织'
 type Org struct {
-	Id              uint64    `gorm:"column:id;primaryKey;type:uint;autoIncrement;comment:ID" json:"id"`
-	CreatedTime     time.Time `gorm:"column:created_time;type:time;not null;comment:创建时间" json:"created_time"`
-	UpdatedTime     time.Time `gorm:"column:updated_time;type:time;not null;comment:最后修改时间" json:"updated_time"`
-	DeletedTime     uint64    `gorm:"column:deleted_time;index;type:uint;not null;default:0;comment:删除时间" json:"deleted_time"`
-	OrgId           uint64    `gorm:"column:org_id;unique;type:uint;not null;default:0;comment:uuid" json:"org_id"`
-	OrgName         string    `gorm:"column:org_name;type:string;size:255;not null;default:'';comment:组织名称" json:"org_name"`
-	OrgAvatar       string    `gorm:"column:org_avatar;type:string;size:1023;not null;default:'';comment:组织头像" json:"org_avatar"`
-	OrgContactName  string    `gorm:"column:org_contact_name;type:string;size:255;not null;default:'';comment:组织联系名称" json:"org_contact_name"`
-	OrgContactPhone string    `gorm:"column:org_contact_phone;type:string;size:255;not null;default:'';comment:组织联系手机" json:"org_contact_phone"`
-	OrgContactEmail string    `gorm:"column:org_contact_email;type:string;size:255;not null;default:'';comment:组织联系邮箱" json:"org_contact_email"`
-	OrgType         uint32    `gorm:"column:org_type;type:uint;not null;default:0;comment:组织状态；1：个人版，2：标准组织，3：。。。" json:"org_type"`
-	OrgStatus       uint32    `gorm:"column:org_status;type:uint;not null;default:0;comment:状态；0：INIT，1：ENABLE，2：DISABLE，3：DELETED" json:"org_status"`
-	OrgIndustryId   uint64    `gorm:"column:org_industry_id;type:uint;not null;default:0;comment:组织行业" json:"org_industry_id"`
-	OrgScaleId      uint64    `gorm:"column:org_scale_id;type:uint;not null;default:0;comment:组织规模" json:"org_scale_id"`
-	OrgAddress      string    `gorm:"column:org_address;type:string;size:1023;not null;default:'';comment:组织地址" json:"org_address"`
-	OrgZipCode      string    `gorm:"column:org_zip_code;type:string;size:255;not null;default:'';comment:组织地址邮编" json:"org_zip_code"`
-	OrgCreatorId    uint64    `gorm:"column:org_creator_id;type:uint;not null;default:0;comment:组织创建者" json:"org_creator_id"`
+	Id               uint64    `gorm:"column:id;primaryKey;type:uint;autoIncrement;comment:ID" json:"id"`
+	CreatedTime      time.Time `gorm:"column:created_time;type:time;not null;comment:创建时间" json:"created_time"`
+	UpdatedTime      time.Time `gorm:"column:updated_time;type:time;not null;comment:最后修改时间" json:"updated_time"`
+	DeletedTime      uint64    `gorm:"column:deleted_time;index;type:uint;not null;default:0;comment:删除时间" json:"deleted_time"`
+	OrgId            uint64    `gorm:"column:org_id;unique;type:uint;not null;default:0;comment:uuid" json:"org_id"`
+	OrgName          string    `gorm:"column:org_name;type:string;size:255;not null;default:'';comment:组织名称" json:"org_name"`
+	OrgAvatar        string    `gorm:"column:org_avatar;type:string;size:1023;not null;default:'';comment:组织头像" json:"org_avatar"`
+	OrgContactName   string    `gorm:"column:org_contact_name;type:string;size:255;not null;default:'';comment:组织联系名称" json:"org_contact_name"`
+	OrgContactPhone  string    `gorm:"column:org_contact_phone;type:string;size:255;not null;default:'';comment:组织联系手机" json:"org_contact_phone"`
+	OrgContactEmail  string    `gorm:"column:org_contact_email;type:string;size:255;not null;default:'';comment:组织联系邮箱" json:"org_contact_email"`
+	OrgType          uint32    `gorm:"column:org_type;type:uint;not null;default:0;comment:组织状态；1：个人版，2：标准组织，3：。。。" json:"org_type"`
+	OrgStatus        uint32    `gorm:"column:org_status;type:uint;not null;default:0;comment:状态；0：INIT，1：ENABLE，2：DISABLE，3：DELETED" json:"org_status"`
+	OrgIndustryId    uint64    `gorm:"column:org_industry_id;type:uint;not null;default:0;comment:组织行业" json:"org_industry_id"`
+	OrgScaleId       uint64    `gorm:"column:org_scale_id;type:uint;not null;default:0;comment:组织规模" json:"org_scale_id"`
+	OrgAddress       string    `gorm:"column:org_address;type:string;size:1023;not null;default:'';comment:组织地址" json:"org_address"`
+	OrgZipCode       string    `gorm:"column:org_zip_code;type:string;size:255;not null;default:'';comment:组织地址邮编" json:"org_zip_code"`
+	OrgCreatorId     uint64    `gorm:"column:org_creator_id;type:uint;not null;default:0;comment:组织创建者" json:"org_creator_id"`
+	ModifyStatusTime uint64    `gorm:"column:modify_status_time;type:uint;not null;default:0;comment:修改状态时间" json:"modify_status_time"`
 }
 
 // TableName table name
@@ -81,6 +83,34 @@ func (s *Org) CreateTableMigrator(migrator gorm.Migrator) migrationuitl.Migratio
 // DropTableMigrator create table migrator
 func (s *Org) DropTableMigrator(migrator gorm.Migrator) migrationuitl.MigrationInterface {
 	return migrationuitl.NewDropTable(migrator, migrationuitl.Version, s)
+}
+
+func (s *Org) AddColumnModifyStatusTime(migrator gorm.Migrator) migrationuitl.MigrationInterface {
+	var (
+		dataModel           = &OrgSchema
+		columnName          = "modify_status_time"
+		migrationVersion    = migrationuitl.Version
+		migrationIdentifier = migrationVersion + ":" + s.TableName() + ":add_column:" + columnName
+	)
+	migrationUp := func() error {
+		if migrator.HasColumn(dataModel, columnName) {
+			return nil
+		}
+		return migrator.AddColumn(dataModel, columnName)
+	}
+	migrationDown := func() error {
+		if !migrator.HasColumn(dataModel, columnName) {
+			return nil
+		}
+		return migrator.DropColumn(dataModel, columnName)
+	}
+
+	return migrationuitl.NewAnyMigrator(
+		migrationVersion,
+		migrationIdentifier,
+		migrationUp,
+		migrationDown,
+	)
 }
 
 // TableSQL table SQL

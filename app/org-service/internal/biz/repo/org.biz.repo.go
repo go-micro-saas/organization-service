@@ -14,10 +14,15 @@ type OrgBizRepo interface {
 	JoinByInviteLink(ctx context.Context, param *bo.JoinByInviteLinkParam) (*po.OrgEmployee, error)
 	AgreeOrRefuseInvite(ctx context.Context, param *bo.AgreeOrRefuseInviteParam) (*po.OrgEmployee, error)
 
+	SetOrgStatus(ctx context.Context, param *bo.SetOrgStatusParam) (*po.Org, error)
+	RemoveEmployee(ctx context.Context, param *bo.RemoveEmployeeParam) (*po.OrgEmployee, error)
+	SetEmployeeRole(ctx context.Context, param *bo.SetEmployeeRoleParam) (*po.OrgEmployee, error)
+	SetEmployeeStatus(ctx context.Context, param *bo.SetEmployeeStatusParam) (*po.OrgEmployee, error)
+
 	GetOrgInfo(ctx context.Context, orgID uint64) (*po.Org, error)
 	GetOrgInfoList(ctx context.Context, orgIDList []uint64) ([]*po.Org, error)
 	ListOrg(ctx context.Context, param *bo.OrgListParam) ([]*po.Org, int64, error)
-	
+
 	GetEmployeeInfo(ctx context.Context, employeeID uint64) (*po.OrgEmployee, error)
 	GetEmployeeInfoList(ctx context.Context, employeeIDList []uint64) ([]*po.OrgEmployee, error)
 	ListOrgEmployee(ctx context.Context, param *bo.OrgEmployeeListParam) ([]*po.OrgEmployee, int64, error)

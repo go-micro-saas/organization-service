@@ -12,6 +12,7 @@ import (
 	accountservicev1 "github.com/go-micro-saas/service-api/api/account-service/v1/services"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
+	"time"
 )
 
 type orgBiz struct {
@@ -139,4 +140,42 @@ func (s *orgBiz) ListOrg(ctx context.Context, param *bo.OrgListParam) ([]*po.Org
 		return dataModels, counter, err
 	}
 	return dataModels, counter, err
+}
+
+func (s *orgBiz) SetOrgStatus(ctx context.Context, param *bo.SetOrgStatusParam) (*po.Org, error) {
+	if !param.CanSetOrgStatus() {
+		e := errorv1.DefaultErrorS105NotAllowedSetStatus()
+		return nil, errorpkg.WithStack(e)
+	}
+	dataModel, err := s.GetOrgInfo(ctx, param.OrgId)
+	if err != nil {
+		return nil, err
+	}
+	employeeModel, err := s.GetEmployeeInfo(ctx, param.OperatorEid)
+	if err != nil {
+		return nil, err
+	}
+	if employeeModel.OrgId != dataModel.OrgId {
+		e := errorv1.DefaultErrorS105NotOrgEmployee()
+		return nil, errorpkg.WithStack(e)
+	}
+	if dataModel.OrgStatus == param.OrgStatus {
+		return dataModel, nil
+	}
+
+	// can set
+	if !employeeModel.CanManageOrg() {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
+	}
+
+	// update status
+	dataModel.OrgStatus = param.OrgStatus
+	dataModel.UpdatedTime = time.Now()
+	dataModel.ModifyStatusTime = uint64(time.Now().Unix())
+	err = s.orgData.SetOrgStatus(ctx, dataModel)
+	if err != nil {
+		return nil, err
+	}
+	return dataModel, nil
 }

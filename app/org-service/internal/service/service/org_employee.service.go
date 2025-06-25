@@ -19,6 +19,39 @@ func (s *orgV1Service) AddEmployee(ctx context.Context, req *resourcev1.AddEmplo
 	}, nil
 }
 
+func (s *orgV1Service) RemoveEmployee(ctx context.Context, req *resourcev1.RemoveEmployeeReq) (*resourcev1.RemoveEmployeeResp, error) {
+	param := dto.OrgDto.ToBoRemoveEmployeeParam(req)
+	reply, err := s.orgBiz.RemoveEmployee(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.RemoveEmployeeResp{
+		Data: dto.OrgDto.ToPbRemoveEmployeeRespData(reply),
+	}, nil
+}
+
+func (s *orgV1Service) SetEmployeeRole(ctx context.Context, req *resourcev1.SetEmployeeRoleReq) (*resourcev1.SetEmployeeRoleResp, error) {
+	param := dto.OrgDto.ToBoSetEmployeeRoleParam(req)
+	reply, err := s.orgBiz.SetEmployeeRole(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.SetEmployeeRoleResp{
+		Data: dto.OrgDto.ToPbSetEmployeeRoleRespData(reply),
+	}, nil
+}
+
+func (s *orgV1Service) SetEmployeeStatus(ctx context.Context, req *resourcev1.SetEmployeeStatusReq) (*resourcev1.SetEmployeeStatusResp, error) {
+	param := dto.OrgDto.ToBoSetEmployeeStatusParam(req)
+	reply, err := s.orgBiz.SetEmployeeStatus(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.SetEmployeeStatusResp{
+		Data: dto.OrgDto.ToPbSetEmployeeStatusRespData(reply),
+	}, nil
+}
+
 func (s *orgV1Service) GetOrgEmployeeInfo(ctx context.Context, req *resourcev1.GetOrgEmployeeInfoReq) (*resourcev1.GetOrgEmployeeInfoResp, error) {
 	dataModel, err := s.orgBiz.GetEmployeeInfo(ctx, req.EmployeeId)
 	if err != nil {

@@ -35,4 +35,8 @@ enum ERROR {
   S105_INVALID_INVITE_STATUS  = 105000018 [(errors.code) = 400];  // 无效的邀请状态
   S105_NOT_INVITED_USER       = 105000019 [(errors.code) = 400];  // 不是被邀请用户
   S105_INCORRECT_INVITE_TYPE  = 105000020 [(errors.code) = 400];  // 邀请类型不正确
+  S105_NOT_ALLOWED_SET_STATUS = 105000021 [(errors.code) = 400];  // 不允许设置为此状态
+  S105_ORG_NOT_ENABLE         = 105000022 [(errors.code) = 400];  // 组织未启用
+  S105_NOT_ALLOWED_SET_ROLE   = 105000023 [(errors.code) = 400];  // 不允许设置为此角色
+  S105_CANNOT_MODIFY_SELF     = 105000024 [(errors.code) = 400];  // 不能修改自己
 }

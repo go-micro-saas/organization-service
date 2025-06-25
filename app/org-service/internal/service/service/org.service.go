@@ -54,6 +54,17 @@ func (s *orgV1Service) OnlyCreateOrg(ctx context.Context, req *resourcev1.OnlyCr
 	}, nil
 }
 
+func (s *orgV1Service) SetOrgStatus(ctx context.Context, req *resourcev1.SetOrgStatusReq) (*resourcev1.SetOrgStatusResp, error) {
+	param := dto.OrgDto.ToBoSetOrgStatusParam(req)
+	reply, err := s.orgBiz.SetOrgStatus(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.SetOrgStatusResp{
+		Data: dto.OrgDto.ToPbSetOrgStatusRespData(reply),
+	}, nil
+}
+
 func (s *orgV1Service) GetOrgInfo(ctx context.Context, req *resourcev1.GetOrgInfoReq) (*resourcev1.GetOrgInfoResp, error) {
 	dataModel, err := s.orgBiz.GetOrgInfo(ctx, req.OrgId)
 	if err != nil {

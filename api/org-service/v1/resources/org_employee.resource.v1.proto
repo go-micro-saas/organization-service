@@ -8,6 +8,7 @@ option java_multiple_files  = true;
 option java_package         = "saas.api.org.resourcev1";
 option java_outer_classname = "SaasApiOrgResourceV1";
 
+import "validate/validate.proto";
 // import "github.com/ikaiguang/go-srv-kit/kit/page/page.kit.proto";
 import "api/org-service/v1/enums/org.enum.v1.proto";
 
@@ -28,4 +29,63 @@ message OrgEmployee {
   saas.api.org.enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus employee_status = 13;
   uint64 inviter_record_id                                                    = 14;
   uint64 inviter_user_id                                                      = 15;
+}
+
+message RemoveEmployeeReq {
+  uint64 operator_eid = 100 [(validate.rules).uint64.gt = 0];
+
+  uint64 employee_id = 1 [(validate.rules).uint64.gt = 0];
+}
+message RemoveEmployeeResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+
+  RemoveEmployeeRespData data = 100;
+}
+message RemoveEmployeeRespData {
+  bool success = 100;
+
+  uint64 employee_id = 1;
+}
+
+message SetEmployeeRoleReq {
+  uint64 operator_eid = 100 [(validate.rules).uint64.gt = 0];
+
+  uint64 employee_id                                       = 1 [(validate.rules).uint64.gt = 0];
+  enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole employee_role = 2 [(validate.rules).enum = { not_in: [ 0 ] }];
+}
+message SetEmployeeRoleResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+  SetEmployeeRoleRespData data = 100;
+}
+message SetEmployeeRoleRespData {
+  bool success = 100;
+
+  uint64 employee_id                                       = 1;
+  enumv1.OrgEmployeeRoleEnum.OrgEmployeeRole employee_role = 2;
+}
+
+message SetEmployeeStatusReq {
+  uint64 operator_eid                                            = 100 [(validate.rules).uint64.gt = 0];
+  uint64 employee_id                                             = 1 [(validate.rules).uint64.gt = 0];
+  enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus employee_status = 2 [(validate.rules).enum = { not_in: [ 0 ] }];
+}
+message SetEmployeeStatusResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+
+  SetEmployeeStatusRespData data = 100;
+}
+message SetEmployeeStatusRespData {
+  bool success = 100;
+
+  uint64 employee_id                                             = 1;
+  enumv1.OrgEmployeeStatusEnum.OrgEmployeeStatus employee_status = 2;
 }

@@ -336,3 +336,21 @@ message GetOrgInviteRecordListRespData {
   repeated OrgInviteRecord list           = 1;
   kit.page.pagepkg.PageResponse page_info = 2;
 }
+
+message SetOrgStatusReq {
+  uint64 operator_eid                       = 100 [(validate.rules).uint64.gt = 0];           // 操作成员ID
+  uint64 org_id                             = 1 [(validate.rules).uint64.gt = 0];             // 组织ID
+  enumv1.OrgStatusEnum.OrgStatus org_status = 2 [(validate.rules).enum = { not_in: [ 0 ] }];  // 组织状态
+}
+message SetOrgStatusResp {
+  int32 code                   = 1;
+  string reason                = 2;
+  string message               = 3;
+  map<string, string> metadata = 4;
+  SetOrgStatusRespData data    = 100;
+}
+message SetOrgStatusRespData {
+  bool success                                           = 100;
+  uint64 org_id                                          = 1;
+  saas.api.org.enumv1.OrgStatusEnum.OrgStatus org_status = 2;
+}

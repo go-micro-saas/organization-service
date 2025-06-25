@@ -38,8 +38,23 @@ func (s *Migrate) Upgrade(ctx context.Context) error {
 		e := errorpkg.ErrorInternalError("")
 		return errorpkg.Wrap(e, err)
 	}
+	mr = orgschemas.OrgSchema.AddColumnModifyStatusTime(migrator)
+	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
+		e := errorpkg.ErrorInternalError("")
+		return errorpkg.Wrap(e, err)
+	}
 	// 创建表
 	mr = employeeschemas.OrgEmployeeSchema.CreateTableMigrator(migrator)
+	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
+		e := errorpkg.ErrorInternalError("")
+		return errorpkg.Wrap(e, err)
+	}
+	mr = employeeschemas.OrgEmployeeSchema.AddColumnModifyStatusTime(migrator)
+	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
+		e := errorpkg.ErrorInternalError("")
+		return errorpkg.Wrap(e, err)
+	}
+	mr = employeeschemas.OrgEmployeeSchema.AddColumnModifyRoleTime(migrator)
 	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
 		e := errorpkg.ErrorInternalError("")
 		return errorpkg.Wrap(e, err)

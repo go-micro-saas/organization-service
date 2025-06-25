@@ -29,7 +29,8 @@ message OrgStatusEnum {
     UNSPECIFIED = 0;  // 未指定
     ENABLE      = 1;  // 有效的
     DISABLE     = 2;  // 已禁用
-    DELETED     = 3;  // 已删除
+    EXPIRED     = 3;  // 已过期
+    DELETED     = 4;  // 已删除
   }
 }
 
@@ -48,7 +49,8 @@ message OrgEmployeeStatusEnum {
     UNSPECIFIED = 0;  // 未指定
     ENABLE      = 1;  // 有效的
     DISABLE     = 2;  // 已禁用
-    DELETED     = 3;  // 已删除
+    REMOVED     = 3;  // 已移除
+    DELETED     = 4;  // 已删除
   }
 }
 

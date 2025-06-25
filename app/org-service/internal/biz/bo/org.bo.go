@@ -158,3 +158,46 @@ type OrgInviteRecordListParam struct {
 
 	PaginatorArgs *gormpkg.PaginatorArgs
 }
+
+type SetOrgStatusParam struct {
+	OperatorEid uint64
+	OrgId       uint64
+	OrgStatus   enumv1.OrgStatusEnum_OrgStatus
+}
+
+func (s *SetOrgStatusParam) CanSetOrgStatus() bool {
+	// DELETED 请使用删除组织接口
+	return s.OrgStatus == enumv1.OrgStatusEnum_ENABLE ||
+		s.OrgStatus == enumv1.OrgStatusEnum_DISABLE
+}
+
+type RemoveEmployeeParam struct {
+	OperatorEid uint64
+	EmployeeId  uint64
+}
+
+type SetEmployeeRoleParam struct {
+	OperatorEid  uint64
+	EmployeeId   uint64
+	EmployeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole
+}
+
+func (s *SetEmployeeRoleParam) CanSetEmployeeRole() bool {
+	// CREATOR 请使用转交组织负责人接口 || 强制设置为组织负责人接口
+	return s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_NORMAL ||
+		s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_ADMIN ||
+		s.EmployeeRole == enumv1.OrgEmployeeRoleEnum_SUPER
+}
+
+type SetEmployeeStatusParam struct {
+	OperatorEid    uint64
+	EmployeeId     uint64
+	EmployeeStatus enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus
+}
+
+func (s *SetEmployeeStatusParam) CanSetEmployeeStatus() bool {
+	// REMOVED 请使用移除成员接口，转移成员资源
+	// DELETED 请使用删除组织接口，转移组织资源
+	return s.EmployeeStatus == enumv1.OrgEmployeeStatusEnum_ENABLE ||
+		s.EmployeeStatus == enumv1.OrgEmployeeStatusEnum_DISABLE
+}

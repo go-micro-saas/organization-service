@@ -18,6 +18,8 @@ type OrgEmployeeRepo interface {
 	Insert(ctx context.Context, dataModels []*po.OrgEmployee) error
 	Update(ctx context.Context, dataModel *po.OrgEmployee) error
 	ExistUpdate(ctx context.Context, dataModel *po.OrgEmployee) (anotherModel *po.OrgEmployee, isNotFound bool, err error)
+	SetOrgEmployeeStatus(ctx context.Context, dataModel *po.OrgEmployee) (err error)
+	SetOrgEmployeeRole(ctx context.Context, dataModel *po.OrgEmployee) (err error)
 	QueryOneById(ctx context.Context, id interface{}) (dataModel *po.OrgEmployee, isNotFound bool, err error)
 	QueryOneByConditions(ctx context.Context, conditions map[string]interface{}) (dataModel *po.OrgEmployee, isNotFound bool, err error)
 	QueryOneByUserID(ctx context.Context, param *po.QueryEmployeeParam) (dataModel *po.OrgEmployee, isNotFound bool, err error)
