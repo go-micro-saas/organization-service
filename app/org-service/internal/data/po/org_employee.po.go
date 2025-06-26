@@ -90,6 +90,22 @@ func (s *OrgEmployee) CanManageEmployee(target *OrgEmployee) bool {
 	}
 }
 
+func (s *OrgEmployee) CanSetRole(role enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole) bool {
+	switch s.EmployeeRole {
+	default:
+		return false
+	case enumv1.OrgEmployeeRoleEnum_CREATOR:
+		return role != enumv1.OrgEmployeeRoleEnum_CREATOR
+	case enumv1.OrgEmployeeRoleEnum_SUPER:
+		return role != enumv1.OrgEmployeeRoleEnum_CREATOR &&
+			role != enumv1.OrgEmployeeRoleEnum_SUPER
+	case enumv1.OrgEmployeeRoleEnum_ADMIN:
+		return role != enumv1.OrgEmployeeRoleEnum_CREATOR &&
+			role != enumv1.OrgEmployeeRoleEnum_SUPER &&
+			role != enumv1.OrgEmployeeRoleEnum_ADMIN
+	}
+}
+
 func IsOrgOwner(employeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole) bool {
 	return employeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR
 }

@@ -226,7 +226,7 @@ func (s *orgBiz) SetEmployeeStatus(ctx context.Context, param *bo.SetEmployeeSta
 	}
 
 	// set
-	employee.EmployeeStatus = enumv1.OrgEmployeeStatusEnum_REMOVED
+	employee.EmployeeStatus = param.EmployeeStatus
 	employee.ModifyStatusTime = uint64(time.Now().Unix())
 	employee.UpdatedTime = time.Now()
 	if err = s.employeeData.SetOrgEmployeeStatus(ctx, employee); err != nil {
@@ -272,6 +272,10 @@ func (s *orgBiz) SetEmployeeRole(ctx context.Context, param *bo.SetEmployeeRoleP
 	}
 	if employee.EmployeeRole == param.EmployeeRole {
 		return employee, nil
+	}
+	if !operator.CanSetRole(param.EmployeeRole) {
+		e := errorv1.DefaultErrorS105EmployeeNoPermission()
+		return nil, errorpkg.WithStack(e)
 	}
 
 	// set

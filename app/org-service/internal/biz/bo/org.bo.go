@@ -168,7 +168,8 @@ type SetOrgStatusParam struct {
 func (s *SetOrgStatusParam) CanSetOrgStatus() bool {
 	// DELETED 请使用删除组织接口
 	return s.OrgStatus == enumv1.OrgStatusEnum_ENABLE ||
-		s.OrgStatus == enumv1.OrgStatusEnum_DISABLE
+		s.OrgStatus == enumv1.OrgStatusEnum_DISABLE ||
+		s.OrgStatus == enumv1.OrgStatusEnum_EXPIRED
 }
 
 type RemoveEmployeeParam struct {
