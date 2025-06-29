@@ -1,7 +1,7 @@
 package global
 
 const (
-	KeyPrefix = "org_s_"
+	KeyPrefix = "org_service_"
 )
 
 func Key(k string) string {
