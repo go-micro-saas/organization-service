@@ -19,7 +19,7 @@ const (
 	DefaultOrgInviteRecordExpireTime = time.Hour * 24
 )
 
-// OrgInviteRecord ENGINE InnoDB CHARSET utf8mb4 COMMENT '事件历史'
+// OrgInviteRecord ENGINE InnoDB CHARSET utf8mb4 COMMENT '组织邀请记录'
 type OrgInviteRecord struct {
 	Id                  uint64                                               `gorm:"column:id;primaryKey" json:"id"`                            // ID
 	CreatedTime         time.Time                                            `gorm:"column:created_time" json:"created_time"`                   // 创建时间

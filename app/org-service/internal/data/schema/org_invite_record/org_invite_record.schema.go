@@ -42,7 +42,7 @@ const (
 	FieldInviteCode          = "invite_code"
 )
 
-// OrgInviteRecord ENGINE InnoDB CHARSET utf8mb4 COMMENT '事件历史'
+// OrgInviteRecord ENGINE InnoDB CHARSET utf8mb4 COMMENT '组织邀请记录'
 type OrgInviteRecord struct {
 	Id                  uint64    `gorm:"column:id;primaryKey;type:uint;autoIncrement;comment:ID" json:"id"`
 	CreatedTime         time.Time `gorm:"column:created_time;type:time;not null;comment:创建时间" json:"created_time"`
@@ -84,28 +84,28 @@ func (s *OrgInviteRecord) DropTableMigrator(migrator gorm.Migrator) migrationuit
 // TableSQL table SQL
 func (s *OrgInviteRecord) TableSQL() string {
 	return `
-create table og_org_invite_record (
+CREATE TABLE og_org_invite_record (
 	id bigint unsigned auto_increment comment 'ID',
-	created_time datetime(3) not null comment '创建时间',
-	updated_time datetime(3) not null comment '最后修改时间',
-	invite_id bigint unsigned not null default 0 comment 'uuid',
-	org_id bigint unsigned not null default 0 comment '组织ID',
-	inviter_user_id bigint unsigned not null default 0 comment '邀请者用户ID',
-	inviter_employee_id bigint unsigned not null default 0 comment '邀请者成员ID',
-	invited_type integer unsigned not null default 0 comment '邀请类型：1：账号邀请，2：链接邀请',
-	invited_user_id bigint unsigned not null default 0 comment '被邀请者用户ID',
-	invited_account varchar(1023) not null default '' comment '被邀请者账户',
-	invited_account_type integer unsigned not null default 0 comment '被邀请者账户类型：1：手机，2：邮箱，3：微信，4：飞书，5：钉钉',
-	invited_employee_role integer unsigned not null default 0 comment '角色；1：创建者，2：普通成员，3：管理员，4：超级管理员',
-	invite_status integer unsigned not null default 0 comment '状态；1：邀请中，2：已同意，3：已拒绝，4：已取消，5：已过期',
-	expire_time datetime(3) not null comment '过期时间',
-	assign_employee_id bigint unsigned not null default 0 comment '分配成员ID',
-	invite_code varchar(255) not null default '' comment '邀请码',
-	primary key (id),
-	unique key (invite_id),
+	created_time datetime(3) NOT NULL comment '创建时间',
+	updated_time datetime(3) NOT NULL comment '最后修改时间',
+	invite_id bigint unsigned NOT NULL DEFAULT 0 comment 'uuid',
+	org_id bigint unsigned NOT NULL DEFAULT 0 comment '组织ID',
+	inviter_user_id bigint unsigned NOT NULL DEFAULT 0 comment '邀请者用户ID',
+	inviter_employee_id bigint unsigned NOT NULL DEFAULT 0 comment '邀请者成员ID',
+	invited_type INTEGER unsigned NOT NULL DEFAULT 0 comment '邀请类型：1：账号邀请，2：链接邀请',
+	invited_user_id bigint unsigned NOT NULL DEFAULT 0 comment '被邀请者用户ID',
+	invited_account VARCHAR(1023) NOT NULL DEFAULT '' comment '被邀请者账户',
+	invited_account_type INTEGER unsigned NOT NULL DEFAULT 0 comment '被邀请者账户类型：1：手机，2：邮箱，3：微信，4：飞书，5：钉钉',
+	invited_employee_role INTEGER unsigned NOT NULL DEFAULT 0 comment '角色；1：创建者，2：普通成员，3：管理员，4：超级管理员',
+	invite_status INTEGER unsigned NOT NULL DEFAULT 0 comment '状态；1：邀请中，2：已同意，3：已拒绝，4：已取消，5：已过期',
+	expire_time datetime(3) NOT NULL comment '过期时间',
+	assign_employee_id bigint unsigned NOT NULL DEFAULT 0 comment '分配成员ID',
+	invite_code VARCHAR(255) NOT NULL DEFAULT '' comment '邀请码',
+	PRIMARY KEY (id),
+	UNIQUE KEY (invite_id),
 	key (org_id)
 ) ENGINE InnoDB,
   CHARSET utf8mb4,
-  COMMENT '事件历史'
+  COMMENT '组织邀请记录'
 `
 }

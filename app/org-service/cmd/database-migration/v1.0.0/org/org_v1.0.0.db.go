@@ -6,6 +6,7 @@ import (
 	employeeschemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_employee"
 	eventschemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_event_history"
 	inviteschemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_invite_record"
+	userorginfoschemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_record_for_user"
 	migrationpkg "github.com/ikaiguang/go-srv-kit/data/migration"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	"gorm.io/gorm"
@@ -61,6 +62,11 @@ func (s *Migrate) Upgrade(ctx context.Context) error {
 	}
 	// 创建表
 	mr = inviteschemas.OrgInviteRecordSchema.CreateTableMigrator(migrator)
+	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
+		e := errorpkg.ErrorInternalError("")
+		return errorpkg.Wrap(e, err)
+	}
+	mr = userorginfoschemas.OrgRecordForUserSchema.CreateTableMigrator(migrator)
 	if err := s.migrateRepo.RunMigratorUp(ctx, mr); err != nil {
 		e := errorpkg.ErrorInternalError("")
 		return errorpkg.Wrap(e, err)
