@@ -5,3 +5,6 @@ org_service:
     instance_name: "org-service"
     metadata:
       service: org-service
+  business_setting:
+    user_create_org_max_count: 10
+    user_belong_org_max_count: 20

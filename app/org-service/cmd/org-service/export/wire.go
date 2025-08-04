@@ -27,6 +27,7 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 		conf.GetServiceConfig,
 		// idGenerator
 		dto.ToPbGetNodeIdReq, dto.GetNodeIDOptions, snowflakeapi.GetSingletonIDGeneratorByHTTPAPI,
+		dto.GetBusinessSetting,
 		// data
 		data.NewOrgRepo,
 		data.NewOrgEmployeeRepo,

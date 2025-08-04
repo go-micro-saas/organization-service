@@ -215,6 +215,35 @@ func (m *ServiceConfig_OrgService) validate(all bool) error {
 		}
 	}
 
+	if all {
+		switch v := interface{}(m.GetBusinessSetting()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ServiceConfig_OrgServiceValidationError{
+					field:  "BusinessSetting",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ServiceConfig_OrgServiceValidationError{
+					field:  "BusinessSetting",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetBusinessSetting()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ServiceConfig_OrgServiceValidationError{
+				field:  "BusinessSetting",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
 		return ServiceConfig_OrgServiceMultiError(errors)
 	}
@@ -416,3 +445,113 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ServiceConfig_OrgService_SnowflakeValidationError{}
+
+// Validate checks the field values on ServiceConfig_OrgService_BusinessSetting
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *ServiceConfig_OrgService_BusinessSetting) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on
+// ServiceConfig_OrgService_BusinessSetting with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in
+// ServiceConfig_OrgService_BusinessSettingMultiError, or nil if none found.
+func (m *ServiceConfig_OrgService_BusinessSetting) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ServiceConfig_OrgService_BusinessSetting) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for UserCreateOrgMaxCount
+
+	// no validation rules for UserBelongOrgMaxCount
+
+	if len(errors) > 0 {
+		return ServiceConfig_OrgService_BusinessSettingMultiError(errors)
+	}
+
+	return nil
+}
+
+// ServiceConfig_OrgService_BusinessSettingMultiError is an error wrapping
+// multiple validation errors returned by
+// ServiceConfig_OrgService_BusinessSetting.ValidateAll() if the designated
+// constraints aren't met.
+type ServiceConfig_OrgService_BusinessSettingMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ServiceConfig_OrgService_BusinessSettingMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ServiceConfig_OrgService_BusinessSettingMultiError) AllErrors() []error { return m }
+
+// ServiceConfig_OrgService_BusinessSettingValidationError is the validation
+// error returned by ServiceConfig_OrgService_BusinessSetting.Validate if the
+// designated constraints aren't met.
+type ServiceConfig_OrgService_BusinessSettingValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ServiceConfig_OrgService_BusinessSettingValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ServiceConfig_OrgService_BusinessSettingValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ServiceConfig_OrgService_BusinessSettingValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ServiceConfig_OrgService_BusinessSettingValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ServiceConfig_OrgService_BusinessSettingValidationError) ErrorName() string {
+	return "ServiceConfig_OrgService_BusinessSettingValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ServiceConfig_OrgService_BusinessSettingValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sServiceConfig_OrgService_BusinessSetting.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ServiceConfig_OrgService_BusinessSettingValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ServiceConfig_OrgService_BusinessSettingValidationError{}

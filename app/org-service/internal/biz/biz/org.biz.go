@@ -16,8 +16,9 @@ import (
 )
 
 type orgBiz struct {
-	log         *log.Helper
-	idGenerator idpkg.Snowflake
+	log             *log.Helper
+	idGenerator     idpkg.Snowflake
+	businessSetting *po.BusinessSetting
 
 	orgData              datarepos.OrgRepo
 	employeeData         datarepos.OrgEmployeeRepo
@@ -30,6 +31,7 @@ type orgBiz struct {
 func NewOrgBiz(
 	logger log.Logger,
 	idGenerator idpkg.Snowflake,
+	businessSetting *po.BusinessSetting,
 
 	orgData datarepos.OrgRepo,
 	employeeData datarepos.OrgEmployeeRepo,
@@ -43,6 +45,7 @@ func NewOrgBiz(
 	return &orgBiz{
 		log:                  logHelper,
 		idGenerator:          idGenerator,
+		businessSetting:      businessSetting,
 		orgData:              orgData,
 		employeeData:         employeeData,
 		inviteRecordData:     inviteRecordData,

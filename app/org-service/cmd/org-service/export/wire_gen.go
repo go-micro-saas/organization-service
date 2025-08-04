@@ -41,6 +41,7 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 	if err != nil {
 		return nil, nil, err
 	}
+	businessSetting := dto.GetBusinessSetting(serviceConfig)
 	db, err := setuputil.GetRecommendDBConn(launcherManager)
 	if err != nil {
 		cleanup()
@@ -56,7 +57,7 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 		cleanup()
 		return nil, nil, err
 	}
-	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgRepo, orgEmployeeRepo, orgInviteRecordRepo, orgRecordForUserRepo, srvAccountV1Client)
+	orgBizRepo := biz.NewOrgBiz(logger, snowflake, businessSetting, orgRepo, orgEmployeeRepo, orgInviteRecordRepo, orgRecordForUserRepo, srvAccountV1Client)
 	srvOrgV1Server := service.NewOrgV1Service(logger, orgBizRepo)
 	cleanupManager, err := service.RegisterServices(hs, gs, srvOrgV1Server)
 	if err != nil {

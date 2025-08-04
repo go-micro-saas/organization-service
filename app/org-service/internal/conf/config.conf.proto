@@ -18,8 +18,14 @@ message ServiceConfig {
       string instance_name         = 3;
       map<string, string> metadata = 4;
     }
+    // BusinessSetting for org service
+    message BusinessSetting {
+      int32 user_create_org_max_count = 1;  // 用户最大创建组织数(包含个人版组织)
+      int32 user_belong_org_max_count = 2;  // 用户最大所属组织数(包含个人版组织)
+    }
 
-    Snowflake snowflake = 1;
+    Snowflake snowflake              = 1;
+    BusinessSetting business_setting = 2;
   }
   OrgService org_service = 1;
 }

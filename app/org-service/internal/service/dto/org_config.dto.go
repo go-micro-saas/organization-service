@@ -3,6 +3,7 @@ package dto
 import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/conf"
+	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	nodeidresourcev1 "github.com/go-micro-saas/service-api/api/nodeid-service/v1/resources"
 	accountapi "github.com/go-micro-saas/service-api/app/account-service"
 	snowflakeapi "github.com/go-micro-saas/service-api/app/snowflake-service"
@@ -46,4 +47,19 @@ func GetAccountV1ServiceNameForHTTP() []clientutil.ServiceName {
 	return []clientutil.ServiceName{
 		accountapi.AccountServiceHTTP,
 	}
+}
+
+func GetBusinessSetting(cfg *conf.ServiceConfig) *po.BusinessSetting {
+	setting := po.DefaultBusinessSetting()
+	config := cfg.GetOrgService().GetBusinessSetting()
+	if config == nil {
+		return setting
+	}
+	if config.GetUserCreateOrgMaxCount() > 0 {
+		setting.UserCreateOrgMaxCount = config.GetUserCreateOrgMaxCount()
+	}
+	if config.GetUserBelongOrgMaxCount() > 0 {
+		setting.UserBelongOrgMaxCount = config.GetUserBelongOrgMaxCount()
+	}
+	return setting
 }
