@@ -409,3 +409,19 @@ func ErrorS105CannotModifySelf(format string, args ...interface{}) *errors.Error
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_CANNOT_MODIFY_SELF.Number()))}
 	return e
 }
+
+// 已有个人版组织
+func IsS105AlreadyHasPersonalOrg(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_ALREADY_HAS_PERSONAL_ORG.String() && e.Code == 400
+}
+
+// 已有个人版组织
+func ErrorS105AlreadyHasPersonalOrg(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_ALREADY_HAS_PERSONAL_ORG.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_ALREADY_HAS_PERSONAL_ORG.Number()))}
+	return e
+}

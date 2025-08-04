@@ -8,6 +8,7 @@ import (
 
 type OrgBizRepo interface {
 	CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.CreateOrgReply, error)
+	CheckAlreadyHasPersonalOrg(orgModel *po.Org, orgRecordModel *po.OrgRecordForUser) error
 	AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*bo.AddEmployeeReply, error)
 	CreateInviteRecordForLink(ctx context.Context, param *bo.CreateInviteRecordForLinkParam) (*po.OrgInviteRecord, error)
 	CreateInviteRecordForEmployee(ctx context.Context, param *bo.CreateInviteRecordForEmployeeParam) (*po.OrgInviteRecord, error)

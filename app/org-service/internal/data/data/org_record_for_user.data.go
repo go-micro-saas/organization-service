@@ -103,6 +103,33 @@ func (s *orgRecordForUserRepo) CreateInBatchesWithDBConn(ctx context.Context, db
 	return s.createInBatches(ctx, dbConn, dataModels, batchSize)
 }
 
+// FirstOrCreate ...
+func (s *orgRecordForUserRepo) FirstOrCreate(ctx context.Context, dataModel *po.OrgRecordForUser) (*po.OrgRecordForUser, error) {
+	err := s.dbConn.WithContext(ctx).
+		Table(s.OrgRecordForUserSchema.TableName()).
+		Where(schemas.FieldUserId+" = ?", dataModel.UserId).
+		FirstOrCreate(dataModel).Error
+	if err != nil {
+		if gormpkg.IsErrDuplicatedKey(err) {
+			err = nil
+			goto getExistData
+		}
+		e := errorpkg.ErrorInternalServer("")
+		return nil, errorpkg.Wrap(e, err)
+	}
+	return dataModel, nil
+getExistData:
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgRecordForUserSchema.TableName()).
+		Where(schemas.FieldUserId+" = ?", dataModel.UserId).
+		First(dataModel).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		return nil, errorpkg.Wrap(e, err)
+	}
+	return dataModel, nil
+}
+
 // =============== 更新 ===============
 
 // update update
@@ -157,6 +184,45 @@ func (s *orgRecordForUserRepo) ExistUpdateWithDBConn(ctx context.Context, dbConn
 	return s.existUpdate(ctx, dbConn, dataModel)
 }
 
+func (s *orgRecordForUserRepo) UpdatePersonalOrgIdWithTx(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.OrgRecordForUser) (err error) {
+	fc := func(ctx context.Context, tx *gorm.DB) error {
+		updates := map[string]interface{}{
+			schemas.FieldPersonalOrgId: dataModel.PersonalOrgId,
+			schemas.FieldUpdatedTime:   dataModel.UpdatedTime,
+		}
+		err = tx.WithContext(ctx).
+			Table(s.OrgRecordForUserSchema.TableName()).
+			Where(schemas.FieldUserId+" = ?", dataModel.UserId).
+			UpdateColumns(updates).Error
+		if err != nil {
+			e := errorpkg.ErrorInternalServer("")
+			return errorpkg.Wrap(e, err)
+		}
+		return err
+	}
+	err = tx.Do(ctx, fc)
+	if err != nil {
+		return err
+	}
+	return err
+}
+
+func (s *orgRecordForUserRepo) UpdateLastOrgId(ctx context.Context, dataModel *po.OrgRecordForUser) (err error) {
+	updates := map[string]interface{}{
+		schemas.FieldLastOrgId:   dataModel.LastOrgId,
+		schemas.FieldUpdatedTime: dataModel.UpdatedTime,
+	}
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgRecordForUserSchema.TableName()).
+		Where(schemas.FieldUserId+" = ?", dataModel.UserId).
+		UpdateColumns(updates).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		return errorpkg.Wrap(e, err)
+	}
+	return
+}
+
 // =============== query one : 查一个 ===============
 
 func (s *orgRecordForUserRepo) queryOneByUserId(ctx context.Context, dbConn *gorm.DB, userID uint64) (dataModel *po.OrgRecordForUser, isNotFound bool, err error) {
@@ -184,6 +250,28 @@ func (s *orgRecordForUserRepo) QueryOneByUserId(ctx context.Context, userID uint
 
 func (s *orgRecordForUserRepo) QueryOneByUserIdWithDBConn(ctx context.Context, dbConn *gorm.DB, userID uint64) (dataModel *po.OrgRecordForUser, isNotFound bool, err error) {
 	return s.queryOneByUserId(ctx, dbConn, userID)
+}
+
+func (s *orgRecordForUserRepo) QueryOneByUserIdForUpdate(ctx context.Context, tx gormpkg.TransactionInterface, uid uint64) (dataModel *po.OrgRecordForUser, err error) {
+	dataModel = new(po.OrgRecordForUser)
+	fc := func(ctx context.Context, tx *gorm.DB) error {
+		tx = tx.WithContext(ctx).
+			Table(s.OrgRecordForUserSchema.TableName()).
+			Where(schemas.FieldUserId+" = ?", uid)
+
+		return gormpkg.ForUpdate(tx).First(dataModel).Error
+	}
+	err = tx.Do(ctx, fc)
+	if err != nil {
+		//if gormpkg.IsErrRecordNotFound(err) {
+		//	err = nil
+		//	isNotFound = true
+		//} else {
+		e := errorpkg.ErrorInternalServer("")
+		err = errorpkg.Wrap(e, err)
+		return
+	}
+	return
 }
 
 // queryOneByConditions query one by conditions

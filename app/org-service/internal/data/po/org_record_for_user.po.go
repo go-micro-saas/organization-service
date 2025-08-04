@@ -19,3 +19,13 @@ type OrgRecordForUser struct {
 	PersonalOrgId uint64    `gorm:"column:personal_org_id" json:"personal_org_id"` // 个人组织ID
 	LastOrgId     uint64    `gorm:"column:last_org_id" json:"last_org_id"`         // 最后的组织ID
 }
+
+func DefaultOrgRecordForUser(userID uint64) *OrgRecordForUser {
+	return &OrgRecordForUser{
+		UserId:        userID,
+		CreatedTime:   time.Now(),
+		UpdatedTime:   time.Now(),
+		PersonalOrgId: 0,
+		LastOrgId:     0,
+	}
+}

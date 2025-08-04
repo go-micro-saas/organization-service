@@ -31,6 +31,7 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 		data.NewOrgRepo,
 		data.NewOrgEmployeeRepo,
 		data.NewOrgInviteRecordRepo,
+		data.NewOrgRecordForUserRepo,
 		// api
 		dto.GetAccountV1ServiceNameForGRPC, accountapi.NewAccountV1GRPCClient,
 		//dto.GetAccountV1ServiceNameForHTTP, accountapi.NewAccountV1HTTPClient,

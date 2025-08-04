@@ -49,13 +49,14 @@ func exportServices(launcherManager setuputil.LauncherManager, hs *http.Server, 
 	orgRepo := data.NewOrgRepo(db)
 	orgEmployeeRepo := data.NewOrgEmployeeRepo(db)
 	orgInviteRecordRepo := data.NewOrgInviteRecordRepo(db)
+	orgRecordForUserRepo := data.NewOrgRecordForUserRepo(db)
 	v2 := dto.GetAccountV1ServiceNameForGRPC()
 	srvAccountV1Client, err := accountapi.NewAccountV1GRPCClient(serviceAPIManager, v2...)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
-	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgRepo, orgEmployeeRepo, orgInviteRecordRepo, srvAccountV1Client)
+	orgBizRepo := biz.NewOrgBiz(logger, snowflake, orgRepo, orgEmployeeRepo, orgInviteRecordRepo, orgRecordForUserRepo, srvAccountV1Client)
 	srvOrgV1Server := service.NewOrgV1Service(logger, orgBizRepo)
 	cleanupManager, err := service.RegisterServices(hs, gs, srvOrgV1Server)
 	if err != nil {

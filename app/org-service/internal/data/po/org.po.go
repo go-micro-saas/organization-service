@@ -39,6 +39,10 @@ type Org struct {
 	ModifyStatusTime uint64                         `gorm:"column:modify_status_time" json:"modify_status_time"` // 修改状态时间
 }
 
+func (s *Org) IsPersonalOrg() bool {
+	return s.OrgType == enumv1.OrgTypeEnum_PERSON
+}
+
 func DefaultOrg() *Org {
 	dataModel := &Org{
 		Id:              0,

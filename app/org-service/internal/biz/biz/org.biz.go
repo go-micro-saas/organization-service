@@ -19,9 +19,10 @@ type orgBiz struct {
 	log         *log.Helper
 	idGenerator idpkg.Snowflake
 
-	orgData          datarepos.OrgRepo
-	employeeData     datarepos.OrgEmployeeRepo
-	inviteRecordData datarepos.OrgInviteRecordRepo
+	orgData              datarepos.OrgRepo
+	employeeData         datarepos.OrgEmployeeRepo
+	inviteRecordData     datarepos.OrgInviteRecordRepo
+	orgRecordForUserData datarepos.OrgRecordForUserRepo
 
 	accountV1Client accountservicev1.SrvAccountV1Client
 }
@@ -33,19 +34,29 @@ func NewOrgBiz(
 	orgData datarepos.OrgRepo,
 	employeeData datarepos.OrgEmployeeRepo,
 	inviteRecordData datarepos.OrgInviteRecordRepo,
+	orgRecordForUserData datarepos.OrgRecordForUserRepo,
 
 	accountV1Client accountservicev1.SrvAccountV1Client,
 ) bizrepos.OrgBizRepo {
 	logHelper := log.NewHelper(log.With(logger, "module", "test-service/biz/biz"))
 
 	return &orgBiz{
-		log:              logHelper,
-		idGenerator:      idGenerator,
-		orgData:          orgData,
-		employeeData:     employeeData,
-		inviteRecordData: inviteRecordData,
-		accountV1Client:  accountV1Client,
+		log:                  logHelper,
+		idGenerator:          idGenerator,
+		orgData:              orgData,
+		employeeData:         employeeData,
+		inviteRecordData:     inviteRecordData,
+		orgRecordForUserData: orgRecordForUserData,
+		accountV1Client:      accountV1Client,
 	}
+}
+
+func (s *orgBiz) CheckAlreadyHasPersonalOrg(orgModel *po.Org, orgRecordModel *po.OrgRecordForUser) error {
+	if orgModel.IsPersonalOrg() && orgRecordModel.PersonalOrgId > 0 {
+		e := errorv1.DefaultErrorS105AlreadyHasPersonalOrg()
+		return errorpkg.WithStack(e)
+	}
+	return nil
 }
 
 func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.CreateOrgReply, error) {
@@ -78,6 +89,16 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 	// set employee
 	s.SetOrgEmployeeByAccountInfo(employeeModel, accountInfo)
 
+	// org record
+	orgRecordModel := po.DefaultOrgRecordForUser(employeeModel.UserId)
+	orgRecordModel, err = s.orgRecordForUserData.FirstOrCreate(ctx, orgRecordModel)
+	if err != nil {
+		return nil, err
+	}
+	if err = s.CheckAlreadyHasPersonalOrg(orgModel, orgRecordModel); err != nil {
+		return nil, err
+	}
+
 	// 事务
 	tx := s.orgData.NewTransaction(ctx)
 	defer func() {
@@ -89,6 +110,25 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 			)
 		}
 	}()
+
+	// orgRecordForUser
+	orgRecordModel, err = s.orgRecordForUserData.QueryOneByUserIdForUpdate(ctx, tx, employeeModel.UserId)
+	if err != nil {
+		return nil, err
+	}
+	if err = s.CheckAlreadyHasPersonalOrg(orgModel, orgRecordModel); err != nil {
+		return nil, err
+	}
+	if orgModel.IsPersonalOrg() {
+		orgRecordModel.PersonalOrgId = orgModel.OrgId
+		orgRecordModel.UpdatedTime = orgModel.UpdatedTime
+		err = s.orgRecordForUserData.UpdatePersonalOrgIdWithTx(ctx, tx, orgRecordModel)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	// create
 	err = s.orgData.CreateWithTransaction(ctx, tx, orgModel)
 	if err != nil {
 		return nil, err

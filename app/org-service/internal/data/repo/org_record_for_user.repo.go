@@ -13,10 +13,14 @@ type OrgRecordForUserRepo interface {
 	Create(ctx context.Context, dataModel *po.OrgRecordForUser) error
 	ExistCreate(ctx context.Context, dataModel *po.OrgRecordForUser) (anotherModel *po.OrgRecordForUser, isNotFound bool, err error)
 	CreateInBatches(ctx context.Context, dataModels []*po.OrgRecordForUser, batchSize int) error
+	FirstOrCreate(ctx context.Context, dataModel *po.OrgRecordForUser) (*po.OrgRecordForUser, error)
 	Insert(ctx context.Context, dataModels []*po.OrgRecordForUser) error
 	Update(ctx context.Context, dataModel *po.OrgRecordForUser) error
 	ExistUpdate(ctx context.Context, dataModel *po.OrgRecordForUser) (anotherModel *po.OrgRecordForUser, isNotFound bool, err error)
+	UpdatePersonalOrgIdWithTx(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.OrgRecordForUser) (err error)
+	UpdateLastOrgId(ctx context.Context, dataModel *po.OrgRecordForUser) (err error)
 	QueryOneByUserId(ctx context.Context, userID uint64) (dataModel *po.OrgRecordForUser, isNotFound bool, err error)
+	QueryOneByUserIdForUpdate(ctx context.Context, tx gormpkg.TransactionInterface, uid uint64) (dataModel *po.OrgRecordForUser, err error)
 	QueryOneByConditions(ctx context.Context, conditions map[string]interface{}) (dataModel *po.OrgRecordForUser, isNotFound bool, err error)
 	QueryAllByConditions(ctx context.Context, conditions map[string]interface{}) (dataModels []*po.OrgRecordForUser, err error)
 	List(ctx context.Context, conditions map[string]interface{}, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgRecordForUser, totalNumber int64, err error)
