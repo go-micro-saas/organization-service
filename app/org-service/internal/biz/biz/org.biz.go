@@ -122,6 +122,8 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 	if err = s.CheckAlreadyHasPersonalOrg(orgModel, orgRecordModel); err != nil {
 		return nil, err
 	}
+
+	// update
 	if orgModel.IsPersonalOrg() {
 		orgRecordModel.PersonalOrgId = orgModel.OrgId
 		orgRecordModel.UpdatedTime = orgModel.UpdatedTime

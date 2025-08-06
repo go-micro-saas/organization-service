@@ -133,8 +133,6 @@ func (s *orgBiz) ListOrgEmployee(ctx context.Context, param *bo.OrgEmployeeListP
 		UserIDList:     param.UserIDList,
 		EmployeeName:   param.EmployeeName,
 
-		OnlyNotDeleted: true,
-
 		PaginatorArgs: param.PaginatorArgs,
 	}
 	dataModels, counter, err := s.employeeData.ListOrgEmployee(ctx, queryParam, param.PaginatorArgs)
@@ -177,10 +175,8 @@ func (s *orgBiz) RemoveEmployee(ctx context.Context, param *bo.RemoveEmployeePar
 	}
 
 	// set
-	employee.EmployeeStatus = enumv1.OrgEmployeeStatusEnum_REMOVED
-	employee.ModifyStatusTime = uint64(time.Now().Unix())
-	employee.UpdatedTime = time.Now()
-	if err = s.employeeData.SetOrgEmployeeStatus(ctx, employee); err != nil {
+	employee.SetEmployeeRemoveStatus()
+	if err = s.employeeData.RemoveOrgEmployee(ctx, employee); err != nil {
 		return nil, err
 	}
 	return employee, nil

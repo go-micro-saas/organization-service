@@ -7,7 +7,6 @@ import (
 	schemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_employee"
 	gormpkg "github.com/ikaiguang/go-srv-kit/data/gorm"
 	idpkg "github.com/ikaiguang/go-srv-kit/kit/id"
-	uuidpkg "github.com/ikaiguang/go-srv-kit/kit/uuid"
 	errorpkg "github.com/ikaiguang/go-srv-kit/kratos/error"
 	datatypes "gorm.io/datatypes"
 	"gorm.io/gorm"
@@ -18,6 +17,44 @@ import (
 var _ = time.Time{}
 
 var _ = datatypes.JSON{}
+
+func DefaultOrgEmployee() *OrgEmployee {
+	res := &OrgEmployee{
+		Id:              0,
+		CreatedTime:     time.Now(),
+		UpdatedTime:     time.Now(),
+		DeletedTime:     0,
+		EmployeeId:      0,
+		UserId:          0,
+		OrgId:           0,
+		EmployeeName:    "",
+		EmployeeAvatar:  "",
+		EmployeePhone:   "",
+		EmployeeEmail:   "",
+		EmployeeRole:    enumv1.OrgEmployeeRoleEnum_NORMAL,
+		EmployeeStatus:  enumv1.OrgEmployeeStatusEnum_ENABLE,
+		InviterRecordId: 0,
+		InviterUserId:   0,
+	}
+	return res
+}
+
+func DefaultOrgEmployeeWithID(idGenerator idpkg.Snowflake) (dataModel *OrgEmployee, err error) {
+	dataModel = DefaultOrgEmployee()
+	dataModel.EmployeeId, err = idGenerator.NextID()
+	if err != nil {
+		e := errorpkg.ErrorInternalServer(err.Error())
+		return dataModel, errorpkg.WithStack(e)
+	}
+	return dataModel, err
+}
+
+func DefaultOrgEmployeeStatus() []enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus {
+	return []enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus{
+		enumv1.OrgEmployeeStatusEnum_ENABLE,
+		enumv1.OrgEmployeeStatusEnum_DISABLE,
+	}
+}
 
 // OrgEmployee ENGINE InnoDB CHARSET utf8mb4 COMMENT '组织成员'
 type OrgEmployee struct {
@@ -46,7 +83,7 @@ func (s *OrgEmployee) GenUUID() string {
 }
 
 func (s *OrgEmployee) RebuildUUID() string {
-	return uuidpkg.NewUUID()
+	return s.EmployeeUuid + "-" + strconv.FormatUint(s.EmployeeId, 10)
 }
 
 func (s *OrgEmployee) IsValid() bool {
@@ -106,43 +143,20 @@ func (s *OrgEmployee) CanSetRole(role enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole
 	}
 }
 
+func (s *OrgEmployee) SetEmployeeRemoveStatus() {
+	s.EmployeeUuid = s.RebuildUUID()
+	s.EmployeeStatus = enumv1.OrgEmployeeStatusEnum_REMOVED
+	s.ModifyStatusTime = uint64(time.Now().Unix())
+	s.UpdatedTime = time.Now()
+	s.DeletedTime = uint64(time.Now().Unix())
+}
+
 func IsOrgOwner(employeeRole enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole) bool {
 	return employeeRole == enumv1.OrgEmployeeRoleEnum_CREATOR
 }
 
 func GenEmployeeUUID(orgID, userID uint64) string {
 	return strconv.FormatUint(orgID, 10) + "-" + strconv.FormatUint(userID, 10)
-}
-
-func DefaultOrgEmployee() *OrgEmployee {
-	res := &OrgEmployee{
-		Id:              0,
-		CreatedTime:     time.Now(),
-		UpdatedTime:     time.Now(),
-		DeletedTime:     0,
-		EmployeeId:      0,
-		UserId:          0,
-		OrgId:           0,
-		EmployeeName:    "",
-		EmployeeAvatar:  "",
-		EmployeePhone:   "",
-		EmployeeEmail:   "",
-		EmployeeRole:    enumv1.OrgEmployeeRoleEnum_NORMAL,
-		EmployeeStatus:  enumv1.OrgEmployeeStatusEnum_ENABLE,
-		InviterRecordId: 0,
-		InviterUserId:   0,
-	}
-	return res
-}
-
-func DefaultOrgEmployeeWithID(idGenerator idpkg.Snowflake) (dataModel *OrgEmployee, err error) {
-	dataModel = DefaultOrgEmployee()
-	dataModel.EmployeeId, err = idGenerator.NextID()
-	if err != nil {
-		e := errorpkg.ErrorInternalServer(err.Error())
-		return dataModel, errorpkg.WithStack(e)
-	}
-	return dataModel, err
 }
 
 type QueryEmployeeParam struct {
@@ -157,8 +171,10 @@ type OrgEmployeeListParam struct {
 	UserIDList     []uint64 // 用户ID列表
 	EmployeeName   string   // 成员名称
 
+	IgnoreDefaultOrgEmployeeStatus bool                                             // 忽略成员状态
+	EmployeeStatus                 []enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus // status
+
 	IgnoreDeletedTime bool // 忽略删除时间
-	OnlyNotDeleted    bool // 只查询未删除
 	OnlyDeleted       bool // 只查询已删除
 
 	PaginatorArgs *gormpkg.PaginatorArgs
@@ -180,15 +196,38 @@ func (s *OrgEmployeeListParam) WhereConditions(dbConn *gorm.DB) *gorm.DB {
 	} else if len(s.UserIDList) > 1 {
 		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldUserId)+" IN (?)", s.UserIDList)
 	}
+	if len(s.EmployeeStatus) == 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeStatus)+" = ?", s.EmployeeStatus[0])
+	} else if len(s.EmployeeStatus) > 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeStatus)+" IN (?)", s.EmployeeStatus)
+	}
+	// 仅查询有效状态
+	if !s.IgnoreDefaultOrgEmployeeStatus {
+		WhereDefaultOrgEmployeeStatus(dbConn)
+	}
 	if !s.IgnoreDeletedTime {
-		if s.OnlyNotDeleted {
-			dbConn = dbConn.Where("deleted_time = ?", 0)
-		} else if s.OnlyDeleted {
-			dbConn = dbConn.Where("deleted_time > ?", 0)
+		if s.OnlyDeleted {
+			dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldDeletedTime)+" > ?", 0)
+		} else {
+			dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldDeletedTime)+" = ?", 0)
 		}
 	}
 	if len(s.EmployeeName) > 0 {
 		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeName)+" LIKE ?", "%"+s.EmployeeName+"%")
 	}
 	return dbConn
+}
+
+func WhereDefaultOrgEmployeeStatus(dbConn *gorm.DB) *gorm.DB {
+	defaultOrgEmployeeStatus := DefaultOrgEmployeeStatus()
+	if len(defaultOrgEmployeeStatus) == 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeStatus)+" = ?", defaultOrgEmployeeStatus[0])
+	} else if len(defaultOrgEmployeeStatus) > 1 {
+		dbConn = dbConn.Where(schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeStatus)+" IN (?)", defaultOrgEmployeeStatus)
+	}
+	return dbConn
+}
+
+type UserEmployeeList struct {
+	UserID uint64
 }

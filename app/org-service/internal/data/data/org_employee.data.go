@@ -196,6 +196,25 @@ func (s *orgEmployeeRepo) SetOrgEmployeeStatus(ctx context.Context, dataModel *p
 	return
 }
 
+func (s *orgEmployeeRepo) RemoveOrgEmployee(ctx context.Context, dataModel *po.OrgEmployee) (err error) {
+	updates := map[string]interface{}{
+		schemas.FieldUpdatedTime:      dataModel.UpdatedTime,
+		schemas.FieldEmployeeUuid:     dataModel.EmployeeUuid,
+		schemas.FieldEmployeeStatus:   dataModel.EmployeeStatus,
+		schemas.FieldModifyStatusTime: dataModel.ModifyStatusTime,
+		schemas.FieldDeletedTime:      dataModel.DeletedTime,
+	}
+	err = s.dbConn.WithContext(ctx).
+		Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldId+" = ?", dataModel.Id).
+		UpdateColumns(updates).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		return errorpkg.Wrap(e, err)
+	}
+	return
+}
+
 func (s *orgEmployeeRepo) SetOrgEmployeeRole(ctx context.Context, dataModel *po.OrgEmployee) (err error) {
 	updates := map[string]interface{}{
 		schemas.FieldUpdatedTime:    dataModel.UpdatedTime,
@@ -329,6 +348,22 @@ func (s *orgEmployeeRepo) QueryOneByConditions(ctx context.Context, conditions m
 // QueryOneByConditionsWithDBConn query one by conditions
 func (s *orgEmployeeRepo) QueryOneByConditionsWithDBConn(ctx context.Context, dbConn *gorm.DB, conditions map[string]interface{}) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
 	return s.queryOneByConditions(ctx, dbConn, conditions)
+}
+
+func (s *orgEmployeeRepo) QueryUserEmployeeList(ctx context.Context, queryParam *po.UserEmployeeList) (dataModels []*po.OrgEmployee, err error) {
+	// query where
+	dbConn := s.dbConn.WithContext(ctx).Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldUserId+" = ?", queryParam.UserID).
+		Where(schemas.FieldDeletedTime+" = ?", 0)
+
+	dbConn = po.WhereDefaultOrgEmployeeStatus(dbConn)
+	err = dbConn.Find(&dataModels).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		err = errorpkg.Wrap(e, err)
+		return
+	}
+	return
 }
 
 // =============== query all : 查全部 ===============
