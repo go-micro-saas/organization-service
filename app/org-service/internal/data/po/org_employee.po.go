@@ -160,9 +160,8 @@ func GenEmployeeUUID(orgID, userID uint64) string {
 }
 
 type QueryEmployeeParam struct {
-	OrgID      uint64
-	UserID     uint64
-	EmployeeId uint64
+	OrgID  uint64
+	UserID uint64
 }
 
 type OrgEmployeeListParam struct {

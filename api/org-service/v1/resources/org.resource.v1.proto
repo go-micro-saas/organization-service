@@ -234,6 +234,10 @@ message GetOrgInfoListResp {
 message GetOrgEmployeeInfoReq {
   uint64 employee_id = 100 [(validate.rules).uint64.gt = 0];
 }
+message GetUserOrgEmployeeInfoReq {
+  uint64 user_id = 100 [(validate.rules).uint64.gt = 0];
+  uint64 org_id  = 101 [(validate.rules).uint64.gt = 0];
+}
 message GetOrgEmployeeInfoResp {
   int32 code                   = 1;
   string reason                = 2;

@@ -119,9 +119,8 @@ func (s *orgBiz) canAddEmployee(ctx context.Context, param *bo.AddEmployeeParam)
 
 func (s *orgBiz) canInviteEmployee(ctx context.Context, operatorUid, orgID uint64) (*po.OrgEmployee, error) {
 	queryParam := &po.QueryEmployeeParam{
-		OrgID:      orgID,
-		UserID:     operatorUid,
-		EmployeeId: 0,
+		OrgID:  orgID,
+		UserID: operatorUid,
 	}
 	employee, isNotFound, err := s.employeeData.QueryOneByUserID(ctx, queryParam)
 	if err != nil {
@@ -140,6 +139,22 @@ func (s *orgBiz) canInviteEmployee(ctx context.Context, operatorUid, orgID uint6
 
 func (s *orgBiz) GetEmployeeInfo(ctx context.Context, employeeID uint64) (*po.OrgEmployee, error) {
 	dataModel, isNotFound, err := s.employeeData.QueryOneByEmployeeID(ctx, employeeID)
+	if err != nil {
+		return nil, err
+	}
+	if isNotFound {
+		e := errorv1.DefaultErrorS105EmployeeNotFound()
+		return nil, errorpkg.WithStack(e)
+	}
+	return dataModel, nil
+}
+
+func (s *orgBiz) GetUserOrgEmployeeInfo(ctx context.Context, userID, orgID uint64) (*po.OrgEmployee, error) {
+	queryParam := &po.QueryEmployeeParam{
+		OrgID:  orgID,
+		UserID: userID,
+	}
+	dataModel, isNotFound, err := s.employeeData.QueryOneByUserID(ctx, queryParam)
 	if err != nil {
 		return nil, err
 	}

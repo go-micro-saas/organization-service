@@ -141,6 +141,7 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 	if err != nil {
 		return nil, err
 	}
+	// if !param.SkipCreateEmployee || orgModel.IsPersonalOrg() {
 	if !param.SkipCreateEmployee {
 		err = s.employeeData.CreateWithTransaction(ctx, tx, employeeModel)
 		if err != nil {

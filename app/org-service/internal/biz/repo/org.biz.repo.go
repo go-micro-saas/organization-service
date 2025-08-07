@@ -25,6 +25,7 @@ type OrgBizRepo interface {
 	ListOrg(ctx context.Context, param *bo.OrgListParam) ([]*po.Org, int64, error)
 
 	GetEmployeeInfo(ctx context.Context, employeeID uint64) (*po.OrgEmployee, error)
+	GetUserOrgEmployeeInfo(ctx context.Context, userID, orgID uint64) (*po.OrgEmployee, error)
 	GetEmployeeInfoList(ctx context.Context, employeeIDList []uint64) ([]*po.OrgEmployee, error)
 	ListOrgEmployee(ctx context.Context, param *bo.OrgEmployeeListParam) ([]*po.OrgEmployee, int64, error)
 

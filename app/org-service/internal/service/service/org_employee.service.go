@@ -62,6 +62,16 @@ func (s *orgV1Service) GetOrgEmployeeInfo(ctx context.Context, req *resourcev1.G
 	}, nil
 }
 
+func (s *orgV1Service) GetUserOrgEmployeeInfo(ctx context.Context, req *resourcev1.GetUserOrgEmployeeInfoReq) (*resourcev1.GetOrgEmployeeInfoResp, error) {
+	dataModel, err := s.orgBiz.GetUserOrgEmployeeInfo(ctx, req.UserId, req.OrgId)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.GetOrgEmployeeInfoResp{
+		Data: dto.OrgDto.ToPbOrgEmployee(dataModel),
+	}, nil
+}
+
 func (s *orgV1Service) GetOrgEmployeeInfoList(ctx context.Context, req *resourcev1.GetOrgEmployeeInfoListReq) (*resourcev1.GetOrgEmployeeInfoListResp, error) {
 	dataModels, err := s.orgBiz.GetEmployeeInfoList(ctx, req.EmployeeIds)
 	if err != nil {
