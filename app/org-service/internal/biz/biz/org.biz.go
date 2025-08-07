@@ -122,6 +122,9 @@ func (s *orgBiz) CreateOrg(ctx context.Context, param *bo.CreateOrgParam) (*bo.C
 	if err = s.CheckAlreadyHasPersonalOrg(orgModel, orgRecordModel); err != nil {
 		return nil, err
 	}
+	if err = s.CheckCreateOrJoinOrgLimit(ctx, employeeModel); err != nil {
+		return nil, err
+	}
 
 	// update
 	if orgModel.IsPersonalOrg() {

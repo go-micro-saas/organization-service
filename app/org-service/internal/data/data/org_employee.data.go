@@ -266,12 +266,14 @@ func (s *orgEmployeeRepo) QueryOneByIdWithDBConn(ctx context.Context, dbConn *go
 
 func (s *orgEmployeeRepo) QueryOneByUserID(ctx context.Context, param *po.QueryEmployeeParam) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
 	dataModel = new(po.OrgEmployee)
-	err = s.dbConn.WithContext(ctx).
+	dbConn := s.dbConn.WithContext(ctx).
 		Table(s.OrgEmployeeSchema.TableName()).
 		Where(schemas.FieldOrgId+" = ?", param.OrgID).
 		Where(schemas.FieldUserId+" = ?", param.UserID).
-		Where(schemas.FieldDeletedTime+" =?", 0).
-		First(dataModel).Error
+		Where(schemas.FieldDeletedTime+" =?", 0)
+
+	dbConn = po.WhereDefaultOrgEmployeeStatus(dbConn)
+	err = dbConn.First(dataModel).Error
 	if err != nil {
 		if gormpkg.IsErrRecordNotFound(err) {
 			err = nil
@@ -353,6 +355,24 @@ func (s *orgEmployeeRepo) QueryOneByConditionsWithDBConn(ctx context.Context, db
 func (s *orgEmployeeRepo) QueryUserEmployeeList(ctx context.Context, queryParam *po.UserEmployeeList) (dataModels []*po.OrgEmployee, err error) {
 	// query where
 	dbConn := s.dbConn.WithContext(ctx).Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldUserId+" = ?", queryParam.UserID).
+		Where(schemas.FieldDeletedTime+" = ?", 0)
+
+	dbConn = po.WhereDefaultOrgEmployeeStatus(dbConn)
+	err = dbConn.Find(&dataModels).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		err = errorpkg.Wrap(e, err)
+		return
+	}
+	return
+}
+
+func (s *orgEmployeeRepo) QueryUserEmployeeRole(ctx context.Context, queryParam *po.UserEmployeeList) (dataModels []*po.OrgEmployeeRole, err error) {
+	// query where
+	selectFields := (&po.OrgEmployeeRole{}).SelectFields()
+	dbConn := s.dbConn.WithContext(ctx).Table(s.OrgEmployeeSchema.TableName()).
+		Select(selectFields).
 		Where(schemas.FieldUserId+" = ?", queryParam.UserID).
 		Where(schemas.FieldDeletedTime+" = ?", 0)
 

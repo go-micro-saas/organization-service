@@ -231,3 +231,44 @@ func WhereDefaultOrgEmployeeStatus(dbConn *gorm.DB) *gorm.DB {
 type UserEmployeeList struct {
 	UserID uint64
 }
+
+type OrgEmployeeRole struct {
+	DeletedTime    uint64                                         `gorm:"column:deleted_time" json:"deleted_time"`       // 删除时间
+	EmployeeId     uint64                                         `gorm:"column:employee_id" json:"employee_id"`         // uuid
+	UserId         uint64                                         `gorm:"column:user_id" json:"user_id"`                 // 用户ID
+	OrgId          uint64                                         `gorm:"column:org_id" json:"org_id"`                   // 组织ID
+	EmployeeRole   enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole     `gorm:"column:employee_role" json:"employee_role"`     // 角色；1：创建者，2：普通成员，3：管理员，4：超级管理员
+	EmployeeStatus enumv1.OrgEmployeeStatusEnum_OrgEmployeeStatus `gorm:"column:employee_status" json:"employee_status"` // 状态；1：ENABLE，2：DISABLE，3：DELETED
+}
+
+func (s *OrgEmployeeRole) SelectFields() []string {
+	return []string{
+		schemas.OrgEmployeeSchema.FieldName(schemas.FieldDeletedTime),
+		schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeId),
+		schemas.OrgEmployeeSchema.FieldName(schemas.FieldUserId),
+		schemas.OrgEmployeeSchema.FieldName(schemas.FieldOrgId),
+		schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeRole),
+		schemas.OrgEmployeeSchema.FieldName(schemas.FieldEmployeeStatus),
+	}
+}
+
+type OrgEmployeeRoleCount struct {
+	UserId       uint64
+	TotalCounter int32
+	RoleCount    map[enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole]int32
+}
+
+func CalcUserRoleCount(dataModels []*OrgEmployeeRole) *OrgEmployeeRoleCount {
+	res := &OrgEmployeeRoleCount{
+		RoleCount:    make(map[enumv1.OrgEmployeeRoleEnum_OrgEmployeeRole]int32),
+		TotalCounter: int32(len(dataModels)),
+	}
+	if len(dataModels) == 0 {
+		return res
+	}
+	res.UserId = dataModels[0].UserId
+	for i := range dataModels {
+		res.RoleCount[dataModels[i].EmployeeRole]++
+	}
+	return res
+}

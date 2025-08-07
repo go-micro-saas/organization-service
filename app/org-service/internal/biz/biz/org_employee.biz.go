@@ -10,12 +10,41 @@ import (
 	"time"
 )
 
+func (s *orgBiz) CheckCreateOrJoinOrgLimit(ctx context.Context, employeeModel *po.OrgEmployee) error {
+	queryParam := &po.UserEmployeeList{
+		UserID: employeeModel.UserId,
+	}
+	employeeRoles, err := s.employeeData.QueryUserEmployeeRole(ctx, queryParam)
+	if err != nil {
+		return err
+	}
+	roleCounter := po.CalcUserRoleCount(employeeRoles)
+	if roleCounter.TotalCounter < 1 {
+		return nil
+	}
+	if roleCounter.TotalCounter >= s.businessSetting.UserBelongOrgMaxCount {
+		e := errorv1.DefaultErrorS105UserBelongOrgMaxCount()
+		return errorpkg.WithStack(e)
+	}
+	if roleCounter.RoleCount[enumv1.OrgEmployeeRoleEnum_CREATOR] >= s.businessSetting.UserCreateOrgMaxCount {
+		e := errorv1.DefaultErrorS105UserCreateOrgMaxCount()
+		return errorpkg.WithStack(e)
+	}
+	return nil
+}
+
 func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*bo.AddEmployeeReply, error) {
 	// check account
 	accountInfo, err := s.GetAccountInfo(ctx, param.UserId)
 	if err != nil {
 		return nil, err
 	}
+
+	// org
+	//orgModel, err := s.GetOrgInfo(ctx, param.OrgId)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	// employee
 	var (
@@ -35,6 +64,9 @@ func (s *orgBiz) AddEmployee(ctx context.Context, param *bo.AddEmployeeParam) (*
 		return nil, err
 	}
 	if err = s.isEmployeeExists(ctx, employee); err != nil {
+		return nil, err
+	}
+	if err = s.CheckCreateOrJoinOrgLimit(ctx, employee); err != nil {
 		return nil, err
 	}
 

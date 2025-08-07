@@ -27,6 +27,7 @@ type OrgEmployeeRepo interface {
 	QueryOneByEmployeeID(ctx context.Context, employeeID uint64) (dataModel *po.OrgEmployee, isNotFound bool, err error)
 	QueryByEmployeeIDList(ctx context.Context, employeeIDList []uint64) ([]*po.OrgEmployee, error)
 	QueryUserEmployeeList(ctx context.Context, queryParam *po.UserEmployeeList) (dataModels []*po.OrgEmployee, err error)
+	QueryUserEmployeeRole(ctx context.Context, queryParam *po.UserEmployeeList) (dataModels []*po.OrgEmployeeRole, err error)
 	QueryAllByConditions(ctx context.Context, conditions map[string]interface{}) (dataModels []*po.OrgEmployee, err error)
 	List(ctx context.Context, conditions map[string]interface{}, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgEmployee, totalNumber int64, err error)
 	ListOrgEmployee(ctx context.Context, queryParam *po.OrgEmployeeListParam, paginatorArgs *gormpkg.PaginatorArgs) (dataModels []*po.OrgEmployee, recordCount int64, err error)

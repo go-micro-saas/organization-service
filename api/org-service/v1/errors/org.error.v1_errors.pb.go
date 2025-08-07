@@ -425,3 +425,35 @@ func ErrorS105AlreadyHasPersonalOrg(format string, args ...interface{}) *errors.
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_ALREADY_HAS_PERSONAL_ORG.Number()))}
 	return e
 }
+
+// 已达创建或加入组织限制
+func IsS105UserBelongOrgMaxCount(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_USER_BELONG_ORG_MAX_COUNT.String() && e.Code == 400
+}
+
+// 已达创建或加入组织限制
+func ErrorS105UserBelongOrgMaxCount(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_USER_BELONG_ORG_MAX_COUNT.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_USER_BELONG_ORG_MAX_COUNT.Number()))}
+	return e
+}
+
+// 已达创建组织限制
+func IsS105UserCreateOrgMaxCount(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == ERROR_S105_USER_CREATE_ORG_MAX_COUNT.String() && e.Code == 400
+}
+
+// 已达创建组织限制
+func ErrorS105UserCreateOrgMaxCount(format string, args ...interface{}) *errors.Error {
+	e := errors.New(400, ERROR_S105_USER_CREATE_ORG_MAX_COUNT.String(), fmt.Sprintf(format, args...))
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_USER_CREATE_ORG_MAX_COUNT.Number()))}
+	return e
+}

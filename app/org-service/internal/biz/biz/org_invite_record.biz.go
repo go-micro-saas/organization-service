@@ -118,6 +118,10 @@ func (s *orgBiz) JoinByInviteLink(ctx context.Context, param *bo.JoinByInviteLin
 	if err = s.isEmployeeExists(ctx, employeeModel); err != nil {
 		return nil, err
 	}
+	if err = s.CheckCreateOrJoinOrgLimit(ctx, employeeModel); err != nil {
+		return nil, err
+	}
+
 	// create
 	err = s.employeeData.Create(ctx, employeeModel)
 	if err != nil {
@@ -183,6 +187,11 @@ func (s *orgBiz) AgreeOrRefuseInvite(ctx context.Context, param *bo.AgreeOrRefus
 	if param.IsAgree {
 		if err = s.isEmployeeExists(ctx, employeeModel); err != nil {
 			return employeeModel, err
+		}
+	}
+	if param.IsAgree {
+		if err = s.CheckCreateOrJoinOrgLimit(ctx, employeeModel); err != nil {
+			return nil, err
 		}
 	}
 

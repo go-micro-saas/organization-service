@@ -9,32 +9,34 @@ import (
 
 var ERROR_http_code = map[string]int{
 
-	"UNKNOWN":                       500,
-	"S105_CANNOT_BE_OWNER":          400,
-	"S105_INVALID_OPERATOR":         400,
-	"S105_ORG_NOT_FOUND":            400,
-	"S105_ORG_EXISTS":               400,
-	"S105_EMPLOYEE_EXISTS":          400,
-	"S105_EMPLOYEE_NOT_FOUND":       400,
-	"S105_EMPLOYEE_NOT_OWNER":       400,
-	"S105_EMPLOYEE_NOT_ADMIN":       400,
-	"S105_EMPLOYEE_NOT_SUPER":       400,
-	"S105_EMPLOYEE_NOT_NORMAL":      400,
-	"S105_EMPLOYEE_NOT_ENABLE":      400,
-	"S105_EMPLOYEE_NOT_CREATOR":     400,
-	"S105_EMPLOYEE_DISABLE":         400,
-	"S105_EMPLOYEE_NO_PERMISSION":   400,
-	"S105_NOT_ORG_EMPLOYEE":         400,
-	"S105_INVALID_INVITE_RECORD":    400,
-	"S105_INVITATION_HAS_EXPIRED":   400,
-	"S105_INVALID_INVITE_STATUS":    400,
-	"S105_NOT_INVITED_USER":         400,
-	"S105_INCORRECT_INVITE_TYPE":    400,
-	"S105_NOT_ALLOWED_SET_STATUS":   400,
-	"S105_ORG_NOT_ENABLE":           400,
-	"S105_NOT_ALLOWED_SET_ROLE":     400,
-	"S105_CANNOT_MODIFY_SELF":       400,
-	"S105_ALREADY_HAS_PERSONAL_ORG": 400,
+	"UNKNOWN":                        500,
+	"S105_CANNOT_BE_OWNER":           400,
+	"S105_INVALID_OPERATOR":          400,
+	"S105_ORG_NOT_FOUND":             400,
+	"S105_ORG_EXISTS":                400,
+	"S105_EMPLOYEE_EXISTS":           400,
+	"S105_EMPLOYEE_NOT_FOUND":        400,
+	"S105_EMPLOYEE_NOT_OWNER":        400,
+	"S105_EMPLOYEE_NOT_ADMIN":        400,
+	"S105_EMPLOYEE_NOT_SUPER":        400,
+	"S105_EMPLOYEE_NOT_NORMAL":       400,
+	"S105_EMPLOYEE_NOT_ENABLE":       400,
+	"S105_EMPLOYEE_NOT_CREATOR":      400,
+	"S105_EMPLOYEE_DISABLE":          400,
+	"S105_EMPLOYEE_NO_PERMISSION":    400,
+	"S105_NOT_ORG_EMPLOYEE":          400,
+	"S105_INVALID_INVITE_RECORD":     400,
+	"S105_INVITATION_HAS_EXPIRED":    400,
+	"S105_INVALID_INVITE_STATUS":     400,
+	"S105_NOT_INVITED_USER":          400,
+	"S105_INCORRECT_INVITE_TYPE":     400,
+	"S105_NOT_ALLOWED_SET_STATUS":    400,
+	"S105_ORG_NOT_ENABLE":            400,
+	"S105_NOT_ALLOWED_SET_ROLE":      400,
+	"S105_CANNOT_MODIFY_SELF":        400,
+	"S105_ALREADY_HAS_PERSONAL_ORG":  400,
+	"S105_USER_BELONG_ORG_MAX_COUNT": 400,
+	"S105_USER_CREATE_ORG_MAX_COUNT": 400,
 }
 
 func (x ERROR) HTTPCode() int {
@@ -222,5 +224,19 @@ func DefaultErrorS105CannotModifySelf() *errors.Error {
 func DefaultErrorS105AlreadyHasPersonalOrg() *errors.Error {
 	e := errors.New(400, ERROR_S105_ALREADY_HAS_PERSONAL_ORG.String(), "已有个人版组织")
 	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_ALREADY_HAS_PERSONAL_ORG.Number()))}
+	return e
+}
+
+// 已达创建或加入组织限制
+func DefaultErrorS105UserBelongOrgMaxCount() *errors.Error {
+	e := errors.New(400, ERROR_S105_USER_BELONG_ORG_MAX_COUNT.String(), "已达创建或加入组织限制")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_USER_BELONG_ORG_MAX_COUNT.Number()))}
+	return e
+}
+
+// 已达创建组织限制
+func DefaultErrorS105UserCreateOrgMaxCount() *errors.Error {
+	e := errors.New(400, ERROR_S105_USER_CREATE_ORG_MAX_COUNT.String(), "已达创建组织限制")
+	e.Metadata = map[string]string{"reason": strconv.Itoa(int(ERROR_S105_USER_CREATE_ORG_MAX_COUNT.Number()))}
 	return e
 }
