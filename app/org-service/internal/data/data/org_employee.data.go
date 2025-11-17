@@ -271,9 +271,9 @@ func (s *orgEmployeeRepo) QueryOneEmployee(ctx context.Context, param *po.QueryE
 		Table(s.OrgEmployeeSchema.TableName()).
 		Where(schemas.FieldOrgId+" = ?", param.OrgID).
 		Where(schemas.FieldUserId+" = ?", param.UserID).
-		Where(schemas.FieldDeletedTime+" = ?", 0).
-		Where(schemas.FieldEmployeeStatus+" = ?", enumv1.OrgEmployeeStatusEnum_ENABLE)
+		Where(schemas.FieldDeletedTime+" = ?", 0)
 
+	dbConn = po.WhereDefaultOrgEmployeeStatus(dbConn)
 	err = dbConn.First(dataModel).Error
 	if err != nil {
 		if gormpkg.IsErrRecordNotFound(err) {

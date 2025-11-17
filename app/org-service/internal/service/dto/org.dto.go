@@ -377,3 +377,14 @@ func (s *orgDto) ToPbSetEmployeeStatusRespData(dataModel *po.OrgEmployee) *resou
 	}
 	return res
 }
+
+func (s *orgDto) ToBoGetUserLastOrgParam(req *resourcev1.GetUserLastOrgReq) *bo.GetUserLastOrgParam {
+	res := &bo.GetUserLastOrgParam{
+		UserID:     req.UserId,
+		UserName:   req.UserName,
+		UserAvatar: req.UserAvatar,
+
+		CreatePersonalOrgIfNotExist: req.CreatePersonalOrgIfNotExist,
+	}
+	return res
+}

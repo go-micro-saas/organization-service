@@ -110,5 +110,12 @@ func (s *orgV1Service) GetOrgList(ctx context.Context, req *resourcev1.GetOrgLis
 }
 
 func (s *orgV1Service) GetUserLastOrg(ctx context.Context, req *resourcev1.GetUserLastOrgReq) (*resourcev1.GetUserLastOrgResp, error) {
-	return s.UnimplementedSrvOrgV1Server.GetUserLastOrg(ctx, req)
+	param := dto.OrgDto.ToBoGetUserLastOrgParam(req)
+	reply, err := s.orgBiz.GetUserLastOrg(ctx, param)
+	if err != nil {
+		return nil, err
+	}
+	return &resourcev1.GetUserLastOrgResp{
+		Data: dto.OrgDto.ToPbCreateOrgRespData(reply),
+	}, nil
 }

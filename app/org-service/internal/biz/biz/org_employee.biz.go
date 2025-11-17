@@ -364,14 +364,14 @@ func (s *orgBiz) GetUserLastOrg(ctx context.Context, param *bo.GetUserLastOrgPar
 		if err != nil {
 			return nil, err
 		}
-		_, isNotFound, err := s.employeeData.QueryOneEmployee(ctx, &po.QueryEmployeeParam{
+		employeeModel, isNotFound, err := s.employeeData.QueryOneEmployee(ctx, &po.QueryEmployeeParam{
 			UserID: param.UserID,
 			OrgID:  lastOrgModel.OrgId,
 		})
 		if err != nil {
 			return nil, err
 		}
-		if isNotFound {
+		if isNotFound || !employeeModel.IsValid() {
 			goto getLastOrg
 		}
 		res.SetByOrg(lastOrgModel)
@@ -394,6 +394,7 @@ getLastOrg:
 	// update last org
 	if orgRecordModel.LastOrgId != lastOrgModel.OrgId {
 		orgRecordModel.LastOrgId = lastOrgModel.OrgId
+		orgRecordModel.UpdatedTime = time.Now()
 		err = s.orgRecordForUserData.UpdateLastOrgId(ctx, orgRecordModel)
 		if err != nil {
 			return nil, err
