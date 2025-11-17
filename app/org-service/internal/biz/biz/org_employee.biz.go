@@ -122,7 +122,7 @@ func (s *orgBiz) canInviteEmployee(ctx context.Context, operatorUid, orgID uint6
 		OrgID:  orgID,
 		UserID: operatorUid,
 	}
-	employee, isNotFound, err := s.employeeData.QueryOneByUserID(ctx, queryParam)
+	employee, isNotFound, err := s.employeeData.QueryOneEmployee(ctx, queryParam)
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +154,7 @@ func (s *orgBiz) GetUserOrgEmployeeInfo(ctx context.Context, userID, orgID uint6
 		OrgID:  orgID,
 		UserID: userID,
 	}
-	dataModel, isNotFound, err := s.employeeData.QueryOneByUserID(ctx, queryParam)
+	dataModel, isNotFound, err := s.employeeData.QueryOneEmployee(ctx, queryParam)
 	if err != nil {
 		return nil, err
 	}
@@ -329,4 +329,76 @@ func (s *orgBiz) SetEmployeeRole(ctx context.Context, param *bo.SetEmployeeRoleP
 		return nil, err
 	}
 	return employee, nil
+}
+
+func (s *orgBiz) GetUserLastOrg(ctx context.Context, param *bo.GetUserLastOrgParam) (*bo.CreateOrgReply, error) {
+	var (
+		orgRecordModel = po.DefaultOrgRecordForUser(param.UserID)
+		err            error
+	)
+	orgRecordModel, err = s.orgRecordForUserData.FirstOrCreate(ctx, orgRecordModel)
+	if err != nil {
+		return nil, err
+	}
+
+	// personal org
+	if orgRecordModel.PersonalOrgId < 1 && param.CreatePersonalOrgIfNotExist {
+		createParam := param.ToCreatePersonOrgParam()
+		orgModel, err := s.CreateOrg(ctx, createParam)
+		if err != nil {
+			return nil, err
+		}
+		orgRecordModel.PersonalOrgId = orgModel.OrgId
+		orgRecordModel.UpdatedTime = time.Now()
+		err = s.orgRecordForUserData.UpdatePersonalOrgId(ctx, orgRecordModel)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	var (
+		res = &bo.CreateOrgReply{}
+	)
+	if orgRecordModel.LastOrgId > 0 {
+		lastOrgModel, err := s.GetOrgInfo(ctx, orgRecordModel.LastOrgId)
+		if err != nil {
+			return nil, err
+		}
+		_, isNotFound, err := s.employeeData.QueryOneEmployee(ctx, &po.QueryEmployeeParam{
+			UserID: param.UserID,
+			OrgID:  lastOrgModel.OrgId,
+		})
+		if err != nil {
+			return nil, err
+		}
+		if isNotFound {
+			goto getLastOrg
+		}
+		res.SetByOrg(lastOrgModel)
+		return res, nil
+	}
+
+getLastOrg:
+	employeeModel, isNotFound, err := s.employeeData.QueryLastByUserID(ctx, param.UserID)
+	if err != nil {
+		return nil, err
+	}
+	if isNotFound {
+		return nil, errorv1.DefaultErrorS105OrgNotFound()
+	}
+	lastOrgModel, err := s.GetOrgInfo(ctx, employeeModel.OrgId)
+	if err != nil {
+		return nil, err
+	}
+
+	// update last org
+	if orgRecordModel.LastOrgId != lastOrgModel.OrgId {
+		orgRecordModel.LastOrgId = lastOrgModel.OrgId
+		err = s.orgRecordForUserData.UpdateLastOrgId(ctx, orgRecordModel)
+		if err != nil {
+			return nil, err
+		}
+	}
+	res.SetByOrg(lastOrgModel)
+	return res, nil
 }

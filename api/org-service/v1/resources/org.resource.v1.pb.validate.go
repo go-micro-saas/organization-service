@@ -971,6 +971,8 @@ func (m *CreateOrgRespData) validate(all bool) error {
 
 	// no validation rules for OrgType
 
+	// no validation rules for OrgStatus
+
 	if len(errors) > 0 {
 		return CreateOrgRespDataMultiError(errors)
 	}
@@ -6523,3 +6525,272 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SetOrgStatusRespDataValidationError{}
+
+// Validate checks the field values on GetUserLastOrgReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetUserLastOrgReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUserLastOrgReq with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUserLastOrgReqMultiError, or nil if none found.
+func (m *GetUserLastOrgReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUserLastOrgReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetUserId() <= 0 {
+		err := GetUserLastOrgReqValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetUserName()) < 1 {
+		err := GetUserLastOrgReqValidationError{
+			field:  "UserName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUserAvatar() != "" {
+
+	}
+
+	// no validation rules for CreatePersonalOrgIfNotExist
+
+	if len(errors) > 0 {
+		return GetUserLastOrgReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUserLastOrgReqMultiError is an error wrapping multiple validation errors
+// returned by GetUserLastOrgReq.ValidateAll() if the designated constraints
+// aren't met.
+type GetUserLastOrgReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUserLastOrgReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUserLastOrgReqMultiError) AllErrors() []error { return m }
+
+// GetUserLastOrgReqValidationError is the validation error returned by
+// GetUserLastOrgReq.Validate if the designated constraints aren't met.
+type GetUserLastOrgReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserLastOrgReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserLastOrgReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserLastOrgReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserLastOrgReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserLastOrgReqValidationError) ErrorName() string {
+	return "GetUserLastOrgReqValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUserLastOrgReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserLastOrgReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserLastOrgReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserLastOrgReqValidationError{}
+
+// Validate checks the field values on GetUserLastOrgResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetUserLastOrgResp) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUserLastOrgResp with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUserLastOrgRespMultiError, or nil if none found.
+func (m *GetUserLastOrgResp) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUserLastOrgResp) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Code
+
+	// no validation rules for Reason
+
+	// no validation rules for Message
+
+	// no validation rules for Metadata
+
+	if all {
+		switch v := interface{}(m.GetData()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetUserLastOrgRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetUserLastOrgRespValidationError{
+					field:  "Data",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetData()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetUserLastOrgRespValidationError{
+				field:  "Data",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetUserLastOrgRespMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUserLastOrgRespMultiError is an error wrapping multiple validation errors
+// returned by GetUserLastOrgResp.ValidateAll() if the designated constraints
+// aren't met.
+type GetUserLastOrgRespMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUserLastOrgRespMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUserLastOrgRespMultiError) AllErrors() []error { return m }
+
+// GetUserLastOrgRespValidationError is the validation error returned by
+// GetUserLastOrgResp.Validate if the designated constraints aren't met.
+type GetUserLastOrgRespValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserLastOrgRespValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserLastOrgRespValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserLastOrgRespValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserLastOrgRespValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserLastOrgRespValidationError) ErrorName() string {
+	return "GetUserLastOrgRespValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUserLastOrgRespValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserLastOrgResp.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserLastOrgRespValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserLastOrgRespValidationError{}

@@ -42,6 +42,7 @@ const (
 	SrvOrgV1_GetOrgList_FullMethodName                    = "/saas.api.org.servicev1.SrvOrgV1/GetOrgList"
 	SrvOrgV1_GetOrgEmployeeList_FullMethodName            = "/saas.api.org.servicev1.SrvOrgV1/GetOrgEmployeeList"
 	SrvOrgV1_GetOrgInviteRecordList_FullMethodName        = "/saas.api.org.servicev1.SrvOrgV1/GetOrgInviteRecordList"
+	SrvOrgV1_GetUserLastOrg_FullMethodName                = "/saas.api.org.servicev1.SrvOrgV1/GetUserLastOrg"
 )
 
 // SrvOrgV1Client is the client API for SrvOrgV1 service.
@@ -94,6 +95,8 @@ type SrvOrgV1Client interface {
 	GetOrgEmployeeList(ctx context.Context, in *resources.GetOrgEmployeeListReq, opts ...grpc.CallOption) (*resources.GetOrgEmployeeListResp, error)
 	// 组织-获取组织邀请记录列表
 	GetOrgInviteRecordList(ctx context.Context, in *resources.GetOrgInviteRecordListReq, opts ...grpc.CallOption) (*resources.GetOrgInviteRecordListResp, error)
+	// 组织-获取用户最后使用的组织
+	GetUserLastOrg(ctx context.Context, in *resources.GetUserLastOrgReq, opts ...grpc.CallOption) (*resources.GetUserLastOrgResp, error)
 }
 
 type srvOrgV1Client struct {
@@ -324,6 +327,16 @@ func (c *srvOrgV1Client) GetOrgInviteRecordList(ctx context.Context, in *resourc
 	return out, nil
 }
 
+func (c *srvOrgV1Client) GetUserLastOrg(ctx context.Context, in *resources.GetUserLastOrgReq, opts ...grpc.CallOption) (*resources.GetUserLastOrgResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(resources.GetUserLastOrgResp)
+	err := c.cc.Invoke(ctx, SrvOrgV1_GetUserLastOrg_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SrvOrgV1Server is the server API for SrvOrgV1 service.
 // All implementations must embed UnimplementedSrvOrgV1Server
 // for forward compatibility.
@@ -374,6 +387,8 @@ type SrvOrgV1Server interface {
 	GetOrgEmployeeList(context.Context, *resources.GetOrgEmployeeListReq) (*resources.GetOrgEmployeeListResp, error)
 	// 组织-获取组织邀请记录列表
 	GetOrgInviteRecordList(context.Context, *resources.GetOrgInviteRecordListReq) (*resources.GetOrgInviteRecordListResp, error)
+	// 组织-获取用户最后使用的组织
+	GetUserLastOrg(context.Context, *resources.GetUserLastOrgReq) (*resources.GetUserLastOrgResp, error)
 	mustEmbedUnimplementedSrvOrgV1Server()
 }
 
@@ -449,6 +464,9 @@ func (UnimplementedSrvOrgV1Server) GetOrgEmployeeList(context.Context, *resource
 }
 func (UnimplementedSrvOrgV1Server) GetOrgInviteRecordList(context.Context, *resources.GetOrgInviteRecordListReq) (*resources.GetOrgInviteRecordListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrgInviteRecordList not implemented")
+}
+func (UnimplementedSrvOrgV1Server) GetUserLastOrg(context.Context, *resources.GetUserLastOrgReq) (*resources.GetUserLastOrgResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserLastOrg not implemented")
 }
 func (UnimplementedSrvOrgV1Server) mustEmbedUnimplementedSrvOrgV1Server() {}
 func (UnimplementedSrvOrgV1Server) testEmbeddedByValue()                  {}
@@ -867,6 +885,24 @@ func _SrvOrgV1_GetOrgInviteRecordList_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SrvOrgV1_GetUserLastOrg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(resources.GetUserLastOrgReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SrvOrgV1Server).GetUserLastOrg(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SrvOrgV1_GetUserLastOrg_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SrvOrgV1Server).GetUserLastOrg(ctx, req.(*resources.GetUserLastOrgReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SrvOrgV1_ServiceDesc is the grpc.ServiceDesc for SrvOrgV1 service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -961,6 +997,10 @@ var SrvOrgV1_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrgInviteRecordList",
 			Handler:    _SrvOrgV1_GetOrgInviteRecordList_Handler,
+		},
+		{
+			MethodName: "GetUserLastOrg",
+			Handler:    _SrvOrgV1_GetUserLastOrg_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

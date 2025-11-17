@@ -5,6 +5,7 @@ package data
 import (
 	"bytes"
 	context "context"
+	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	datarepos "github.com/go-micro-saas/organization-service/app/org-service/internal/data/repo"
 	schemas "github.com/go-micro-saas/organization-service/app/org-service/internal/data/schema/org_employee"
@@ -264,15 +265,38 @@ func (s *orgEmployeeRepo) QueryOneByIdWithDBConn(ctx context.Context, dbConn *go
 	return s.queryOneById(ctx, dbConn, id)
 }
 
-func (s *orgEmployeeRepo) QueryOneByUserID(ctx context.Context, param *po.QueryEmployeeParam) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
+func (s *orgEmployeeRepo) QueryOneEmployee(ctx context.Context, param *po.QueryEmployeeParam) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
 	dataModel = new(po.OrgEmployee)
 	dbConn := s.dbConn.WithContext(ctx).
 		Table(s.OrgEmployeeSchema.TableName()).
 		Where(schemas.FieldOrgId+" = ?", param.OrgID).
 		Where(schemas.FieldUserId+" = ?", param.UserID).
-		Where(schemas.FieldDeletedTime+" =?", 0)
+		Where(schemas.FieldDeletedTime+" = ?", 0).
+		Where(schemas.FieldEmployeeStatus+" = ?", enumv1.OrgEmployeeStatusEnum_ENABLE)
 
-	dbConn = po.WhereDefaultOrgEmployeeStatus(dbConn)
+	err = dbConn.First(dataModel).Error
+	if err != nil {
+		if gormpkg.IsErrRecordNotFound(err) {
+			err = nil
+			isNotFound = true
+		} else {
+			e := errorpkg.ErrorInternalServer("")
+			err = errorpkg.Wrap(e, err)
+		}
+		return
+	}
+	return
+}
+
+func (s *orgEmployeeRepo) QueryLastByUserID(ctx context.Context, userID uint64) (dataModel *po.OrgEmployee, isNotFound bool, err error) {
+	dataModel = new(po.OrgEmployee)
+	dbConn := s.dbConn.WithContext(ctx).
+		Table(s.OrgEmployeeSchema.TableName()).
+		Where(schemas.FieldUserId+" = ?", userID).
+		Where(schemas.FieldDeletedTime+" = ?", 0).
+		Where(schemas.FieldEmployeeStatus+" = ?", enumv1.OrgEmployeeStatusEnum_ENABLE).
+		Order(schemas.FieldCreatedTime + " DESC")
+
 	err = dbConn.First(dataModel).Error
 	if err != nil {
 		if gormpkg.IsErrRecordNotFound(err) {

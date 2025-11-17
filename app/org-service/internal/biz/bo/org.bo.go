@@ -35,6 +35,7 @@ type CreateOrgReply struct {
 	OrgName   string
 	OrgAvatar string
 	OrgType   enumv1.OrgTypeEnum_OrgType
+	OrgStatus enumv1.OrgStatusEnum_OrgStatus
 }
 
 func (s *CreateOrgReply) SetByOrg(orgModel *po.Org) {
@@ -42,6 +43,7 @@ func (s *CreateOrgReply) SetByOrg(orgModel *po.Org) {
 	s.OrgName = orgModel.OrgName
 	s.OrgAvatar = orgModel.OrgAvatar
 	s.OrgType = orgModel.OrgType
+	s.OrgStatus = orgModel.OrgStatus
 }
 
 type AddEmployeeParam struct {
@@ -201,4 +203,30 @@ func (s *SetEmployeeStatusParam) CanSetEmployeeStatus() bool {
 	// DELETED 请使用删除组织接口，转移组织资源
 	return s.EmployeeStatus == enumv1.OrgEmployeeStatusEnum_ENABLE ||
 		s.EmployeeStatus == enumv1.OrgEmployeeStatusEnum_DISABLE
+}
+
+type GetUserLastOrgParam struct {
+	UserID     uint64
+	UserName   string
+	UserAvatar string
+
+	CreatePersonalOrgIfNotExist bool
+}
+
+func (param *GetUserLastOrgParam) ToCreatePersonOrgParam() *CreateOrgParam {
+	res := param.ToCreateOrgParam()
+	res.OrgType = enumv1.OrgTypeEnum_PERSON
+	return res
+}
+
+func (param *GetUserLastOrgParam) ToCreateOrgParam() *CreateOrgParam {
+	return &CreateOrgParam{
+		CreatorID:          param.UserID,
+		CreatorName:        param.UserName,
+		CreatorAvatar:      param.UserAvatar,
+		OrgName:            param.UserName,
+		OrgAvatar:          param.UserAvatar,
+		OrgType:            enumv1.OrgTypeEnum_STANDARD,
+		SkipCreateEmployee: false,
+	}
 }

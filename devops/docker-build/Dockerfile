@@ -77,12 +77,11 @@ WORKDIR ${WORK_DIR}
 # cat /etc/os-release && echo -e "\n\n\n" && cat /etc/apt/sources.list.d/debian.sources
 #RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends -y tzdata curl less && \
-    ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
-    echo ${TZ} > /etc/timezone && \
-    apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		ca-certificates tzdata net-tools less netbase telnet curl \
+        && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime \
+        && echo ${TZ} > /etc/timezone \
+        && apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder ${WORK_DIR}/bin/org-service ./org-service
 COPY --from=builder ${WORK_DIR}/bin/database-migration ./database-migration

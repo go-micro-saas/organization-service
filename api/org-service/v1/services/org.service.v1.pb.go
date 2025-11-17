@@ -37,7 +37,7 @@ var file_api_org_service_v1_services_org_service_v1_proto_rawDesc = []byte{
 	0x69, 0x2f, 0x6f, 0x72, 0x67, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x31,
 	0x2f, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0x5f, 0x65,
 	0x6d, 0x70, 0x6c, 0x6f, 0x79, 0x65, 0x65, 0x2e, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65,
-	0x2e, 0x76, 0x31, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xa2, 0x1b, 0x0a, 0x08, 0x53, 0x72,
+	0x2e, 0x76, 0x31, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x32, 0xb5, 0x1c, 0x0a, 0x08, 0x53, 0x72,
 	0x76, 0x4f, 0x72, 0x67, 0x56, 0x31, 0x12, 0x65, 0x0a, 0x04, 0x50, 0x69, 0x6e, 0x67, 0x12, 0x20,
 	0x2e, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x72, 0x65,
 	0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x2e, 0x50, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71,
@@ -255,16 +255,25 @@ var file_api_org_service_v1_services_org_service_v1_proto_rawDesc = []byte{
 	0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x22, 0x2e,
 	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x28, 0x12, 0x26, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x2f,
 	0x6f, 0x72, 0x67, 0x2f, 0x67, 0x65, 0x74, 0x2d, 0x6f, 0x72, 0x67, 0x2d, 0x69, 0x6e, 0x76, 0x69,
-	0x74, 0x65, 0x2d, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x2d, 0x6c, 0x69, 0x73, 0x74, 0x42, 0x84,
-	0x01, 0x0a, 0x16, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72, 0x67, 0x2e,
-	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x76, 0x31, 0x42, 0x13, 0x53, 0x61, 0x61, 0x73, 0x41,
-	0x70, 0x69, 0x4f, 0x72, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x56, 0x31, 0x50, 0x01,
-	0x5a, 0x53, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x6f, 0x2d,
-	0x6d, 0x69, 0x63, 0x72, 0x6f, 0x2d, 0x73, 0x61, 0x61, 0x73, 0x2f, 0x6f, 0x72, 0x67, 0x61, 0x6e,
-	0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f,
-	0x61, 0x70, 0x69, 0x2f, 0x6f, 0x72, 0x67, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f,
-	0x76, 0x31, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x3b, 0x73, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x65, 0x2d, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x2d, 0x6c, 0x69, 0x73, 0x74, 0x12, 0x90,
+	0x01, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x4c, 0x61, 0x73, 0x74, 0x4f, 0x72,
+	0x67, 0x12, 0x2a, 0x2e, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72, 0x67,
+	0x2e, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x55,
+	0x73, 0x65, 0x72, 0x4c, 0x61, 0x73, 0x74, 0x4f, 0x72, 0x67, 0x52, 0x65, 0x71, 0x1a, 0x2b, 0x2e,
+	0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f, 0x72, 0x67, 0x2e, 0x72, 0x65, 0x73,
+	0x6f, 0x75, 0x72, 0x63, 0x65, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x4c,
+	0x61, 0x73, 0x74, 0x4f, 0x72, 0x67, 0x52, 0x65, 0x73, 0x70, 0x22, 0x25, 0x82, 0xd3, 0xe4, 0x93,
+	0x02, 0x1f, 0x12, 0x1d, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x76, 0x31, 0x2f, 0x6f, 0x72, 0x67, 0x2f,
+	0x67, 0x65, 0x74, 0x2d, 0x75, 0x73, 0x65, 0x72, 0x2d, 0x6c, 0x61, 0x73, 0x74, 0x2d, 0x6f, 0x72,
+	0x67, 0x42, 0x84, 0x01, 0x0a, 0x16, 0x73, 0x61, 0x61, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x6f,
+	0x72, 0x67, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x76, 0x31, 0x42, 0x13, 0x53, 0x61,
+	0x61, 0x73, 0x41, 0x70, 0x69, 0x4f, 0x72, 0x67, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x56,
+	0x31, 0x50, 0x01, 0x5a, 0x53, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x67, 0x6f, 0x2d, 0x6d, 0x69, 0x63, 0x72, 0x6f, 0x2d, 0x73, 0x61, 0x61, 0x73, 0x2f, 0x6f, 0x72,
+	0x67, 0x61, 0x6e, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6f, 0x72, 0x67, 0x2d, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x3b, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_api_org_service_v1_services_org_service_v1_proto_goTypes = []any{
@@ -290,26 +299,28 @@ var file_api_org_service_v1_services_org_service_v1_proto_goTypes = []any{
 	(*resources.GetOrgListReq)(nil),                     // 19: saas.api.org.resourcev1.GetOrgListReq
 	(*resources.GetOrgEmployeeListReq)(nil),             // 20: saas.api.org.resourcev1.GetOrgEmployeeListReq
 	(*resources.GetOrgInviteRecordListReq)(nil),         // 21: saas.api.org.resourcev1.GetOrgInviteRecordListReq
-	(*resources.PingResp)(nil),                          // 22: saas.api.org.resourcev1.PingResp
-	(*resources.CreateOrgResp)(nil),                     // 23: saas.api.org.resourcev1.CreateOrgResp
-	(*resources.AddEmployeeResp)(nil),                   // 24: saas.api.org.resourcev1.AddEmployeeResp
-	(*resources.CreateInviteRecordForLinkResp)(nil),     // 25: saas.api.org.resourcev1.CreateInviteRecordForLinkResp
-	(*resources.CreateInviteRecordForEmployeeResp)(nil), // 26: saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp
-	(*resources.JoinByInviteLinkResp)(nil),              // 27: saas.api.org.resourcev1.JoinByInviteLinkResp
-	(*resources.AgreeOrRefuseInviteResp)(nil),           // 28: saas.api.org.resourcev1.AgreeOrRefuseInviteResp
-	(*resources.SetOrgStatusResp)(nil),                  // 29: saas.api.org.resourcev1.SetOrgStatusResp
-	(*resources.RemoveEmployeeResp)(nil),                // 30: saas.api.org.resourcev1.RemoveEmployeeResp
-	(*resources.SetEmployeeRoleResp)(nil),               // 31: saas.api.org.resourcev1.SetEmployeeRoleResp
-	(*resources.SetEmployeeStatusResp)(nil),             // 32: saas.api.org.resourcev1.SetEmployeeStatusResp
-	(*resources.GetOrgInfoResp)(nil),                    // 33: saas.api.org.resourcev1.GetOrgInfoResp
-	(*resources.GetOrgInfoListResp)(nil),                // 34: saas.api.org.resourcev1.GetOrgInfoListResp
-	(*resources.GetOrgEmployeeInfoResp)(nil),            // 35: saas.api.org.resourcev1.GetOrgEmployeeInfoResp
-	(*resources.GetOrgEmployeeInfoListResp)(nil),        // 36: saas.api.org.resourcev1.GetOrgEmployeeInfoListResp
-	(*resources.GetOrgInviteRecordInfoResp)(nil),        // 37: saas.api.org.resourcev1.GetOrgInviteRecordInfoResp
-	(*resources.GetOrgInviteRecordInfoListResp)(nil),    // 38: saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp
-	(*resources.GetOrgListResp)(nil),                    // 39: saas.api.org.resourcev1.GetOrgListResp
-	(*resources.GetOrgEmployeeListResp)(nil),            // 40: saas.api.org.resourcev1.GetOrgEmployeeListResp
-	(*resources.GetOrgInviteRecordListResp)(nil),        // 41: saas.api.org.resourcev1.GetOrgInviteRecordListResp
+	(*resources.GetUserLastOrgReq)(nil),                 // 22: saas.api.org.resourcev1.GetUserLastOrgReq
+	(*resources.PingResp)(nil),                          // 23: saas.api.org.resourcev1.PingResp
+	(*resources.CreateOrgResp)(nil),                     // 24: saas.api.org.resourcev1.CreateOrgResp
+	(*resources.AddEmployeeResp)(nil),                   // 25: saas.api.org.resourcev1.AddEmployeeResp
+	(*resources.CreateInviteRecordForLinkResp)(nil),     // 26: saas.api.org.resourcev1.CreateInviteRecordForLinkResp
+	(*resources.CreateInviteRecordForEmployeeResp)(nil), // 27: saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp
+	(*resources.JoinByInviteLinkResp)(nil),              // 28: saas.api.org.resourcev1.JoinByInviteLinkResp
+	(*resources.AgreeOrRefuseInviteResp)(nil),           // 29: saas.api.org.resourcev1.AgreeOrRefuseInviteResp
+	(*resources.SetOrgStatusResp)(nil),                  // 30: saas.api.org.resourcev1.SetOrgStatusResp
+	(*resources.RemoveEmployeeResp)(nil),                // 31: saas.api.org.resourcev1.RemoveEmployeeResp
+	(*resources.SetEmployeeRoleResp)(nil),               // 32: saas.api.org.resourcev1.SetEmployeeRoleResp
+	(*resources.SetEmployeeStatusResp)(nil),             // 33: saas.api.org.resourcev1.SetEmployeeStatusResp
+	(*resources.GetOrgInfoResp)(nil),                    // 34: saas.api.org.resourcev1.GetOrgInfoResp
+	(*resources.GetOrgInfoListResp)(nil),                // 35: saas.api.org.resourcev1.GetOrgInfoListResp
+	(*resources.GetOrgEmployeeInfoResp)(nil),            // 36: saas.api.org.resourcev1.GetOrgEmployeeInfoResp
+	(*resources.GetOrgEmployeeInfoListResp)(nil),        // 37: saas.api.org.resourcev1.GetOrgEmployeeInfoListResp
+	(*resources.GetOrgInviteRecordInfoResp)(nil),        // 38: saas.api.org.resourcev1.GetOrgInviteRecordInfoResp
+	(*resources.GetOrgInviteRecordInfoListResp)(nil),    // 39: saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp
+	(*resources.GetOrgListResp)(nil),                    // 40: saas.api.org.resourcev1.GetOrgListResp
+	(*resources.GetOrgEmployeeListResp)(nil),            // 41: saas.api.org.resourcev1.GetOrgEmployeeListResp
+	(*resources.GetOrgInviteRecordListResp)(nil),        // 42: saas.api.org.resourcev1.GetOrgInviteRecordListResp
+	(*resources.GetUserLastOrgResp)(nil),                // 43: saas.api.org.resourcev1.GetUserLastOrgResp
 }
 var file_api_org_service_v1_services_org_service_v1_proto_depIdxs = []int32{
 	0,  // 0: saas.api.org.servicev1.SrvOrgV1.Ping:input_type -> saas.api.org.resourcev1.PingReq
@@ -334,30 +345,32 @@ var file_api_org_service_v1_services_org_service_v1_proto_depIdxs = []int32{
 	19, // 19: saas.api.org.servicev1.SrvOrgV1.GetOrgList:input_type -> saas.api.org.resourcev1.GetOrgListReq
 	20, // 20: saas.api.org.servicev1.SrvOrgV1.GetOrgEmployeeList:input_type -> saas.api.org.resourcev1.GetOrgEmployeeListReq
 	21, // 21: saas.api.org.servicev1.SrvOrgV1.GetOrgInviteRecordList:input_type -> saas.api.org.resourcev1.GetOrgInviteRecordListReq
-	22, // 22: saas.api.org.servicev1.SrvOrgV1.Ping:output_type -> saas.api.org.resourcev1.PingResp
-	23, // 23: saas.api.org.servicev1.SrvOrgV1.CreateOrg:output_type -> saas.api.org.resourcev1.CreateOrgResp
-	23, // 24: saas.api.org.servicev1.SrvOrgV1.OnlyCreateOrg:output_type -> saas.api.org.resourcev1.CreateOrgResp
-	24, // 25: saas.api.org.servicev1.SrvOrgV1.AddEmployee:output_type -> saas.api.org.resourcev1.AddEmployeeResp
-	25, // 26: saas.api.org.servicev1.SrvOrgV1.CreateInviteRecordForLink:output_type -> saas.api.org.resourcev1.CreateInviteRecordForLinkResp
-	26, // 27: saas.api.org.servicev1.SrvOrgV1.CreateInviteRecordForEmployee:output_type -> saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp
-	27, // 28: saas.api.org.servicev1.SrvOrgV1.JoinByInviteLink:output_type -> saas.api.org.resourcev1.JoinByInviteLinkResp
-	28, // 29: saas.api.org.servicev1.SrvOrgV1.AgreeOrRefuseInvite:output_type -> saas.api.org.resourcev1.AgreeOrRefuseInviteResp
-	29, // 30: saas.api.org.servicev1.SrvOrgV1.SetOrgStatus:output_type -> saas.api.org.resourcev1.SetOrgStatusResp
-	30, // 31: saas.api.org.servicev1.SrvOrgV1.RemoveEmployee:output_type -> saas.api.org.resourcev1.RemoveEmployeeResp
-	31, // 32: saas.api.org.servicev1.SrvOrgV1.SetEmployeeRole:output_type -> saas.api.org.resourcev1.SetEmployeeRoleResp
-	32, // 33: saas.api.org.servicev1.SrvOrgV1.SetEmployeeStatus:output_type -> saas.api.org.resourcev1.SetEmployeeStatusResp
-	33, // 34: saas.api.org.servicev1.SrvOrgV1.GetOrgInfo:output_type -> saas.api.org.resourcev1.GetOrgInfoResp
-	34, // 35: saas.api.org.servicev1.SrvOrgV1.GetOrgInfoList:output_type -> saas.api.org.resourcev1.GetOrgInfoListResp
-	35, // 36: saas.api.org.servicev1.SrvOrgV1.GetOrgEmployeeInfo:output_type -> saas.api.org.resourcev1.GetOrgEmployeeInfoResp
-	36, // 37: saas.api.org.servicev1.SrvOrgV1.GetOrgEmployeeInfoList:output_type -> saas.api.org.resourcev1.GetOrgEmployeeInfoListResp
-	35, // 38: saas.api.org.servicev1.SrvOrgV1.GetUserOrgEmployeeInfo:output_type -> saas.api.org.resourcev1.GetOrgEmployeeInfoResp
-	37, // 39: saas.api.org.servicev1.SrvOrgV1.GetOrgInviteRecordInfo:output_type -> saas.api.org.resourcev1.GetOrgInviteRecordInfoResp
-	38, // 40: saas.api.org.servicev1.SrvOrgV1.GetOrgInviteRecordInfoList:output_type -> saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp
-	39, // 41: saas.api.org.servicev1.SrvOrgV1.GetOrgList:output_type -> saas.api.org.resourcev1.GetOrgListResp
-	40, // 42: saas.api.org.servicev1.SrvOrgV1.GetOrgEmployeeList:output_type -> saas.api.org.resourcev1.GetOrgEmployeeListResp
-	41, // 43: saas.api.org.servicev1.SrvOrgV1.GetOrgInviteRecordList:output_type -> saas.api.org.resourcev1.GetOrgInviteRecordListResp
-	22, // [22:44] is the sub-list for method output_type
-	0,  // [0:22] is the sub-list for method input_type
+	22, // 22: saas.api.org.servicev1.SrvOrgV1.GetUserLastOrg:input_type -> saas.api.org.resourcev1.GetUserLastOrgReq
+	23, // 23: saas.api.org.servicev1.SrvOrgV1.Ping:output_type -> saas.api.org.resourcev1.PingResp
+	24, // 24: saas.api.org.servicev1.SrvOrgV1.CreateOrg:output_type -> saas.api.org.resourcev1.CreateOrgResp
+	24, // 25: saas.api.org.servicev1.SrvOrgV1.OnlyCreateOrg:output_type -> saas.api.org.resourcev1.CreateOrgResp
+	25, // 26: saas.api.org.servicev1.SrvOrgV1.AddEmployee:output_type -> saas.api.org.resourcev1.AddEmployeeResp
+	26, // 27: saas.api.org.servicev1.SrvOrgV1.CreateInviteRecordForLink:output_type -> saas.api.org.resourcev1.CreateInviteRecordForLinkResp
+	27, // 28: saas.api.org.servicev1.SrvOrgV1.CreateInviteRecordForEmployee:output_type -> saas.api.org.resourcev1.CreateInviteRecordForEmployeeResp
+	28, // 29: saas.api.org.servicev1.SrvOrgV1.JoinByInviteLink:output_type -> saas.api.org.resourcev1.JoinByInviteLinkResp
+	29, // 30: saas.api.org.servicev1.SrvOrgV1.AgreeOrRefuseInvite:output_type -> saas.api.org.resourcev1.AgreeOrRefuseInviteResp
+	30, // 31: saas.api.org.servicev1.SrvOrgV1.SetOrgStatus:output_type -> saas.api.org.resourcev1.SetOrgStatusResp
+	31, // 32: saas.api.org.servicev1.SrvOrgV1.RemoveEmployee:output_type -> saas.api.org.resourcev1.RemoveEmployeeResp
+	32, // 33: saas.api.org.servicev1.SrvOrgV1.SetEmployeeRole:output_type -> saas.api.org.resourcev1.SetEmployeeRoleResp
+	33, // 34: saas.api.org.servicev1.SrvOrgV1.SetEmployeeStatus:output_type -> saas.api.org.resourcev1.SetEmployeeStatusResp
+	34, // 35: saas.api.org.servicev1.SrvOrgV1.GetOrgInfo:output_type -> saas.api.org.resourcev1.GetOrgInfoResp
+	35, // 36: saas.api.org.servicev1.SrvOrgV1.GetOrgInfoList:output_type -> saas.api.org.resourcev1.GetOrgInfoListResp
+	36, // 37: saas.api.org.servicev1.SrvOrgV1.GetOrgEmployeeInfo:output_type -> saas.api.org.resourcev1.GetOrgEmployeeInfoResp
+	37, // 38: saas.api.org.servicev1.SrvOrgV1.GetOrgEmployeeInfoList:output_type -> saas.api.org.resourcev1.GetOrgEmployeeInfoListResp
+	36, // 39: saas.api.org.servicev1.SrvOrgV1.GetUserOrgEmployeeInfo:output_type -> saas.api.org.resourcev1.GetOrgEmployeeInfoResp
+	38, // 40: saas.api.org.servicev1.SrvOrgV1.GetOrgInviteRecordInfo:output_type -> saas.api.org.resourcev1.GetOrgInviteRecordInfoResp
+	39, // 41: saas.api.org.servicev1.SrvOrgV1.GetOrgInviteRecordInfoList:output_type -> saas.api.org.resourcev1.GetOrgInviteRecordInfoListResp
+	40, // 42: saas.api.org.servicev1.SrvOrgV1.GetOrgList:output_type -> saas.api.org.resourcev1.GetOrgListResp
+	41, // 43: saas.api.org.servicev1.SrvOrgV1.GetOrgEmployeeList:output_type -> saas.api.org.resourcev1.GetOrgEmployeeListResp
+	42, // 44: saas.api.org.servicev1.SrvOrgV1.GetOrgInviteRecordList:output_type -> saas.api.org.resourcev1.GetOrgInviteRecordListResp
+	43, // 45: saas.api.org.servicev1.SrvOrgV1.GetUserLastOrg:output_type -> saas.api.org.resourcev1.GetUserLastOrgResp
+	23, // [23:46] is the sub-list for method output_type
+	0,  // [0:23] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name

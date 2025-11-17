@@ -108,3 +108,7 @@ func (s *orgV1Service) GetOrgList(ctx context.Context, req *resourcev1.GetOrgLis
 		},
 	}, nil
 }
+
+func (s *orgV1Service) GetUserLastOrg(ctx context.Context, req *resourcev1.GetUserLastOrgReq) (*resourcev1.GetUserLastOrgResp, error) {
+	return s.UnimplementedSrvOrgV1Server.GetUserLastOrg(ctx, req)
+}

@@ -61,6 +61,7 @@ func (s *orgDto) ToPbCreateOrgRespData(dataModel *bo.CreateOrgReply) *resourcev1
 		OrgName:   dataModel.OrgName,
 		OrgAvatar: dataModel.OrgAvatar,
 		OrgType:   dataModel.OrgType,
+		OrgStatus: dataModel.OrgStatus,
 	}
 	return res
 }

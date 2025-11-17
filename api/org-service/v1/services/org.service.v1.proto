@@ -157,4 +157,10 @@ service SrvOrgV1 {
       get: "/api/v1/org/get-org-invite-record-list"
     };
   }
+  // 组织-获取用户最后使用的组织
+  rpc GetUserLastOrg(resourcev1.GetUserLastOrgReq) returns (resourcev1.GetUserLastOrgResp) {
+    option (google.api.http) = {
+      get: "/api/v1/org/get-user-last-org"
+    };
+  }
 }

@@ -186,23 +186,31 @@ func (s *orgRecordForUserRepo) ExistUpdateWithDBConn(ctx context.Context, dbConn
 
 func (s *orgRecordForUserRepo) UpdatePersonalOrgIdWithTx(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.OrgRecordForUser) (err error) {
 	fc := func(ctx context.Context, tx *gorm.DB) error {
-		updates := map[string]interface{}{
-			schemas.FieldPersonalOrgId: dataModel.PersonalOrgId,
-			schemas.FieldUpdatedTime:   dataModel.UpdatedTime,
-		}
-		err = tx.WithContext(ctx).
-			Table(s.OrgRecordForUserSchema.TableName()).
-			Where(schemas.FieldUserId+" = ?", dataModel.UserId).
-			UpdateColumns(updates).Error
-		if err != nil {
-			e := errorpkg.ErrorInternalServer("")
-			return errorpkg.Wrap(e, err)
-		}
-		return err
+		return s.updatePersonalOrgId(ctx, tx, dataModel)
 	}
 	err = tx.Do(ctx, fc)
 	if err != nil {
 		return err
+	}
+	return err
+}
+
+func (s *orgRecordForUserRepo) UpdatePersonalOrgId(ctx context.Context, dataModel *po.OrgRecordForUser) (err error) {
+	return s.updatePersonalOrgId(ctx, s.dbConn, dataModel)
+}
+
+func (s *orgRecordForUserRepo) updatePersonalOrgId(ctx context.Context, dbConn *gorm.DB, dataModel *po.OrgRecordForUser) (err error) {
+	updates := map[string]interface{}{
+		schemas.FieldPersonalOrgId: dataModel.PersonalOrgId,
+		schemas.FieldUpdatedTime:   dataModel.UpdatedTime,
+	}
+	err = dbConn.WithContext(ctx).
+		Table(s.OrgRecordForUserSchema.TableName()).
+		Where(schemas.FieldUserId+" = ?", dataModel.UserId).
+		UpdateColumns(updates).Error
+	if err != nil {
+		e := errorpkg.ErrorInternalServer("")
+		return errorpkg.Wrap(e, err)
 	}
 	return err
 }

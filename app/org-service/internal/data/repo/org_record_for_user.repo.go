@@ -18,6 +18,7 @@ type OrgRecordForUserRepo interface {
 	Update(ctx context.Context, dataModel *po.OrgRecordForUser) error
 	ExistUpdate(ctx context.Context, dataModel *po.OrgRecordForUser) (anotherModel *po.OrgRecordForUser, isNotFound bool, err error)
 	UpdatePersonalOrgIdWithTx(ctx context.Context, tx gormpkg.TransactionInterface, dataModel *po.OrgRecordForUser) (err error)
+	UpdatePersonalOrgId(ctx context.Context, dataModel *po.OrgRecordForUser) (err error)
 	UpdateLastOrgId(ctx context.Context, dataModel *po.OrgRecordForUser) (err error)
 	QueryOneByUserId(ctx context.Context, userID uint64) (dataModel *po.OrgRecordForUser, isNotFound bool, err error)
 	QueryOneByUserIdForUpdate(ctx context.Context, tx gormpkg.TransactionInterface, uid uint64) (dataModel *po.OrgRecordForUser, err error)
