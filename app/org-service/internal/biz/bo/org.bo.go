@@ -1,10 +1,11 @@
 package bo
 
 import (
+	"time"
+
 	enumv1 "github.com/go-micro-saas/organization-service/api/org-service/v1/enums"
 	"github.com/go-micro-saas/organization-service/app/org-service/internal/data/po"
 	gormpkg "github.com/ikaiguang/go-srv-kit/data/gorm"
-	"time"
 )
 
 type Testdata struct {
@@ -200,7 +201,6 @@ type SetEmployeeStatusParam struct {
 
 func (s *SetEmployeeStatusParam) CanSetEmployeeStatus() bool {
 	// REMOVED 请使用移除成员接口，转移成员资源
-	// DELETED 请使用删除组织接口，转移组织资源
 	return s.EmployeeStatus == enumv1.OrgEmployeeStatusEnum_ENABLE ||
 		s.EmployeeStatus == enumv1.OrgEmployeeStatusEnum_DISABLE
 }

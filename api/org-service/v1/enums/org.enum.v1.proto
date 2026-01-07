@@ -50,7 +50,6 @@ message OrgEmployeeStatusEnum {
     ENABLE      = 1;  // 有效的
     DISABLE     = 2;  // 已禁用
     REMOVED     = 3;  // 已移除
-    DELETED     = 4;  // 已删除
   }
 }
 

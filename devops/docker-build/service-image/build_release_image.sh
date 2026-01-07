@@ -6,7 +6,7 @@ echo "==> The currently executed script file: ${CURRENT_FILE_PATH}"
 echo "==> The currently executed script path: ${CURRENT_FILE_DIR}"
 
 # release image
-export FROM_IMAGE_NAME=debian:stable-20250520
+export FROM_IMAGE_NAME=debian:stable-20251117
 export BASE_IMAGE_NAME=go-micro-saas/golang-release-image:latest
 export IS_EXIST_BASE_IMAGE=0
 docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "^${BASE_IMAGE_NAME}$" && export IS_EXIST_BASE_IMAGE=1 || echo "CANNOT FOUND ${BASE_IMAGE_NAME}"
