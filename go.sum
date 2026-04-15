@@ -84,6 +84,8 @@ github.com/go-micro-saas/service-api v0.0.18 h1:kK2NcRkWlOlhxm112TmmEYkvW6n0pB4t
 github.com/go-micro-saas/service-api v0.0.18/go.mod h1:/oYPR14qlhrzCfyZovYyCdEpp/TcIAE55Gf/pTaFSZ4=
 github.com/go-micro-saas/service-api v0.0.21 h1:SRs97SxyMnQ1dl0SHP3xREqzsaGBPA/ZXcpLjJ2rUVc=
 github.com/go-micro-saas/service-api v0.0.21/go.mod h1:WJRvkFZ7097e5m35IrdvmqNYyWfdg1ehisSdyurQgds=
+github.com/go-micro-saas/service-api v0.0.22 h1:IVScBT7vWNXqhOB4qibUBKrkxpgbuZ/K6Kd4V+Y6U58=
+github.com/go-micro-saas/service-api v0.0.22/go.mod h1:SnPuISRZ7ECK5yAuCfH/fTkNtNDcav7oUWyxg+icoko=
 github.com/go-ole/go-ole v1.2.6/go.mod h1:pprOEPIfldk/42T2oK7lQ4v4JSDwmV0As9GaiUsvbm0=
 github.com/go-ole/go-ole v1.3.0 h1:Dt6ye7+vXGIKZ7Xtk4s6/xVdGDQynvom7xCFEdWr6uE=
 github.com/go-ole/go-ole v1.3.0/go.mod h1:5LS6F96DhAwUc7C+1HLexzMXY1xGRSryjyPPKW6zv78=
@@ -191,6 +193,10 @@ github.com/hashicorp/serf v0.10.2 h1:m5IORhuNSjaxeljg5DeQVDlQyVkhRIjJDimbkCa8aAc
 github.com/hashicorp/serf v0.10.2/go.mod h1:T1CmSGfSeGfnfNy/w0odXQUR1rfECGd2Qdsp84DjOiY=
 github.com/ikaiguang/go-srv-kit v0.3.50 h1:Iz6LblgfL+fY1jgy8DCy6HijUHeGVFIJSVvsIdSGuOg=
 github.com/ikaiguang/go-srv-kit v0.3.50/go.mod h1:7t2yIBKOyDi9UihZ8IAWGC94mW3AIlbNR5WoCOwbda0=
+github.com/ikaiguang/go-srv-kit v0.3.51 h1:9w2EkFUjzoghXlE0JBGjCDygnXQAK5DmQtE62s68NbI=
+github.com/ikaiguang/go-srv-kit v0.3.51/go.mod h1:7t2yIBKOyDi9UihZ8IAWGC94mW3AIlbNR5WoCOwbda0=
+github.com/ikaiguang/go-srv-kit v0.3.52 h1:9qwBcebt03ESNBw8fhFh/J/wKlnY213RvklsJfFRQfA=
+github.com/ikaiguang/go-srv-kit v0.3.52/go.mod h1:7t2yIBKOyDi9UihZ8IAWGC94mW3AIlbNR5WoCOwbda0=
 github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=
 github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=
 github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=
