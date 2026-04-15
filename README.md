@@ -24,7 +24,7 @@ make testing-all-in-one
 
 ## 服务配置
 
-* 配置文件：[app.yaml](./app/service-layout/configs/app.yaml)
+* 配置文件：[app.yaml](./app/org-service/configs/app.yaml)
 
 **示例如下：**
 
@@ -45,11 +45,11 @@ make store-configuration
 #* `conf`： 启动读取配置
 #* `source_dir`： 被存储的配置文件所在文件夹
 #* `store_dir`： 存储到配置中心位置
-go run ./app/service-layout/cmd/store-configuration/... -conf=./app/service-layout/configs \
--source_dir=./app/service-layout/configs \
--store_dir=go-micro-saas/service-layout/develop/v1.0.0
+go run ./app/org-service/cmd/store-configuration/... -conf=./app/org-service/configs \
+-source_dir=./app/org-service/configs \
+-store_dir=go-micro-saas/org-service/develop/v1.0.0
 
-go run ./app/service-layout/cmd/store-configuration/... -conf=./app/service-layout/configs \
+go run ./app/org-service/cmd/store-configuration/... -conf=./app/org-service/configs \
 -source_dir=./app/uuid-service/configs \
 -store_dir=go-micro-saas/uuid-service/develop/v1.0.0
 ```
